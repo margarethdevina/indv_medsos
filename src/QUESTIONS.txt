@@ -1,0 +1,27 @@
+1. Navbar mau dibuat fixed di top tapi saat di fixed = "top", backgroundImage hilang. Caranya buat fixed selain fixed="top"?
+
+2. navbar backgroundImage pakai gambar dr url, kalau ambil dr folder Assets, backgroundImage nya ga berfungsi. Cara untuk apply gambar yg di download sebagai backgroundImage bagaimana ya?
+
+3. Ubah warna arrow tooltip Add Post
+
+4. Saat mobile view ada gap disebelah kanan navbar, gimana hilangkan gap nya?
+
+5. Cards di LandingPage (BannerBottom), bagian atas sudah ok ada turunan seperti tangga tapi bagian bawah ga ikut kayak tangga, gimana caranya ya?
+    Saat pakai align-self center seakan2 card menyusut topnya.
+
+6. Icon sosmed ga rata, saat di align-items bisa rata tapi posisi jadi ditengah2 footer. Dipakaikan position absolute menggubah posisi column Company juga dan kolom Company mesti diabsolute juga jadinya (atau ga dinamis). Cara meratakan icon sosmed?
+
+    sudah pakai align-items: baseline atau start tetap ga bisa rata.
+
+7. gambar disimpan di folder assets, tapi saat ditarik pakai: 
+    "../../Assets/SampleMediaPosts/sampleMedia04.jpg"
+    atau "sampleMedia04.jpg" (untuk tes gambar ada yg disimpan di folder pages jg)
+    
+    gambar ga bisa muncul di web nya. Kenapa tag img atau CardImg ga mau tarik media dari asset kita ya?
+
+x. react skrg v18 dan ga bisa accomodate redux dan react-redux, gimana cara downgrade versi react nya? 
+    saat ganti versi react di package.json redux dan react-redux berhasil keinstall tapi web tidak ke render krn error.
+    jadi diuninstall lagi.
+
+    
+

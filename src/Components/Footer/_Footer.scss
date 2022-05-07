@@ -1,0 +1,104 @@
+@import '../../index.scss';
+
+#footer {
+    background-color: $basic-color-darkpurple;
+    padding         : 2.5rem 0;
+
+    .container {
+        max-width      : 70%;
+        margin         : auto;
+        display        : flex;
+        justify-content: space-between;
+
+        @media screen and (max-width: 1150px) {
+            max-width: 80%
+        }
+
+        @media screen and (max-width: 930px) {
+            max-width: 90%
+        }
+
+        @media screen and (max-width: 820px) {
+            max-width: 95%
+        }
+
+        @media screen and (max-width: 790px) {
+            flex-direction: column;
+            align-items   : center;
+            max-width     : 100%;
+            gap           : 30px 0;
+
+            div:nth-child(2) {
+                flex-direction: column;
+            }
+
+            .footer__lists {
+                gap        : 30px 0px;
+                text-align : center;
+                margin-left: -2rem;
+            }
+
+            .footer__socials {
+                align-items: center;
+            }
+
+        }
+
+    }
+
+    .footer__logo {
+        font-family    : $font-brand;
+        font-weight    : bold;
+        font-style     : italic;
+        font-size      : 24px;
+        text-decoration: none;
+        color          : $basic-color-white;
+        cursor         : pointer;
+    }
+
+    .footer__lists {
+        display: flex;
+        gap    : 0 50px;
+
+        .topic {
+            color          : $basic-color-white;
+            font-family    : $font-content;
+            font-weight    : bold;
+            margin-bottom  : 15px;
+            list-style-type: none;
+        }
+
+        li:not(:first-child) {
+            margin-top     : 10px;
+            list-style-type: none;
+        }
+
+        a {
+            color          : rgba(255, 255, 255, 0.9); //white with opacity 0.9
+            text-decoration: none;
+            font-family    : $font-content;
+            font-size      : 13px;
+        }
+
+        a:hover {
+            color: $basic-color-purple;
+        }
+    }
+
+    .footer__socials {
+        display: flex;
+        gap    : 0 20px;
+        cursor : pointer;
+
+        &__icons {
+            fill : $basic-color-white;
+            width: 30px;
+
+            &:hover {
+                fill: $basic-color-purple;
+            }
+        }
+
+    }
+
+}

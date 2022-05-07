@@ -1,0 +1,151 @@
+@import '../../index.scss';
+
+$height_card : 200px;
+
+.app_banner {
+
+    &_bg {
+        background-color: $basic-color-lightgreen;
+    }
+
+    &_font {
+        font-family: $font-brand;
+        font-weight: bolder;
+        font-style : italic;
+        font-size  : 17px;
+    }
+
+    &_fontFooter {
+        font-family   : $font-content;
+        font-weight   : 100;
+        font-size     : 15px;
+        color         : $basic-color-purple;
+    }
+
+    &_container {
+        padding       : 20px 0;
+        display       : flex;
+        flex-direction: column;
+        align-items   : center;
+        gap           : 50px 0;
+
+
+        &_cards {
+            display        : flex;
+            width          : 100%;
+            gap            : 0 20px; //gap untuk garis
+            justify-content: center;
+            height         : calc($height_card*1.45);
+
+            .card {
+                min-height      : $height_card;
+                max-width       : 250px;
+                position        : relative;
+                background-color: $basic-color-lightgreen;
+                border-color: $basic-color-darkpurple;
+                border-radius   : 10px;
+                padding         : 80px 40px 30px 40px;
+
+                &__icon {
+                    position        : absolute;
+                    content         : '';
+                    left            : 30px;
+                    top             : -40px;
+                    background-color: $basic-color-darkpurple;
+                    padding         : 20px;
+                    border-radius   : 100%;
+                }
+
+                &__title {
+                    font-family: $font-content;
+                    font-size  : 1.4rem;
+                    color      : $basic-color-darkpurple;
+                    font-weight: 700;
+                }
+
+                &__info {
+                    font-family: $font-content;
+                    line-height: 1.5rem;
+                    color      : $basic-color-purple;
+                    margin-top : 10px;
+                }
+
+                &:first-child {
+                    align-self: flex-start;
+                }
+
+                &:nth-child(2) {
+                    align-self: center;
+                    position  : relative;
+                }
+
+                //buat garis untuk apit card tengah
+                &:nth-child(2)::before,
+                &:nth-child(2)::after {
+                    position        : absolute;
+                    content         : '';
+                    top             : 40%;
+                    width           : 20px;
+                    height          : 10px;
+                    background-color: $basic-color-darkpurple;
+                }
+
+                //posisi garis sebelum card tengah
+                &:nth-child(2)::before {
+                    left: -20px;
+                    top : 40%;
+                }
+
+                //posisi garis sesudah card tengah
+                &:nth-child(2)::after {
+                    right: -20px;
+                    top  : 40%;
+                }
+
+                &:last-child {
+                    align-self: flex-end;
+                }
+
+            }
+
+            @media screen and (max-width: 768px) {
+                flex-direction   : column;
+                height           : unset;
+                align-items      : center;
+                $gap             : 100px; //untuk panjang garis antar card
+                gap              : $gap 0;
+
+                .card {
+                    max-width: 300px;
+
+                    &:first-child,
+                    &:last-child,
+                    &:nth-child(2) {
+                        align-self: unset;
+                    }
+
+                    &:nth-child(2)::before,
+                    &:nth-child(2)::after {
+                        width : 10px; //supaya sama dengan height saat horisontal
+                        height: $gap;
+                    }
+
+                    //posisi garis sebelum card tengah
+                    &:nth-child(2)::before {
+                        top : -$gap;
+                        left: 50%;
+                    }
+
+                    //posisi garis sesudah card tengah
+                    &:nth-child(2)::after {
+                        top   : unset;
+                        bottom: -$gap;
+                        left  : 50%;
+                    }
+                }
+            }
+        }
+
+    }
+
+}

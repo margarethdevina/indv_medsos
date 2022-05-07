@@ -1,11 +1,24 @@
 body {
   margin: 0;
+  padding: 0;
+
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
 }
+
+$basic-color-purple: #c4558f;
+$basic-color-darkpurple: #351c75;
+$basic-color-white: white;
+$basic-color-green: #8ac400;
+$basic-color-lightgreen: #efffe9;
+// $basic-color-blue: #3d85c6;
+$font-brand: Georgia, 'Times New Roman', Times, serif;
+$font-content: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

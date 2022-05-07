@@ -1,0 +1,84 @@
+@import '../../index.scss';
+
+.app_navbar {
+    display        : flex;
+    align-items    : center;
+    justify-content: space-between;
+
+    &_brand {
+        font-family: $font-brand;
+        font-weight: bold;
+        font-style : italic;
+        cursor     : pointer;
+        margin     : 0 3rem 0 0;
+    }
+
+    &_list {
+
+        &_item {
+            &_link {
+                font-family         : $font-content;
+                font-weight         : normal;
+                font-size           : 18px;
+                color               : black;
+                text-decoration-line: none;
+                margin              : 0 2rem;
+            }
+
+            &_link:hover {
+                color           : $basic-color-purple;
+                background-color: #d9ead3;
+                border-radius   : 0.2rem;
+            }
+        }
+    }
+
+    &_btn {
+        cursor       : pointer;
+        font-family  : $font-content;
+        font-weight  : normal;
+        font-size    : 18px;
+        color        : black;
+        border-width : 1.5px;
+        border-radius: 0.2rem;
+
+        // &_btn:hover {
+        //     color           : $basic-color-white;
+        //     background-color: grey;
+        //     border-radius   : 3px;
+        // }
+    }
+
+}
+
+.tooltip-inner {
+    // opacity         : 0.8 !important;
+    color           : black !important;
+    font-family     : $font-content !important;
+    font-weight     : normal !important;
+    font-size       : 18px !important;
+    background-color: #d9ead3 !important;
+}
+
+// .tooltip-arrow{
+//     color: #d9ead3 !important;
+//     // border-bottom-color: #d9ead3 !important;
+// }
+
+.bs-tooltip-auto[x-placement^="bottom"] span.arrow::before,
+.bs-tooltip-bottom .arrow::before {
+    border-bottom-color: #d9ead3 !important;
+}
+
+.navbar-toggler {
+    border : none;
+    outline: none;
+    font-size: 18px !important;
+
+    &:focus,
+    &:active,
+    &-icon:focus {
+        outline   : none;
+        box-shadow: none;
+    }
+}
