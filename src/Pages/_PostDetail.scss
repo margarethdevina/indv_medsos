@@ -1,0 +1,39 @@
+@import '../index.scss';
+
+._detail {
+    &_font {
+        font-family: $font-content;
+        color      : $basic-color-darkpurple;
+        font-size  : 18px;
+        font-weight: bold;
+        text-align : left;
+        margin-left: 1rem;
+        margin-top: 1rem;
+
+        &_content {
+            font-weight: lighter !important;
+            text-align : left;
+            margin-left: 1rem;
+        }
+
+    }
+
+    &_hr {
+        color: $basic-color-green;
+    }
+
+    &_button{
+        background-color: $basic-color-darkpurple;
+        width: fit-content;
+        height: 2.5rem
+    }
+
+}
+
+._profile{
+    &_border{
+        border-radius: 100%;
+        width: 20px;
+        height: 20px;
+    }
+}

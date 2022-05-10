@@ -5,11 +5,11 @@ import { API_URL } from "../helper";
 
 const AllPostsPage = (props) => {
 
-    const [dbPosts, setDbPosts] = useState([])
+    const [dbPosts, setDbPosts] = useState([]);
 
     useEffect(() => {
         getPosts()
-    }, [])
+    }, []);
 
     const getPosts = () => {
         Axios.get(`${API_URL}/posts`)
@@ -17,7 +17,7 @@ const AllPostsPage = (props) => {
                 console.log("isi dbPosts", response.data)
                 setDbPosts(response.data)
             }).catch((error) => { console.log(error) })
-    }
+    };
 
     return (
         <div className="container pt-3 pb-3 px-5">

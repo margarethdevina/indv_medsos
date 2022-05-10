@@ -6,35 +6,49 @@ import addPostIcon from "../../Assets/IconRef/add_post.png";
 import './_Navbar.scss';
 import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, Button, NavbarText, Tooltip } from "reactstrap";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import ModalLogin from "../ModalLogin/ModalLogin";
 
 const NavbarComponent = (props) => {
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [openCollapse, setOpenCollapse] = useState(false);
     const [tooltipOpen, setTooltipOpen] = useState(false);
+    const [openLogin, setOpenLogin] = useState(false);
+    const [dropOpen, setDropOpen] = React.useState(false);
+
+    const { username, role } = useSelector((state) => {
+        return {
+            username: state.usersReducer.username,
+            role: state.usersReducer.role
+        }
+    })
 
     return (
         <div
             style={{
-                backgroundImage: "url('https://www.loudounchamber.org/wp-content/uploads/2020/03/greenlimegeometric-e1584724830611.jpg')",
-                // backgroundImage: {backgroundNavbar},
+                backgroundImage: `url(${backgroundNavbar})`,
                 backgroundRepeat: "no-repeat",
-                backgroundSize: "cover"
+                backgroundSize: "cover",
+                // position: "sticky",
+                // top: 0
             }}
         >
+            <ModalLogin
+                modalOpen={openLogin}
+                toggleOpen={() => setOpenLogin(!openLogin)}
+            />
+
             <Navbar
                 expand="md"
                 className="container"
                 color="transparent"
                 light
-            // fixed="top"
             >
                 <NavbarBrand
                     onClick={() => navigate("/")}
                 >
-                    {/* <img src="https://i.pinimg.com/736x/88/39/23/883923c338eb5864220bb7bf2cb25838.jpg" 
-                    width="35"
-                    /> */}
                     <h4
                         className="app_navbar_brand"
                     >
@@ -91,7 +105,10 @@ const NavbarComponent = (props) => {
 
                         <div className="mx-md-3">
 
-                            <div className="d-none d-md-flex flex-column align-items-center">
+                            <div
+                                className="d-none d-md-flex flex-column align-items-center"
+                                onClick={() => setOpenLogin(!openLogin)}
+                            >
                                 <img
                                     className="app_navbar_btn"
                                     cursor="pointer"
@@ -112,6 +129,7 @@ const NavbarComponent = (props) => {
                                 size="sm"
                                 outline
                                 color="warning"
+                                onClick={() => setOpenLogin(!openLogin)}
                             >
                                 Sign In
                             </Button>
@@ -152,6 +170,8 @@ const NavbarComponent = (props) => {
                 </Collapse>
 
             </Navbar>
+
+
 
         </div >
     )

@@ -1,17 +1,28 @@
 1. Navbar mau dibuat fixed di top tapi saat di fixed = "top", backgroundImage hilang. Caranya buat fixed selain fixed="top"?
 
+==> inline styling pakai position fixed top 0 di parent div ATAU inline styling juga di elemen Navbar nya
+==> supaya ga setengah tampilan width mesti diatur
+
 2. navbar backgroundImage pakai gambar dr url, kalau ambil dr folder Assets, backgroundImage nya ga berfungsi. Cara untuk apply gambar yg di download sebagai backgroundImage bagaimana ya?
+
+==> kalau styling berarti panggil variabel ga pakai kurawa
 
 3. Ubah warna arrow tooltip Add Post
 
-4. Saat mobile view ada gap disebelah kanan navbar, gimana hilangkan gap nya?
+==> mesti buka isi css tooltipnya untuk ubah, ignore dl gpp ga signifikan
+
+4. Saat mobile view ada gap disebelah kanan navbar, gimana hilangkan gap nya? ==> sekarang udah hilang? Modal yang bisa sering kayak gini
 
 5. Cards di LandingPage (BannerBottom), bagian atas sudah ok ada turunan seperti tangga tapi bagian bawah ga ikut kayak tangga, gimana caranya ya?
     Saat pakai align-self center seakan2 card menyusut topnya.
 
+    ==> coba ganti height di tiap card jadi bagian bawah sama atasnya akan berubah atau edit margin top nya jadi ga pakai align-self
+
 6. Icon sosmed ga rata, saat di align-items bisa rata tapi posisi jadi ditengah2 footer. Dipakaikan position absolute menggubah posisi column Company juga dan kolom Company mesti diabsolute juga jadinya (atau ga dinamis). Cara meratakan icon sosmed?
 
     sudah pakai align-items: baseline atau start tetap ga bisa rata.
+
+    ==> svg yg di download bawa viewbox, h, dan w sendiri2 dan twitter beda sendiri (lbh besar) jadi difixed aja height dan width nya di css nya
 
 7. gambar disimpan di folder assets, tapi saat ditarik pakai: 
     "../../Assets/SampleMediaPosts/sampleMedia04.jpg"
@@ -19,9 +30,17 @@
     
     gambar ga bisa muncul di web nya. Kenapa tag img atau CardImg ga mau tarik media dari asset kita ya?
 
-x. react skrg v18 dan ga bisa accomodate redux dan react-redux, gimana cara downgrade versi react nya? 
+    ==> gambar skrg pakai url dl gpp karena nanti pas backend kita akan replace pengambilan url langsung dr server kita bukan dr google image dsb lagi
+
+8. react skrg v18 dan ga bisa accomodate redux dan react-redux, gimana cara downgrade versi react nya? 
     saat ganti versi react di package.json redux dan react-redux berhasil keinstall tapi web tidak ke render krn error.
     jadi diuninstall lagi.
+
+    Redux sama React Redux sudah terinstall skrg
+
+8 Mei 2022
+Target fitur2 front-end udah kebuat sebelum backend mulai
+Jadi tinggal ganti API_URL aja
 
     
 
