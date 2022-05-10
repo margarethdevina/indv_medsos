@@ -41,11 +41,12 @@ const ModalLogin = (props) => {
             alert("Fill in all form")
         } else if (inForm.usernameOrEmail.includes("@")) {
 
-            console.log("isi username", inForm.usernameOrEmail)
+            console.log("isi email", inForm.usernameOrEmail)
             console.log("inForm.password", inForm.password)
 
             Axios.get(`${API_URL}/users?email=${inForm.usernameOrEmail}&password=${inForm.password}`)
                 .then((response) => {
+                    console.log("data saat masuk lwt email",response.data)
                     localStorage.setItem("tokenIdUser", response.data[0].id)
                     dispatch(loginAction(response.data[0]))
                     props.toggleOpen();
@@ -60,6 +61,7 @@ const ModalLogin = (props) => {
 
             Axios.get(`${API_URL}/users?username=${inForm.usernameOrEmail}&password=${inForm.password}`)
                 .then((response) => {
+                    console.log("data saat masuk lwt username",response.data)
                     localStorage.setItem("tokenIdUser", response.data[0].id)
                     dispatch(loginAction(response.data[0]))
                     props.toggleOpen();
@@ -70,7 +72,6 @@ const ModalLogin = (props) => {
         }
 
     }
-
 
     const [visibleForm, setVisibleForm] = useState({
         type: "password",
@@ -93,7 +94,7 @@ const ModalLogin = (props) => {
 
     return (
         <Modal
-            isOpen={true}
+            isOpen={props.modalOpen}
             toggle={props.toggleOpen}
         >
             <ModalBody>
