@@ -19,7 +19,7 @@ const NavbarComponent = (props) => {
     const [openLogin, setOpenLogin] = useState(false);
     const [dropOpen, setDropOpen] = React.useState(false);
 
-    const { username} = useSelector((state) => {
+    const { username } = useSelector((state) => {
         return {
             username: state.usersReducer.username,
         }
@@ -106,19 +106,47 @@ const NavbarComponent = (props) => {
                         {
                             username ?
                                 <>
-                                    <Dropdown isOpen={dropOpen} toggle={() => setDropOpen(!dropOpen)}>
-                                        <DropdownToggle onClick={() => setDropOpen(!dropOpen)}>
-                                            {username}
-                                        </DropdownToggle>
-                                        <DropdownMenu end>
-                                            <DropdownItem>
+                                    <div className="d-none d-md-flex">
+                                        <Dropdown isOpen={dropOpen} toggle={() => setDropOpen(!dropOpen)}>
+                                            <DropdownToggle 
+                                            className="app_navbar_btn_user"
+                                            onClick={() => setDropOpen(!dropOpen)}>
+                                                {username}
+                                            </DropdownToggle>
+                                            <DropdownMenu end>
+                                                <DropdownItem onClick={() => navigate("/userprofile")}>
+                                                    Your Profile
+                                                </DropdownItem>
+                                                <DropdownItem onClick={() => dispatch(logoutAction())}>
+                                                    Logout
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </Dropdown>
+                                    </div>
+
+
+                                    <div className="mx-md-3">
+                                        <div
+                                            className="d-md-none col-12 my-1">
+
+                                            <span
+                                                className="app_navbar_list_item_link"
+                                                onClick={() => navigate("/userprofile")}
+                                            >
                                                 Your Profile
-                                            </DropdownItem>
-                                            <DropdownItem onClick={() => dispatch(logoutAction())}>
+                                            </span>
+
+                                            <br />
+
+                                            <span className="app_navbar_list_item_link"
+                                                onClick={() => dispatch(logoutAction())}
+                                            >
                                                 Logout
-                                            </DropdownItem>
-                                        </DropdownMenu>
-                                    </Dropdown>
+                                            </span>
+
+                                        </div>
+                                    </div>
+
                                 </>
                                 :
                                 <>

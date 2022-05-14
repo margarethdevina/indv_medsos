@@ -42,5 +42,7 @@
 Target fitur2 front-end udah kebuat sebelum backend mulai
 Jadi tinggal ganti API_URL aja
 
-    
+9. tips untuk error handling sebaiknya gmn ya? suka habiskan waktu berjam2 untuk cek error karena bingung errornya di mana
+
+10. 
 

@@ -2,36 +2,44 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { Nav, NavItem, NavLink } from "reactstrap";
-import CardsInYourPosts from "../Components/CardsInYourPosts/CardsInYourPosts";
+import CardsInAllPosts from "../Components/CardsInAllPosts/CardsInAllPosts";
 
-const YourPostsPage = (props) => {
+const YourLikesPage = (props) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { username, posts } = useSelector((state) => {
+    const { username, likes, posts } = useSelector((state) => {
         return {
             username: state.usersReducer.username,
+            likes: state.usersReducer.likes,
             posts: state.postsReducer.posts
         }
     })
 
-    console.log("data state yg masuk page yourPosts", username, posts)
+    console.log("data state yg masuk page yourLikes", username, likes, posts)
 
-    const printYourPosts = () => {
+    const getYourLikes = () => {
         let temp = []
-        temp = posts.filter(val => val.username == username)
-        console.log("isi temp", temp)
+        for (let i = 0; i < posts.length; i++) {
+            for (let j = 0; j < likes.length; j++) {
+                if (posts[i].id == likes[j]) {
+                    temp.push(posts[i])
+                }
+            }
+        }
+        // console.log("isi temp", temp)
+        return temp
     }
 
     return (
         <div
-        className="container"
+            className="container"
         >
             <Nav tabs>
                 <NavItem>
                     <NavLink
-                        className="active"
+                        className=""
                         onClick={() => navigate("/yourposts")}
                     >
                         Your Posts
@@ -39,7 +47,7 @@ const YourPostsPage = (props) => {
                 </NavItem>
                 <NavItem>
                     <NavLink
-                        className=""
+                        className="active"
                         onClick={() => navigate("/yourlikes")}
                     >
                         Your Likes
@@ -47,13 +55,13 @@ const YourPostsPage = (props) => {
                 </NavItem>
             </Nav>
 
-            {printYourPosts()}
-            <CardsInYourPosts 
-            data = {posts.filter(val => val.username == username)}
+            <CardsInAllPosts
+                data={getYourLikes()}
             />
+
         </div>
     )
 
 }
 
-export default YourPostsPage;
+export default YourLikesPage;

@@ -1,10 +1,10 @@
 import React from "react";
-import './_CardsInAllPosts.scss';
+import './_CardsInYourPosts.scss';
 import { ReactComponent as FavIcon } from '../../Assets/IconRef/love-letter.svg';
 import { CardColumns, Card, CardImg, CardTitle, CardSubtitle } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 
-const CardsInAllPosts = (props) => {
+const CardsInYourPosts = (props) => {
 
     const navigate = useNavigate();
 
@@ -24,14 +24,9 @@ const CardsInAllPosts = (props) => {
                             // top
                             className="_card_media"
                         />
-                        <CardTitle
-                            className="_card_title"
-                            tag="h5"
-                        >
-                            {value.username}
-                        </CardTitle>
+
                         <CardSubtitle
-                            className="d-flex justify-content-between align-items-center text-muted"
+                            className="d-flex justify-content-between align-items-center text-muted pt-2"
                             tag="h6"
                         >
                             <p
@@ -64,4 +59,4 @@ const CardsInAllPosts = (props) => {
 
 }
 
-export default CardsInAllPosts;
+export default CardsInYourPosts;

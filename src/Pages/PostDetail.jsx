@@ -2,16 +2,28 @@ import React, { useState, useEffect } from "react";
 import './_PostDetail.scss';
 import { ReactComponent as FavIcon } from '../Assets/IconRef/love-letter.svg';
 import { ReactComponent as ShareIcon } from '../Assets/IconRef/share.svg';
+import CardsForComments from "../Components/CardsForComments/CardsForComments";
 import Axios from 'axios';
 import { API_URL } from "../helper";
 import { useLocation } from "react-router-dom";
 import { Input, Button } from "reactstrap";
+import { useDispatch, useSelector } from 'react-redux';
 
 const PostDetailPage = (props) => {
 
     const { state, search } = useLocation();
+    const dispatch = useDispatch();
     const [detail, setDetail] = useState({});
     const [favoriteFill, setFavoriteFill] = useState("#351c75");
+
+    const { userid, username, posts } = useSelector((state) => {
+        return {
+            userid: state.usersReducer.id,
+            username: state.usersReducer.username,
+            likes: state.usersReducer.likes,
+            posts: state.postsReducer.posts,
+        }
+    })
 
     useEffect(() => {
         getDetail()
@@ -20,9 +32,8 @@ const PostDetailPage = (props) => {
     const getDetail = () => {
         Axios.get(`${API_URL}/posts${search}`)
             .then((response) => {
-                // console.log("isi detail", response.data)
+                console.log("isi detail", response.data[0])
                 setDetail(response.data[0])
-                console.log("isi detail.comments", detail.comments)
             })
             .catch((error) => { console.log(error) })
     };
@@ -30,14 +41,16 @@ const PostDetailPage = (props) => {
 
     const printComments = () => {
         if (detail.id) {
-            let dbComments = detail.comments
-            console.log("isi dbComments", dbComments)
-            dbComments.map((value, index) => {
+            let { comments } = detail
+            //     let dbComments = detail.comments
+            console.log("isi comments", comments)
+            return comments.map((value, index) => {
                 return (
-                    <>
-                        <div
-                            className="d-flex"
-                        >
+                    <div
+                        className="d-flex"
+                        key={value.id}
+                    >
+                        <div>
                             <span>
                                 {value.username}
                             </span>
@@ -46,11 +59,14 @@ const PostDetailPage = (props) => {
                             </span>
                         </div>
                         <div>
-                            <span>
+                            <span
+                                className="text-muted"
+                            >
                                 {value.commentDate}
                             </span>
                         </div>
-                    </>)
+                    </div >
+                )
             })
         }
     }
@@ -111,20 +127,14 @@ const PostDetailPage = (props) => {
 
                 <hr className="_detail_hr" />
 
-                {/* <p
-                    className="_detail_font_content"
-                > */}
                 {
-                    detail.id
-                        ?
-                        <>
-                            {/* printComments */}
-                            {printComments()}
-                        </>
-                        :
-                        null
+                    detail.id &&
+                    <CardsForComments 
+                    detail = {detail}
+                    />
                 }
-                {/* </p> */}
+
+                {/* {printComments()} */}
 
                 <hr className="_detail_hr" />
 
@@ -136,7 +146,7 @@ const PostDetailPage = (props) => {
                         type="text"
                         placeholder="share your thought..."
                         size="md"
-                        style={{height: "2.5rem"}}
+                        style={{ height: "2.5rem" }}
                     />
 
                     <Button

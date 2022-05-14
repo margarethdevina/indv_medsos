@@ -1,0 +1,47 @@
+@import '../../index.scss';
+
+._card {
+
+    &_border{
+    text-align : left !important;
+    border-radius: 1%;
+    }
+
+    &_profile {
+        align-items  : top;
+        height       : 300px;
+        width        : 100%;
+        border-radius: 100%;
+    }
+
+    &_detail {
+        &_username {
+            padding-top: 0;
+            margin-top: 0;
+            margin-left: 1rem;
+            font-family: $font-content;
+            color      : $basic-color-darkpurple;
+            font-size  : 15px;
+            font-weight: bold;
+            text-align : left !important;
+        }
+        &_comment{
+            margin-left: 0.2rem;
+            font-family: $font-content;
+            color      : $basic-color-purple;
+            font-size  : 15px;
+            font-weight: lighter;
+            text-align : left !important;
+        }
+        &_date{
+            padding-bottom: 0;
+            margin-left: 1rem;
+            margin-bottom: 0;
+            font-family: $font-content;
+            font-size  : 10px;
+            font-weight: light;
+            text-align : left !important;
+        }
+    }
+
+}

@@ -42,6 +42,21 @@
         border-width : 1.5px;
         border-radius: 0.2rem;
 
+        &_user {
+            font-family     : $font-content;
+            font-weight     : normal;
+            font-size       : 18px;
+            color           : white;
+            background-color: $basic-color-darkpurple;
+            border-width    : 1.5px;
+            border-radius   : 0.3rem;
+        }
+
+        &_user:hover {
+            color           : $basic-color-purple;
+            background-color: #d9ead3;
+            border-radius   : 0.3rem;
+        }
     }
 
 }
@@ -66,8 +81,8 @@
 }
 
 .navbar-toggler {
-    border : none;
-    outline: none;
+    border   : none;
+    outline  : none;
     font-size: 18px !important;
 
     &:focus,
