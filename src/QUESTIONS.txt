@@ -44,12 +44,42 @@ Jadi tinggal ganti API_URL aja
 
 9. tips untuk error handling sebaiknya gmn ya? suka habiskan waktu berjam2 untuk cek error karena bingung errornya di mana
 
+    lihat dari running notes developmentya (yg di kanan console log) krn kadang bisa kasih tahu nama komponennya ATAU klo ga ada nama komponen yg dikasi tahu, bisa cek ke bagian kiri. Di kiri biasanya akan kasih tahu nama komponen dan barisnya.
+
+    Unidentifed biasanya bisa karena setState nya bukan ke tipe data yang betul ATAU state yg dicari ada di page lainnya dan belum ditransfer ke page component yg sedang dikerjakan.
+
 10. variabel di scss bisa dipanggil ke komponen ga ya?
+    ga bisa harus lewat kelas atau selector lainnya
 
 
+TES PROFILE DATA REFERENCE
 https://ami.animecharactersdatabase.com/uploads/chars/thumbs/200/9180-317713343.jpg
 doremifasollasido
 doremi
 la la land
 
 https://www.entoin.com/images/chara50.jpg
+
+REGEX REFERENCE
+Email:
+Cara 1
+/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+
+Cara 2
+/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+Cara 3
+/\S+@\S+\.\S+/
+
+Amsal 30:7-9
+
+https://www.ixpaper.com/wp-content/uploads/2021/06/violet-evergarden-wallpaper-ixpaper-3.jpg
+
+
+==========
+
+11. cara live check email dan username sudah exist?
+    - saat onchange sudah coba compare tapi hasilnya dibilang valid terus
+    - setValid sudah pakai settimeout supaya cek exist nya tapi tetap hasilnya valid
+
+12. bgm supaya toast tidak tertindih input form

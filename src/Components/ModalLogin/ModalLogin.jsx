@@ -29,9 +29,6 @@ const ModalLogin = (props) => {
         password: ""
     })
 
-    const [UnameOrEmail, setUnameOrEmail] = useState("");
-    // const [password, setPassword] = useState("");
-
     const handleInput = (value, property) => {
         setInForm({ ...inForm, [property]: value })
     }
@@ -46,7 +43,7 @@ const ModalLogin = (props) => {
 
             Axios.get(`${API_URL}/users?email=${inForm.usernameOrEmail}&password=${inForm.password}`)
                 .then((response) => {
-                    console.log("data saat masuk lwt email",response.data)
+                    console.log("data saat masuk lwt email", response.data)
                     localStorage.setItem("tokenIdUser", response.data[0].id)
                     dispatch(loginAction(response.data[0]))
                     props.toggleOpen();
@@ -61,7 +58,7 @@ const ModalLogin = (props) => {
 
             Axios.get(`${API_URL}/users?username=${inForm.usernameOrEmail}&password=${inForm.password}`)
                 .then((response) => {
-                    console.log("data saat masuk lwt username",response.data)
+                    console.log("data saat masuk lwt username", response.data)
                     localStorage.setItem("tokenIdUser", response.data[0].id)
                     dispatch(loginAction(response.data[0]))
                     props.toggleOpen();
@@ -109,14 +106,6 @@ const ModalLogin = (props) => {
                         type="text"
                         value={inForm.usernameOrEmail}
                         onChange={(event) => handleInput(event.target.value, "usernameOrEmail")}
-                    // onChange={(event) => {
-                    //     event.target.value.includes("@")
-                    //         ?
-                    //         handleInput(event.target.value, "email")
-                    //         :
-                    //         handleInput(event.target.value, "username")
-                    // }
-                    // }
                     />
                 </FormGroup>
                 <FormGroup>
