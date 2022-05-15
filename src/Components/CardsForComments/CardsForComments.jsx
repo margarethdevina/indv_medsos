@@ -14,6 +14,7 @@ const CardsForComments = (props) => {
                     className="col-12"
                 >
                     <Card
+                    className="_card_border"
                     >
                         {/* <CardImg
                             src={value.media}

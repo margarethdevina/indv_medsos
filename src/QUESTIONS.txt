@@ -44,5 +44,12 @@ Jadi tinggal ganti API_URL aja
 
 9. tips untuk error handling sebaiknya gmn ya? suka habiskan waktu berjam2 untuk cek error karena bingung errornya di mana
 
-10. 
+10. variabel di scss bisa dipanggil ke komponen ga ya?
 
+
+https://ami.animecharactersdatabase.com/uploads/chars/thumbs/200/9180-317713343.jpg
+doremifasollasido
+doremi
+la la land
+
+https://www.entoin.com/images/chara50.jpg

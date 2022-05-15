@@ -108,9 +108,9 @@ const NavbarComponent = (props) => {
                                 <>
                                     <div className="d-none d-md-flex">
                                         <Dropdown isOpen={dropOpen} toggle={() => setDropOpen(!dropOpen)}>
-                                            <DropdownToggle 
-                                            className="app_navbar_btn_user"
-                                            onClick={() => setDropOpen(!dropOpen)}>
+                                            <DropdownToggle
+                                                className="app_navbar_btn_user"
+                                                onClick={() => setDropOpen(!dropOpen)}>
                                                 {username}
                                             </DropdownToggle>
                                             <DropdownMenu end>
