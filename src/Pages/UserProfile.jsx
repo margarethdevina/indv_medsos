@@ -5,6 +5,7 @@ import { API_URL } from "../helper";
 import { loginAction } from "../redux/actions/usersActions";
 import { Card, CardImg, CardBody, Button, Input } from "reactstrap";
 import adminPic from "../Assets/SampleProfilePic/Admin.png";
+import { ReactComponent as VerifIcon } from '../Assets/IconRef/verified.svg';
 
 const UserProfilePage = (props) => {
 
@@ -53,7 +54,7 @@ const UserProfilePage = (props) => {
         if (selectedEdit == 0) {
             return (
                 <Card
-                    className="px-1"
+                    className="px-1 py-3"
                 >
                     <div className="container">
                         {
@@ -117,15 +118,31 @@ const UserProfilePage = (props) => {
                             status == "verified"
                                 ?
                                 <>
-                                    <span>Verified Icon</span>
+                                    <span>
+                                        <VerifIcon
+                                            fill="green"
+                                            style={{ width: "25px", height: "25px" }}
+                                        />
+                                    </span>
                                     <span
                                         style={{ fontWeight: "bold" }}
-                                    >Verified</span>
+                                    >
+                                        Verified
+                                    </span>
                                 </>
                                 :
                                 <>
-                                    <span>Unverified Icon</span>
-                                    <span>Unverified</span>
+                                    <span>
+                                        <VerifIcon
+                                            fill="red"
+                                            style={{ width: "25px", height: "25px" }}
+                                        />
+                                    </span>
+                                    <span
+                                        style={{ fontWeight: "bold" }}
+                                    >
+                                        Unverified
+                                    </span>
                                 </>
                         }
                     </div>
@@ -134,7 +151,7 @@ const UserProfilePage = (props) => {
         } else {
             return (
                 <Card
-                    className="px-1"
+                    className="px-1 py-3"
                 >
                     <div className="container">
                         <Input
@@ -186,15 +203,31 @@ const UserProfilePage = (props) => {
                             status == "verified"
                                 ?
                                 <>
-                                    <span>Verified Icon</span>
+                                    <span>
+                                        <VerifIcon
+                                            fill="green"
+                                            style={{ width: "25px", height: "25px" }}
+                                        />
+                                    </span>
                                     <span
                                         style={{ fontWeight: "bold" }}
-                                    >Verified</span>
+                                    >
+                                        Verified
+                                    </span>
                                 </>
                                 :
                                 <>
-                                    <span>Unverified Icon</span>
-                                    <span>Unverified</span>
+                                    <span>
+                                        <VerifIcon
+                                            fill="red"
+                                            style={{ width: "25px", height: "25px" }}
+                                        />
+                                    </span>
+                                    <span
+                                        style={{ fontWeight: "bold" }}
+                                    >
+                                        Unverified
+                                    </span>
                                 </>
                         }
                     </div>

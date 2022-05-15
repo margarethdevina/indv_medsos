@@ -14,14 +14,14 @@ const RegisterPage = (props) => {
     /////// STATE MANAGEMENT ///////
     const [dbUsers, setDbUsers] = useState([]);
     const [dbUsername, setDbUsername] = useState([]);
-    const [dbEmail, setDbEmail] = useState([]);
+    // const [dbEmail, setDbEmail] = useState([]);
 
     const [username, setUsername] = useState("");
     const [usedUsername, setUsedUsername] = useState("");
 
     const [email, setEmail] = useState("");
     const [emailValidity, setEmailValidity] = useState("");
-    const [usedEmail, setUsedEmail] = useState("");
+    // const [usedEmail, setUsedEmail] = useState("");
 
     const [password, setPassword] = useState("");
     const [confPassword, setConfPassword] = useState("");
@@ -50,66 +50,25 @@ const RegisterPage = (props) => {
             }).catch((error) => { console.log(error) })
     };
 
-    const getUsername = () => {
-        console.log("isi dbUsers", dbUsers);
-        let temp = [];
-        dbUsers.map((value, index) => {
-            temp.push(value.username)
-        })
-        setDbUsername(temp)
-        console.log("isi dbUsername", dbUsername);
-    }
-
-    const getEmail = () => {
-        console.log("isi dbUsers", dbUsers);
-        let temp = [];
-        dbUsers.map((value, index) => {
-            temp.push(value.email)
-        })
-        setDbEmail([...temp])
-    }
+    // const getUsername = () => {
+    //     console.log("isi dbUsers", dbUsers);
+    //     let temp = [];
+    //     dbUsers.map((value, index) => {
+    //         temp.push(value.username)
+    //     })
+    //     setDbUsername(temp)
+    //     console.log("isi dbUsername", dbUsername);
+    // }
+    // const getEmail = () => {
+    //     console.log("isi dbUsers", dbUsers);
+    //     let temp = [];
+    //     dbUsers.map((value, index) => {
+    //         temp.push(value.email)
+    //     })
+    //     setDbEmail([...temp])
+    // }
 
     /////// REGISTRATION FUNCTIONS AND ITS SUPPORTING FUNCTIONS ///////
-    const randomPassword = () => {
-        if (username == "" || email == "" || password == "" || confPassword == "") {
-            console.log("Fill in all form")
-            setOpenToast(!openToast)
-            setToastMsg("Fill in all form")
-        } else {
-            if (password.length < 8) {
-                // console.log("Password should contain at least 8 characters")
-                setOpenToast(!openToast)
-                setToastMsg("Password should contain at least 8 characters")
-            } else if (passStrength == "❌ Contain lowercase letter") {
-                // console.log("Password cannot contain lowercase letter")
-                setOpenToast(!openToast)
-                setToastMsg("Password cannot contain lowercase letter")
-            } else if (password != confPassword) {
-                // console.log("Password not match")
-                setOpenToast(!openToast)
-                setToastMsg("Password not match")
-            } else if (dbUsers.find(val => val.username == username)) {
-                // console.log("Username already used")
-                setOpenToast(!openToast)
-                setToastMsg("Username already used")
-                setUsedUsername("❌ Used Username")
-            } else if (dbUsers.find(val => val.email == email)) {
-                // console.log("Email already used")
-                setOpenToast(!openToast)
-                setToastMsg("Email already used")
-                setEmailValidity("❌ Used Email")
-            } else if (emailValidity == "✅ Valid Email") {
-
-                alert("Registrasi berhasil")
-
-            } else {
-                // console.log("❌ Invalid Email")
-                setOpenToast(!openToast)
-                setToastMsg("❌ Invalid Email")
-            }
-        }
-    }
-
     const handlePassword = (value) => {
         // console.log(value)
         setPassword(value)
@@ -193,22 +152,23 @@ const RegisterPage = (props) => {
 
                     alert("Registrasi berhasil")
 
-                    // let res = await Axios.post(`${API_URL}/users`, {
-                    //     email,
-                    //     username,
-                    //     password,
-                    //     status: "unverified",
-                    //     role: "user",
-                    //     fullname: "",
-                    //     bio: "",
-                    //     profilePicture: "",
-                    //     likes: []
-                    // })
+                    let res = await Axios.post(`${API_URL}/users`, {
+                        email,
+                        username,
+                        password,
+                        status: "unverified",
+                        role: "user",
+                        fullname: "",
+                        bio: "",
+                        profilePicture: "",
+                        likes: []
+                    })
 
-                    // console.log("data yg teregister", res.data)
+                    console.log("data yg teregister", res.data)
 
-                    // dispatch(loginAction(res.data))
-                    // navigate("/")
+                    localStorage.setItem("tokenIdUser", res.data.id)
+                    dispatch(loginAction(res.data))
+                    navigate("/")
 
                 } else {
                     // console.log("❌ Invalid Email")
