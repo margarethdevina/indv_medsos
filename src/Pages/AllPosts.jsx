@@ -6,6 +6,7 @@ import { API_URL } from "../helper";
 const AllPostsPage = (props) => {
 
     const [dbPosts, setDbPosts] = useState([]);
+    const [displayLikes, setDisplayLikes] = useState("_card_cardsub_likes")
 
     useEffect(() => {
         getPosts()
@@ -20,10 +21,11 @@ const AllPostsPage = (props) => {
     };
 
     return (
-        <div className="container pt-3 pb-3 px-5">
+        <div className="container pt-3 pb-3 px-md-5">
 
             <CardsInAllPosts
                 data={dbPosts}
+                displayLikes = {displayLikes}
             />
 
         </div>

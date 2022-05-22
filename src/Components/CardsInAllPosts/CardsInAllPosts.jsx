@@ -36,9 +36,12 @@ const CardsInAllPosts = (props) => {
                         >
                             <p
                                 className="_card_cardsub_date"
-                            >{value.uploadDate}</p>
+                            >
+                                {value.uploadDate}
+                            </p>
                             <p
-                                className="_card_cardsub_likes"
+                                className={props.displayLikes}
+                                // className="_card_cardsub_likes"
                             >
                                 <FavIcon
                                     className="_card_icon"

@@ -27,8 +27,8 @@ const RegisterPage = (props) => {
     const [confPassword, setConfPassword] = useState("");
     const [passStrength, setPassStrength] = useState("");
 
-    const [openToast, setOpenToast] = React.useState(false);
-    const [toastMsg, setToastMsg] = React.useState("");
+    const [openToast, setOpenToast] = useState(false);
+    const [toastMsg, setToastMsg] = useState("");
 
     /////// REGEX FUNCTIONS ///////
     const strongRegexPassword = new RegExp("^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})")

@@ -25,6 +25,11 @@ const NavbarComponent = (props) => {
         }
     })
 
+    const handleLogout = () => {
+        dispatch(logoutAction())
+        navigate("/")
+    }
+
     return (
         <div
             style={{
@@ -117,7 +122,7 @@ const NavbarComponent = (props) => {
                                                 <DropdownItem onClick={() => navigate("/userprofile")}>
                                                     Your Profile
                                                 </DropdownItem>
-                                                <DropdownItem onClick={() => dispatch(logoutAction())}>
+                                                <DropdownItem onClick={handleLogout}>
                                                     Logout
                                                 </DropdownItem>
                                             </DropdownMenu>
@@ -139,7 +144,7 @@ const NavbarComponent = (props) => {
                                             <br />
 
                                             <span className="app_navbar_list_item_link"
-                                                onClick={() => dispatch(logoutAction())}
+                                                onClick={handleLogout}
                                             >
                                                 Logout
                                             </span>

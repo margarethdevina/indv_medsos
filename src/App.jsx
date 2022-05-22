@@ -26,39 +26,40 @@ function App() {
 
   const getPosts = () => {
     Axios.get(`${API_URL}/posts`)
-    .then((response) => {
-      console.log("data posts terambil smua?", response.data)
-      dispatch(getPostsAction(response.data))
-    }).catch((error) => {
-      console.log(error)
-    })
+      .then((response) => {
+        console.log("data posts terambil smua?", response.data)
+        dispatch(getPostsAction(response.data))
+      }).catch((error) => {
+        console.log(error)
+      })
   }
-  
+
   const keepLogin = () => {
     let token = localStorage.getItem("tokenIdUser")
     if (token) {
       Axios.get(`${API_URL}/users?id=${token}`)
-      .then((res) => {
-        localStorage.setItem("tokenIdUser", res.data[0].id)
-        dispatch(loginAction(res.data[0]));
-      }).catch((error) => {
-        console.log(error);
-      })
+        .then((res) => {
+          localStorage.setItem("tokenIdUser", res.data[0].id)
+          dispatch(loginAction(res.data[0]));
+        }).catch((error) => {
+          console.log(error);
+        })
     }
   }
-  
+
   useEffect(() => {
     getPosts();
     keepLogin();
   }, [])
-  
-  const { status } = useSelector((state) => {
+
+  const { username, status } = useSelector((state) => {
     return {
+      username: state.usersReducer.username,
       status: state.usersReducer.status
     }
   })
-  
-  console.log("status user yg login",status)
+
+  console.log("status user yg login", status)
 
   return (
     <div className="App">
@@ -68,13 +69,26 @@ function App() {
       <Routes>
 
         <Route path='/' element={<LandingPage />} />
-        <Route path='/yourposts' element={<YourPostsPage />} />
-        <Route path='/yourlikes' element={<YourLikesPage />} />
-        <Route path='/allposts' element={<AllPostsPage />} />
-        <Route path='/uploadpost' element={<UploadPostPage />} />
-        <Route path='/postdetail' element={<PostDetailPage />} />
-        <Route path='/register' element={<RegisterPage />} />
-        <Route path='/userprofile' element={<UserProfilePage />} />
+        {
+          username
+          ?
+            status === "unverified"
+              ?
+              <>
+                <Route path='/userprofile' element={<UserProfilePage />} />
+              </>
+              :
+              <>
+                <Route path='/yourposts' element={<YourPostsPage />} />
+                <Route path='/userprofile' element={<UserProfilePage />} />
+                <Route path='/yourlikes' element={<YourLikesPage />} />
+                <Route path='/allposts' element={<AllPostsPage />} />
+                <Route path='/uploadpost' element={<UploadPostPage />} />
+                <Route path='/postdetail' element={<PostDetailPage />} />
+              </>
+          :
+          <Route path='/register' element={<RegisterPage />} />
+        }
         <Route path='*' element={<NotFoundPage />} />
 
       </Routes>

@@ -54,7 +54,7 @@ const UserProfilePage = (props) => {
         if (selectedEdit == 0) {
             return (
                 <Card
-                    className="px-1 py-3"
+                    className="px-1 py-3 border-2 shadow-lg"
                 >
                     <div className="container">
                         {
@@ -125,7 +125,7 @@ const UserProfilePage = (props) => {
                                         />
                                     </span>
                                     <span
-                                        style={{ fontWeight: "bold" }}
+                                        style={{ fontWeight: "normal" }}
                                     >
                                         Verified
                                     </span>
@@ -139,7 +139,7 @@ const UserProfilePage = (props) => {
                                         />
                                     </span>
                                     <span
-                                        style={{ fontWeight: "bold" }}
+                                        style={{ fontWeight: "normal" }}
                                     >
                                         Unverified
                                     </span>
@@ -151,7 +151,7 @@ const UserProfilePage = (props) => {
         } else {
             return (
                 <Card
-                    className="px-1 py-3"
+                    className="px-1 py-3 border-2 shadow-lg"
                 >
                     <div className="container">
                         <Input
@@ -210,7 +210,7 @@ const UserProfilePage = (props) => {
                                         />
                                     </span>
                                     <span
-                                        style={{ fontWeight: "bold" }}
+                                        style={{ fontWeight: "normal" }}
                                     >
                                         Verified
                                     </span>
@@ -224,7 +224,7 @@ const UserProfilePage = (props) => {
                                         />
                                     </span>
                                     <span
-                                        style={{ fontWeight: "bold" }}
+                                        style={{ fontWeight: "normal" }}
                                     >
                                         Unverified
                                     </span>
@@ -283,7 +283,7 @@ const UserProfilePage = (props) => {
 
     return (
         <div
-            className="row container mx-auto"
+            className="row container mx-auto py-3"
         >
             <div
                 className="col-12 col-md-6 order-md-1"
@@ -299,49 +299,48 @@ const UserProfilePage = (props) => {
                 >
                     <CardBody>
                         {
-                            selectedEdit == 0
-                                ?
-                                <>
-                                    <Button
-                                        className="col-12 mb-2"
-                                        onClick={handleEdit}
-                                        color="warning"
-                                    >
-                                        Edit Profile
-                                    </Button>
-                                </>
-                                :
-                                <>
-                                    <Button
-                                        className="col-12 mb-2"
-                                        onClick={handleSave}
-                                        color="success"
-                                    >
-                                        Save
-                                    </Button>
-                                    <Button
-                                        className="col-12 mb-2"
-                                        onClick={handleCancel}
-                                    >
-                                        Cancel
-                                    </Button>
-                                </>
-                        }
-
-                        {
-                            status == "unverified" &&
+                            status == "unverified"
+                            ?
                             <>
                                 <Button
                                     className="col-12"
-                                >
-                                    Verify you Account
+                                    >
+                                    Verify your Account
                                 </Button>
                             </>
+                            :
+                                selectedEdit == 0
+                                    ?
+                                    <>
+                                        <Button
+                                            className="col-12 mb-2"
+                                            onClick={handleEdit}
+                                            color="warning"
+                                        >
+                                            Edit Profile
+                                        </Button>
+                                    </>
+                                    :
+                                    <>
+                                        <Button
+                                            className="col-12 mb-2"
+                                            onClick={handleSave}
+                                            color="success"
+                                        >
+                                            Save
+                                        </Button>
+                                        <Button
+                                            className="col-12 mb-2"
+                                            onClick={handleCancel}
+                                        >
+                                            Cancel
+                                        </Button>
+                                    </>
                         }
                     </CardBody>
                 </Card>
                 <Card
-                    className="d-none d-md-flex"
+                    className="d-none d-md-flex border-2 shadow-lg"
                 >
                     <CardBody>
                         <div

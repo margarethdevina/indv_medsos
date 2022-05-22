@@ -19,9 +19,11 @@ const YourPostsPage = (props) => {
     console.log("data state yg masuk page yourPosts", username, posts)
 
     const printYourPosts = () => {
-        let temp = []
-        temp = posts.filter(val => val.username == username)
-        console.log("isi temp", temp)
+        if (username){
+            let temp = []
+            temp = posts.filter(val => val.username == username)
+            console.log("isi temp", temp)
+        }
     }
 
     return (

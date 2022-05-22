@@ -83,3 +83,32 @@ https://www.ixpaper.com/wp-content/uploads/2021/06/violet-evergarden-wallpaper-i
     - setValid sudah pakai settimeout supaya cek exist nya tapi tetap hasilnya valid
 
 12. bgm supaya toast tidak tertindih input form
+
+13. image yg masuk sebagai file itu saat masuk disimpan sebagai objek kah? kalau pakai event.target.file[0], yang dihasilkan di console log berupa objek.
+
+14. pas masuk satu page, supaya view langsung dimulai dari awal page bgm ya?
+
+15. Input text supaya value ke set "" secara paksa gimana caranya ya? pakai setState("") belum bisa.
+
+16. 
+
+{
+      "id": 6,
+      "username": "doremi",
+      "media": "https://a-static.besthdwallpaper.com/city-anime-scenery-wallpaper-2048x1152-80806_49.jpg",
+      "caption": "prame",
+      "uploadDate": "2022/04/02",
+      "editedDate": "",
+      "numberOfLikes": 4,
+      "comments": []
+    },
+    {
+      "id": 7,
+      "username": "doremi",
+      "media": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZunfpRDwqNntPKEAxmpY7t_FM3jaS94eQ9g&usqp=CAU",
+      "caption": "greenz",
+      "uploadDate": "2022/04/03",
+      "editedDate": "",
+      "numberOfLikes": 10,
+      "comments": []
+    }
