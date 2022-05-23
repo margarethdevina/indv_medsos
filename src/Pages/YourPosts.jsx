@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Axios from 'axios';
+import { API_URL } from "../helper";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { Nav, NavItem, NavLink } from "reactstrap";
@@ -9,22 +11,25 @@ const YourPostsPage = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { username, posts } = useSelector((state) => {
+    const [dbPosts, setDbPosts] = useState([]);
+
+    useEffect(() => {
+        getPosts()
+    }, []);
+
+    const getPosts = () => {
+        Axios.get(`${API_URL}/posts`)
+            .then((response) => {
+                console.log("isi dbPosts", response.data)
+                setDbPosts(response.data)
+            }).catch((error) => { console.log(error) })
+    };
+
+    const { username } = useSelector((state) => {
         return {
             username: state.usersReducer.username,
-            posts: state.postsReducer.posts
         }
     })
-
-    console.log("data state yg masuk page yourPosts", username, posts)
-
-    const printYourPosts = () => {
-        if (username){
-            let temp = []
-            temp = posts.filter(val => val.username == username)
-            console.log("isi temp", temp)
-        }
-    }
 
     return (
         <div
@@ -49,9 +54,8 @@ const YourPostsPage = (props) => {
                 </NavItem>
             </Nav>
 
-            {printYourPosts()}
             <CardsInYourPosts 
-            data = {posts.filter(val => val.username == username)}
+            data = {dbPosts.filter(val => val.username == username)}
             />
         </div>
     )

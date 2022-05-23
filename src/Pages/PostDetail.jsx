@@ -33,6 +33,9 @@ const PostDetailPage = (props) => {
         }
     })
 
+    const currentDate = new Date();
+    const latestDate = `${currentDate.getFullYear()}/${(currentDate.getMonth() + 1) < 10 ? `0${(currentDate.getMonth() + 1)}` : `${(currentDate.getMonth() + 1)}`}/${currentDate.getDate()}`
+
     useEffect(() => {
         getDetail()
     }, []);
@@ -88,7 +91,8 @@ const PostDetailPage = (props) => {
         console.log("yang ingin disave", inputCaption)
 
         Axios.patch(`${API_URL}/posts/${detail.id}`, {
-            caption: inputCaption
+            caption: inputCaption,
+            editedDate: latestDate
         }).then((res) => {
             console.log("isi res.data pas klik save", res.data)
             getDetail()
@@ -111,7 +115,7 @@ const PostDetailPage = (props) => {
             }).catch((err) => {
                 console.log(err)
             })
-            navigate("/yourposts")
+        navigate("/yourposts")
     }
 
     const getPosts = () => {
@@ -122,6 +126,36 @@ const PostDetailPage = (props) => {
             }).catch((error) => {
                 console.log(error)
             })
+    }
+
+    const handleComment = (value) => {
+        // console.log("hasil input comment", value)
+        setInputComment(value)
+    }
+
+    const handlePost = () => {
+        // console.log("isi komen2 awal",detail.comments)
+
+        detail.comments.push({
+            id: detail.comments[detail.comments.length - 1].id + 1,
+            username,
+            commentDate: latestDate,
+            editedDate: "",
+            comment: inputComment
+        })
+
+        console.log("isi detail comment setelah post", detail.comments)
+
+        Axios.patch(`${API_URL}/posts/${detail.id}`, {
+            comments: detail.comments
+        }).then((res) => {
+            console.log("isi res.data pas klik handlePost", res.data)
+            getDetail()
+            setInputComment("")
+        }).catch((err) => {
+            console.log(err)
+        })
+
     }
 
 
@@ -259,7 +293,6 @@ const PostDetailPage = (props) => {
                                     fill="#351c75"
                                     width="22px"
                                     height="22px"
-                                // style={{ cursor: "pointer" }}
                                 />
                             </DropdownToggle>
                             <DropdownMenu>
@@ -285,6 +318,7 @@ const PostDetailPage = (props) => {
                     detail.id &&
                     <CardsForComments
                         detail={detail}
+                        loginUsername={username}
                     />
                 }
 
@@ -294,15 +328,24 @@ const PostDetailPage = (props) => {
                     className="row mx-auto"
                 >
                     <Input
-                        className="col-12 col-md-10 w-75 mb-2"
+                        className="col-12 col-md-10 w-75 mb-0 order-md-1"
                         type="text"
-                        placeholder="share your thought..."
+                        placeholder="Share your thought..."
                         bsSize="md"
                         style={{ height: "2.5rem" }}
+                        maxLength={300}
+                        value={inputComment}
+                        onChange={(e) => handleComment(e.target.value)}
                     />
-
+                    <span
+                        className="text-start mt-0 mb-1 mb-md-0 order-md-3"
+                        style={{ fontWeight: "normal", fontSize: "9px" }}
+                    >
+                        Limited to 300 characters
+                    </span>
                     <Button
-                        className="col-12 col-md-2 text-center _detail_button"
+                        className="col-12 col-md-2 text-center _detail_button order-md-2"
+                        onClick={handlePost}
                     >
                         Post
                     </Button>

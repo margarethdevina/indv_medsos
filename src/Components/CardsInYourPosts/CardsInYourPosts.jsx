@@ -35,10 +35,10 @@ const CardsInYourPosts = (props) => {
                             <p
                                 className="_card_cardsub_likes"
                             >
-                                <FavIcon
+                                {/* <FavIcon
                                     className="_card_icon"
-                                />
-                                {value.numberOfLikes}
+                                /> */}
+                                Liked by {value.numberOfLikes} people
                             </p>
                         </CardSubtitle>
                     </Card>

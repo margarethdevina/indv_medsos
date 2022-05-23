@@ -213,7 +213,7 @@ const RegisterPage = (props) => {
 
             <Toast
                 isOpen={openToast}
-                style={{ position: "fixed", right: "10px", backgroundColor: "#efffe9" }}
+                style={{ position: "fixed", right: "10px", backgroundColor: "#efffe9", zIndex: "999"}}
             >
                 <ToastHeader
                     icon="warning"

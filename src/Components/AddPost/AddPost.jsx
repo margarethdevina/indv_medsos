@@ -64,9 +64,8 @@ const AddPostComponent = (props) => {
                 console.log("post yg terupload", res.data);
                 dispatch(getPostsAction(res.data));
                 getPosts();
-                setNewPost({ ...newPost, media: "" })
-                setNewPost({ ...newPost, caption: "" })
-                // navigate("/")
+                setNewPost({ ...newPost, media: "", caption: "" })
+                navigate("/yourposts")
             }
         } catch (error) {
             console.log(error)
@@ -97,7 +96,7 @@ const AddPostComponent = (props) => {
                         <Col sm={8}>
                             <Input
                                 id="inputImage"
-                                defaultValue={newPost.media}
+                                value={newPost.media}
                                 placeholder="Insert a media / image"
                                 type="text"
                                 onChange={(e) => handleImage(e.target.value)}

@@ -78,19 +78,39 @@ https://www.ixpaper.com/wp-content/uploads/2021/06/violet-evergarden-wallpaper-i
 
 ==========
 
-11. cara live check email dan username sudah exist?
+11. (REGISTER) cara live check email dan username sudah exist?
     - saat onchange sudah coba compare tapi hasilnya dibilang valid terus
     - setValid sudah pakai settimeout supaya cek exist nya tapi tetap hasilnya valid
+    ==> gpp pas klik tombol aja
 
-12. bgm supaya toast tidak tertindih input form
+12. (REGISTER) bgm supaya toast tidak tertindih input form?
+zIndex untuk atur kedalaman layer, value 999 berarti paling atas
 
-13. image yg masuk sebagai file itu saat masuk disimpan sebagai objek kah? kalau pakai event.target.file[0], yang dihasilkan di console log berupa objek.
+13. (ADD POST) image yg masuk sebagai file itu saat masuk disimpan sebagai objek kah? kalau pakai event.target.file[0], yang dihasilkan di console log berupa objek.
+==> nanti tidak pakai event.target.file[0] karena bisa langsung upload sebagai objek
 
-14. pas masuk satu page, supaya view langsung dimulai dari awal page bgm ya?
+14. (ALL POST, YOUR POST, POST DETAIL) pas masuk satu page, supaya view langsung dimulai dari awal page bgm ya?
+==> ini krn console.log lagi aktif
 
-15. Input text supaya value ke set "" secara paksa gimana caranya ya? pakai setState("") belum bisa.
+15. (ADD POST) Input text supaya value ke set "" secara paksa gimana caranya ya? pakai setState("") belum bisa.
+==> setNewPost media dan caption digabung jangan dipisah karena jadinya cuma salah satu yang aktif
 
-16. 
+16. (ADD POST, YOUR POST, NAVIGATION) sebaiknya pk useselector atau get post ulang lagi ka? krn saat tambah posting baru dan dispatch ke reducer, pas di navigate ke your post langsung akan error krn fungsi filter ke post array dianggap bukan fungsi, seolah2 filter di apply ke tipe data lain.
+==> karena filtering your post cuma dipakai di satu page saja, bisa gunakan state.
+state bisa dipakai kalau data cuma dipakai di 1 atau 2 page saja.
+kalau di berbagai page bisa gunakan reducer.
+
+17. (POST DETAIL) ada cara untuk w-75 w-50 bisa dilimit per breakpoint ga ya? dicoba w-md-75 ga bisa
+==> diatur di @media nya
+
+18. (DB) comment date sebaiknya dipecah jd 2 ga ya? ada created date dan edited date
+==> sebaiknya dipecah ada 2, ada comment date dan ada edited date sendiri
+
+
+
+
+
+
 
 {
       "id": 6,
