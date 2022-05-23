@@ -8,6 +8,7 @@ const AllPostsPage = (props) => {
 
     const [dbPosts, setDbPosts] = useState([]);
     const [displayLikes, setDisplayLikes] = useState("_card_cardsub_likes")
+    const [fromUrLikes, setFromUrLikes] = useState(0)
 
     const { likes } = useSelector((state) => {
         return {
@@ -57,8 +58,9 @@ const AllPostsPage = (props) => {
             <CardsInAllPosts
                 // data={dbPosts}
                 data={likedPosts()}
-                // unlikedPosts={unlikedPosts()}
+                unlikedPosts={unlikedPosts()}
                 displayLikes={displayLikes}
+                fromUrLikes={fromUrLikes}
             />
 
         </div>

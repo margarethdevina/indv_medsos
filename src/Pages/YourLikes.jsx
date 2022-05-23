@@ -19,6 +19,8 @@ const YourLikesPage = (props) => {
 
     const [displayLikes, setDisplayLikes] = useState("d-none _card_cardsub_likes")
 
+    const [fromUrLikes, setFromUrLikes] = useState(1)
+
     console.log("data state yg masuk page yourLikes", username, likes, posts)
 
     const getYourLikes = () => {
@@ -59,7 +61,8 @@ const YourLikesPage = (props) => {
 
             <CardsInAllPosts
                 data={getYourLikes()}
-                displayLikes = {displayLikes}
+                displayLikes={displayLikes}
+                fromUrLikes={fromUrLikes}
             />
 
         </div>
