@@ -49,43 +49,6 @@ const PostDetailPage = (props) => {
             .catch((error) => { console.log(error) })
     };
 
-    const printComments = () => {
-        if (detail.id) {
-            let { comments } = detail
-            //     let dbComments = detail.comments
-            console.log("isi comments", comments)
-            return comments.map((value, index) => {
-                return (
-                    <div
-                        className="d-flex"
-                        key={value.id}
-                    >
-                        <div>
-                            <span>
-                                {value.username}
-                            </span>
-                            <span>
-                                {value.comment}
-                            </span>
-                        </div>
-                        <div>
-                            <span
-                                className="text-muted"
-                            >
-                                {value.commentDate}
-                            </span>
-                        </div>
-                    </div >
-                )
-            })
-        }
-    }
-
-    const handleCaption = (value) => {
-        // console.log("isi handleCaption", value)
-        setInputCaption(value)
-    }
-
     const handleSave = () => {
         setSelectedEdit(0);
         console.log("yang ingin disave", inputCaption)
@@ -126,11 +89,6 @@ const PostDetailPage = (props) => {
             }).catch((error) => {
                 console.log(error)
             })
-    }
-
-    const handleComment = (value) => {
-        // console.log("hasil input comment", value)
-        setInputComment(value)
     }
 
     const handlePost = () => {
@@ -232,7 +190,7 @@ const PostDetailPage = (props) => {
                                 type="textarea"
                                 className="mb-2"
                                 placeholder={detail.caption}
-                                onChange={(e) => handleCaption(e.target.value)}
+                                onChange={(e) => setInputCaption(e.target.value)}
                             />
                             <div
                                 className="d-md-flex justify-content-end"
@@ -335,7 +293,7 @@ const PostDetailPage = (props) => {
                         style={{ height: "2.5rem" }}
                         maxLength={300}
                         value={inputComment}
-                        onChange={(e) => handleComment(e.target.value)}
+                        onChange={(e) => setInputComment(e.target.value)}
                     />
                     <span
                         className="text-start mt-0 mb-1 mb-md-0 order-md-3"

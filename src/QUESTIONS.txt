@@ -106,13 +106,14 @@ kalau di berbagai page bisa gunakan reducer.
 18. (DB) comment date sebaiknya dipecah jd 2 ga ya? ada created date dan edited date
 ==> sebaiknya dipecah ada 2, ada comment date dan ada edited date sendiri
 
+==========
+
+19. 
 
 
+==========
 
-
-
-
-{
+    {
       "id": 6,
       "username": "doremi",
       "media": "https://a-static.besthdwallpaper.com/city-anime-scenery-wallpaper-2048x1152-80806_49.jpg",
@@ -132,3 +133,4 @@ kalau di berbagai page bisa gunakan reducer.
       "numberOfLikes": 10,
       "comments": []
     }
+    

@@ -141,7 +141,7 @@ const CardsInAllPosts = (props) => {
             className="row"
         >
             {
-                likes.length > 0 && props.fromUrLikes == 0
+                likes.length >= 0 && props.fromUrLikes == 0
                     ?
                     printUnliked()
                     :
