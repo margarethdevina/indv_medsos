@@ -1,49 +1,104 @@
 import React, { useState, useEffect } from "react";
+import Axios from "axios";
 import './_CardsInAllPosts.scss';
 import { ReactComponent as FavIcon } from '../../Assets/IconRef/love-letter.svg';
 import { CardColumns, Card, CardImg, CardTitle, CardSubtitle } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
+import { API_URL } from "../../helper";
+import { getPostsAction } from "../../redux/actions/postsActions";
+import { loginAction, updateLikesAction } from "../../redux/actions/usersActions";
 
 const CardsInAllPosts = (props) => {
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [fillFave, setFillFave] = useState("#000000")
-    // "#e13b6e"
-
-    const { username, likes } = useSelector((state) => {
+    const { userid, likes, posts } = useSelector((state) => {
         return {
-            username: state.usersReducer.username,
-            likes: state.usersReducer.likes
+            userid: state.usersReducer.id,
+            likes: state.usersReducer.likes,
+            posts: state.postsReducer.posts
         }
     })
 
-    // const handleFill = () => {
-    //     if (likes.length > 0) {
-    //         for (let i = 0; i < props.data.length; i++) {
-    //             for (let j = 0; j < likes.length; j++) {
-    //                 if (props.data[i].id === likes[j]) {
-    //                     setFillFave("#e13b6e")
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+    const handleLike = (IdPost) => {
+        let tempLike = [...likes];
+        let tempPosts = [...posts];
+        if (!tempLike.includes(IdPost)) {
+            tempLike.push(IdPost);
+            let idxInPost = tempPosts.findIndex(val => val.id == IdPost);
+            console.log("index di post", idxInPost)
+            console.log("NOL di post itu saat ini", tempPosts[idxInPost].numberOfLikes)
+            let tempNoOfLikes = tempPosts[idxInPost].numberOfLikes;
+            tempNoOfLikes++;
+            console.log("number of likes nambah?", tempNoOfLikes)
+
+            //axios patch user likes
+            Axios.patch(`${API_URL}/users/${userid}`, {
+                likes: tempLike
+            }).then((res) => {
+                dispatch(updateLikesAction(res.data.likes))
+
+                //axios patch posts number of likes
+                updateNumberofLikes(IdPost, tempNoOfLikes)
+            }).catch((err) => {
+                console.log(err)
+            });
+
+        } else {
+            let idxInLikes = tempLike.indexOf(IdPost);
+            tempLike.splice(idxInLikes, 1);
+            let idxInPost = tempPosts.findIndex(val => val.id == IdPost);
+            let tempNoOfLikes = tempPosts[idxInPost].numberOfLikes;
+            tempNoOfLikes--;
+            console.log("number of likes berkurang?", tempNoOfLikes)
+
+            //axios patch user likes
+            Axios.patch(`${API_URL}/users/${userid}`, {
+                likes: tempLike
+            }).then((res) => {
+                dispatch(updateLikesAction(res.data.likes))
+
+                //axios patch posts number of likes
+                updateNumberofLikes(IdPost, tempNoOfLikes)
+            }).catch((err) => {
+                console.log(err)
+            });
+        }
+    }
+
+    const updateNumberofLikes = (Id, tempNoOfLikes) => {
+        Axios.patch(`${API_URL}/posts/${Id}`, {
+            numberOfLikes: tempNoOfLikes
+        }).then((res) => {
+            getPosts()
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
+    const getPosts = () => {
+        Axios.get(`${API_URL}/posts`)
+            .then((response) => {
+                dispatch(getPostsAction(response.data))
+                props.handleCallBack(response.data)
+            }).catch((error) => {
+                console.log(error)
+            })
+    }
 
     const printLiked = () => {
-
         return props.data.map((value, index) => {
-
             return (
                 <CardColumns
                     key={value.id}
                     className="col-12 col-md-6"
                 >
                     <Card
-                        onClick={() => navigate(`/postdetail?id=${value.id}`)}
                     >
                         <CardImg
+                            onClick={() => navigate(`/postdetail?id=${value.id}`)}
                             src={value.media}
                             alt={`${value.id}-${value.username}-media`}
                             // top
@@ -71,6 +126,7 @@ const CardsInAllPosts = (props) => {
                                 <FavIcon
                                     className="_card_icon_allPost"
                                     fill="#e13b6e"
+                                    onClick={() => handleLike(value.id)}
                                 />
                                 {value.numberOfLikes}
                             </p>
@@ -78,24 +134,20 @@ const CardsInAllPosts = (props) => {
                     </Card>
                 </CardColumns>
             )
-
         })
-
     }
 
     const printUnliked = () => {
-
         return props.unlikedPosts.map((value, index) => {
-
             return (
                 <CardColumns
                     key={value.id}
                     className="col-12 col-md-6"
                 >
                     <Card
-                        onClick={() => navigate(`/postdetail?id=${value.id}`)}
                     >
                         <CardImg
+                            onClick={() => navigate(`/postdetail?id=${value.id}`)}
                             src={value.media}
                             alt={`${value.id}-${value.username}-media`}
                             // top
@@ -122,7 +174,8 @@ const CardsInAllPosts = (props) => {
                             >
                                 <FavIcon
                                     className="_card_icon_allPost"
-                                    fill="#000000"
+                                    fill="#351c75"
+                                    onClick={() => handleLike(value.id)}
                                 />
                                 {value.numberOfLikes}
                             </p>
@@ -130,11 +183,8 @@ const CardsInAllPosts = (props) => {
                     </Card>
                 </CardColumns>
             )
-
         })
-
     }
-
 
     return (
         <div

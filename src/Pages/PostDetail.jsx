@@ -10,6 +10,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Input, Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalBody } from "reactstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { getPostsAction } from "../redux/actions/postsActions";
+import { updateLikesAction } from "../redux/actions/usersActions";
 
 const PostDetailPage = (props) => {
 
@@ -17,14 +18,15 @@ const PostDetailPage = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [detail, setDetail] = useState({});
-    const [favoriteFill, setFavoriteFill] = useState("#351c75");
+    // const [favoriteFill, setFavoriteFill] = useState("#351c75");
+    const [favoriteFill, setFavoriteFill] = useState("#e13b6e");
     const [dropOpen, setDropOpen] = useState(false);
     const [selectedEdit, setSelectedEdit] = useState(0);
     const [inputCaption, setInputCaption] = useState(detail.caption);
     const [inputComment, setInputComment] = useState("");
     const [openDelete, setOpenDelete] = useState(false)
 
-    const { userid, username, posts } = useSelector((state) => {
+    const { userid, username, likes, posts } = useSelector((state) => {
         return {
             userid: state.usersReducer.id,
             username: state.usersReducer.username,
@@ -38,9 +40,11 @@ const PostDetailPage = (props) => {
 
     useEffect(() => {
         getDetail()
+        favoriteFillTrigger()
     }, []);
 
     const getDetail = () => {
+        console.log("isi search", search)
         Axios.get(`${API_URL}/posts${search}`)
             .then((response) => {
                 console.log("isi detail", response.data[0])
@@ -48,6 +52,15 @@ const PostDetailPage = (props) => {
             })
             .catch((error) => { console.log(error) })
     };
+
+    const favoriteFillTrigger = () => {
+        let tempLike = [...likes];
+        let IdPost = parseInt(search.split("=")[1]);
+        if (!tempLike.includes(IdPost)) {
+            console.log("isi likes, isi search stlh split", tempLike, IdPost)
+            setFavoriteFill("#351c75")
+        }
+    }
 
     const handleSave = () => {
         setSelectedEdit(0);
@@ -81,6 +94,69 @@ const PostDetailPage = (props) => {
         navigate("/yourposts")
     }
 
+    const handleLike = () => {
+        let IdPost = parseInt(search.split("=")[1]);
+        let tempLike = [...likes];
+        let tempPosts = [...posts];
+        if (!tempLike.includes(IdPost)) {
+            tempLike.push(IdPost);
+            let idxInPost = tempPosts.findIndex(val => val.id == IdPost);
+            console.log("index di post", idxInPost)
+            console.log("NOL di post itu saat ini", tempPosts[idxInPost].numberOfLikes)
+            let tempNoOfLikes = tempPosts[idxInPost].numberOfLikes;
+            tempNoOfLikes++;
+            console.log("number of likes nambah?", tempNoOfLikes)
+
+            //axios patch user likes
+            Axios.patch(`${API_URL}/users/${userid}`, {
+                likes: tempLike
+            }).then((res) => {
+                dispatch(updateLikesAction(res.data.likes))
+
+                //axios patch posts number of likes
+                updateNumberofLikes(IdPost, tempNoOfLikes)
+
+                //set warna fill like iconnya
+                setFavoriteFill("#e13b6e")
+            }).catch((err) => {
+                console.log(err)
+            });
+
+        } else {
+            let idxInLikes = tempLike.indexOf(IdPost);
+            tempLike.splice(idxInLikes, 1);
+            let idxInPost = tempPosts.findIndex(val => val.id == IdPost);
+            let tempNoOfLikes = tempPosts[idxInPost].numberOfLikes;
+            tempNoOfLikes--;
+            console.log("number of likes berkurang?", tempNoOfLikes)
+
+            //axios patch user likes
+            Axios.patch(`${API_URL}/users/${userid}`, {
+                likes: tempLike
+            }).then((res) => {
+                dispatch(updateLikesAction(res.data.likes))
+
+                //axios patch posts number of likes
+                updateNumberofLikes(IdPost, tempNoOfLikes)
+
+                //set warna fill like iconnya
+                setFavoriteFill("#351c75")
+            }).catch((err) => {
+                console.log(err)
+            });
+        }
+    }
+
+    const updateNumberofLikes = (Id, tempNoOfLikes) => {
+        Axios.patch(`${API_URL}/posts/${Id}`, {
+            numberOfLikes: tempNoOfLikes
+        }).then((res) => {
+            getPosts()
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
     const getPosts = () => {
         Axios.get(`${API_URL}/posts`)
             .then((response) => {
@@ -94,13 +170,23 @@ const PostDetailPage = (props) => {
     const handlePost = () => {
         // console.log("isi komen2 awal",detail.comments)
 
-        detail.comments.push({
-            id: detail.comments[detail.comments.length - 1].id + 1,
-            username,
-            commentDate: latestDate,
-            editedDate: "",
-            comment: inputComment
-        })
+        if (detail.comments.length > 0) {
+            detail.comments.push({
+                id: detail.comments[detail.comments.length - 1].id + 1,
+                username,
+                commentDate: latestDate,
+                editedDate: "",
+                comment: inputComment
+            })
+        } else {
+            detail.comments.push({
+                id: 0,
+                username,
+                commentDate: latestDate,
+                editedDate: "",
+                comment: inputComment
+            })
+        }
 
         console.log("isi detail comment setelah post", detail.comments)
 
@@ -220,11 +306,13 @@ const PostDetailPage = (props) => {
                     className="_detail_font_content d-flex align-items-center"
                 >
                     <FavIcon
-                        fill="#e13b6e"
+                        // fill="#e13b6e"
+                        fill={favoriteFill}
                         width="22px"
                         height="22px"
                         className="me-3"
                         style={{ cursor: "pointer" }}
+                        onClick={handleLike}
                     />
 
                     <ShareIcon

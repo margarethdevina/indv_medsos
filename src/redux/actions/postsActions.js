@@ -6,10 +6,3 @@ export const getPostsAction = (data) => {
         payload: data
     }
 }
-
-// export const updateCaptionAction = (data) => {
-//     return {
-//         type: "UPDATE_CAPTION",
-//         payload: data
-//     }
-// }

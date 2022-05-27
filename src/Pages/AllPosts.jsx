@@ -20,6 +20,12 @@ const AllPostsPage = (props) => {
         getPosts()
     }, []);
 
+    const handleCallBack = (dataFromCards) => {
+        if(dataFromCards.length>0){
+            setDbPosts(dataFromCards)
+        }
+    }
+
     const getPosts = () => {
         Axios.get(`${API_URL}/posts`)
             .then((response) => {
@@ -61,6 +67,7 @@ const AllPostsPage = (props) => {
                 unlikedPosts={unlikedPosts()}
                 displayLikes={displayLikes}
                 fromUrLikes={fromUrLikes}
+                handleCallBack = {handleCallBack}
             />
 
         </div>
