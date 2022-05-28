@@ -108,7 +108,11 @@ kalau di berbagai page bisa gunakan reducer.
 
 ==========
 
-19. 
+19. di infinite scroll comment kalau commentnya kosong akan muncul loading terus, memang sebaiknya dibiarkan begitu kah?
+
+20. kalau komen yg muncul cuma 1, loading... akan muncul terus jg, begini gpp?
+
+21. 
 
 
 ==========

@@ -6,6 +6,7 @@ import { ReactComponent as BinIcon } from '../../Assets/IconRef/garbage.svg';
 import { CardColumns, Card, CardBody, Input, Button, Modal, ModalBody } from "reactstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { getPostsAction } from "../../redux/actions/postsActions";
+import { getCommentsAction } from "../../redux/actions/commentsActions";
 import { API_URL } from "../../helper";
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -33,17 +34,28 @@ const CardsForComments = (props) => {
             })
     }
 
+    // untuk dispatch comment ulang supaya reducer keupdate
+    const getComments = () => {
+        Axios.get(`${API_URL}/comments`)
+            .then((res) => {
+                dispatch(getCommentsAction(res.data))
+            }).catch((err) => {
+                console.log(err)
+            })
+    }
+
     const handleSave = () => {
         // untuk patch comment dan editedDate
         console.log("yg ingin disave", inputComment)
-        data[selectedIdx].comment = inputComment
-        data[selectedIdx].editedDate = latestDate
+        // data[selectedIdx].comment = inputComment
+        // data[selectedIdx].editedDate = latestDate
 
-        Axios.patch(`${API_URL}/posts/${props.detail.id}`, {
-            comments: data
+        Axios.patch(`${API_URL}/comments/${props.commentsArr.id}`, {
+            comment: inputComment,
+            editedDate: latestDate
         }).then((res) => {
             console.log("isi res.data pas klik save", res.data)
-            getPosts()
+            getComments()
             setInputComment("")
         }).catch((err) => {
             console.log(err)
@@ -59,15 +71,11 @@ const CardsForComments = (props) => {
     }
 
     const confirmDelete = () => {
-        //hapus dari props.detail.comments
-        data.splice(selectedIdx, 1)
+        //data.splice(selectedIdx, 1)
 
-        //patching comments krn klo axios.delete hapus data post satu id langsung
-        Axios.patch(`${API_URL}/posts/${props.detail.id}`, {
-            comments: data
-        }).then((res) => {
-            console.log("isi res.data pas klik handlePost", res.data)
-            getPosts()
+        Axios.delete(`${API_URL}/comments/${props.commentsArr.id}`).
+        then((res) => {
+            getComments()
             setSelectedIdx(null)
             setOpenDelete(!openDelete)
         }).catch((err) => {
@@ -184,7 +192,7 @@ const CardsForComments = (props) => {
     return (
         <div
             id="scrollableDiv"
-            style={{height: 150, overflow: "auto"}}
+            style={{ height: 150, overflow: "auto" }}
         >
             <Modal
                 isOpen={openDelete}

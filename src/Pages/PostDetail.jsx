@@ -38,7 +38,6 @@ const PostDetailPage = (props) => {
             username: state.usersReducer.username,
             likes: state.usersReducer.likes,
             posts: state.postsReducer.posts,
-            // comments: state.commentsReducer.comments
         }
     })
 
@@ -216,43 +215,43 @@ const PostDetailPage = (props) => {
     }
 
     const handlePost = () => {
-        console.log("isi komen2 awal tanpa filter postId", allComments)
+        // console.log("isi komen2 awal tanpa filter postId", allComments)
 
         if (allComments.length > 0) {
-            allComments.push({
+            Axios.post(`${API_URL}/comments`, {
                 postId: query,
                 id: allComments[allComments.length - 1].id + 1,
                 username,
                 commentDate: latestDate,
                 editedDate: "",
                 comment: inputComment
+            }).then((res) => {
+                console.log("isi res.data pas klik handlePost", res.data)
+                getCommentsForThisPost()
+                getAllComments()
+                setInputComment("")
+            }).catch((err) => {
+                console.log(err)
             })
+
         } else {
-            allComments.push({
+            Axios.post(`${API_URL}/comments`, {
                 postId: query,
                 id: 0,
                 username,
                 commentDate: latestDate,
                 editedDate: "",
                 comment: inputComment
+            }).then((res) => {
+                // console.log("isi res.data pas klik handlePost", res.data)
+                getCommentsForThisPost()
+                getAllComments()
+                setInputComment("")
+            }).catch((err) => {
+                console.log(err)
             })
         }
-
-        console.log("isi allComments setelah post", allComments)
-
-        Axios.put(`${API_URL}/comments`, {
-            allComments
-        }).then((res) => {
-            console.log("isi res.data pas klik handlePost", res.data)
-            getCommentsForThisPost()
-            getAllComments()
-            setInputComment("")
-        }).catch((err) => {
-            console.log(err)
-        })
-
     }
-
 
     return (
         <div
