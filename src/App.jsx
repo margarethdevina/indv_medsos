@@ -18,6 +18,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPostsAction } from './redux/actions/postsActions';
 import { loginAction } from './redux/actions/usersActions';
+import { getCommentsAction } from './redux/actions/commentsActions';
 
 
 function App() {
@@ -31,6 +32,15 @@ function App() {
         dispatch(getPostsAction(response.data))
       }).catch((error) => {
         console.log(error)
+      })
+  }
+
+  const getComments = () => {
+    Axios.get(`${API_URL}/comments`)
+      .then((res) => {
+        dispatch(getCommentsAction(res.data))
+      }).catch((err) => {
+        console.log(err)
       })
   }
 
@@ -50,6 +60,7 @@ function App() {
   useEffect(() => {
     getPosts();
     keepLogin();
+    getComments();
   }, [])
 
   const { username, status } = useSelector((state) => {
@@ -71,7 +82,7 @@ function App() {
         <Route path='/' element={<LandingPage />} />
         {
           username
-          ?
+            ?
             status === "unverified"
               ?
               <>
@@ -86,8 +97,8 @@ function App() {
                 <Route path='/uploadpost' element={<UploadPostPage />} />
                 <Route path='/postdetail' element={<PostDetailPage />} />
               </>
-          :
-          <Route path='/register' element={<RegisterPage />} />
+            :
+            <Route path='/register' element={<RegisterPage />} />
         }
         <Route path='*' element={<NotFoundPage />} />
 

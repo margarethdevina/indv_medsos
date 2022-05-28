@@ -1,5 +1,3 @@
-import Axios from "axios";
-import { API_URL } from '../../helper';
 
 export const loginAction = (data) => {
     console.log("DATA USERS DARI COMP UI", data)

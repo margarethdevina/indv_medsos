@@ -1,26 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import './_CardsForComments.scss';
 import { ReactComponent as EditIcon } from '../../Assets/IconRef/edit.svg';
 import { ReactComponent as BinIcon } from '../../Assets/IconRef/garbage.svg';
-import { CardColumns, Card, CardImg, CardBody, CardTitle, CardSubtitle, Input, Button, Modal, ModalBody } from "reactstrap";
+import { CardColumns, Card, CardBody, Input, Button, Modal, ModalBody } from "reactstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { getPostsAction } from "../../redux/actions/postsActions";
 import { API_URL } from "../../helper";
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const CardsForComments = (props) => {
 
     const dispatch = useDispatch();
 
-    let data = props.detail.comments
+    const [selectedIdx, setSelectedIdx] = useState(null);
+    const [openDelete, setOpenDelete] = useState(false);
 
-    const [selectedEdit, setSelectedEdit] = useState(0)
-    const [selectedIdx, setSelectedIdx] = useState(null)
-    const [openDelete, setOpenDelete] = useState(false)
-    const [inputComment, setInputComment] = useState(data.comment);
+    let data = props.commentsArr;
+
+    const [inputComment, setInputComment] = useState("");
 
     const currentDate = new Date();
-    const latestDate = `${currentDate.getFullYear()}/${(currentDate.getMonth() + 1) < 10 ? `0${(currentDate.getMonth() + 1)}` : `${(currentDate.getMonth() + 1)}`}/${currentDate.getDate()}`
+    const latestDate = `${currentDate.getFullYear()}/${(currentDate.getMonth() + 1) < 10 ? `0${(currentDate.getMonth() + 1)}` : `${(currentDate.getMonth() + 1)}`}/${currentDate.getDate()}`;
 
     // untuk dispatch post ulang supaya reducer keupdate
     const getPosts = () => {
@@ -80,101 +81,100 @@ const CardsForComments = (props) => {
     }
 
     const printCard = () => {
+
         return data.map((value, index) => {
             if (selectedIdx == index && openDelete == false) {
-                return (
-                    <CardColumns
-                        key={value.id}
-                        className="col-12"
+                return (<CardColumns
+                    key={value.id}
+                    className="col-12"
+                >
+                    <Card
+                        className="_card_border"
                     >
-                        <Card
-                            className="_card_border"
-                        >
-                            <CardBody>
-                                <span
-                                    className="_card_detail_username"
+                        <CardBody>
+                            <span
+                                className="_card_detail_username"
+                            >
+                                {value.username}
+                            </span>
+                            <Input
+                                type="text"
+                                className="mb-2"
+                                placeholder={value.comment}
+                                maxLength={300}
+                                onChange={(e) => setInputComment(e.target.value)}
+                            />
+                            <div
+                                className="d-md-flex justify-content-end"
+                            >
+                                <Button
+                                    className="col-12 col-md-2 mb-2 me-md-2"
+                                    size="sm"
+                                    color="success"
+                                    onClick={handleSave}
                                 >
-                                    {value.username}
-                                </span>
-                                <Input
-                                    type="text"
-                                    className="mb-2"
-                                    placeholder={value.comment}
-                                    maxLength={300}
-                                    onChange={(e) => setInputComment(e.target.value)}
-                                />
-                                <div
-                                    className="d-md-flex justify-content-end"
+                                    Save
+                                </Button>
+                                <Button
+                                    className="col-12 col-md-2 mb-2"
+                                    size="sm"
+                                    onClick={() => setSelectedIdx(null)}
                                 >
-                                    <Button
-                                        className="col-12 col-md-2 mb-2 me-md-2"
-                                        size="sm"
-                                        color="success"
-                                        onClick={handleSave}
-                                    >
-                                        Save
-                                    </Button>
-                                    <Button
-                                        className="col-12 col-md-2 mb-2"
-                                        size="sm"
-                                        onClick={() => setSelectedIdx(null)}
-                                    >
-                                        Cancel
-                                    </Button>
-                                </div>
-                            </CardBody>
-                        </Card>
-                    </CardColumns >
+                                    Cancel
+                                </Button>
+                            </div>
+                        </CardBody>
+                    </Card>
+                </CardColumns >
                 )
             } else {
-                return (
-                    <CardColumns
-                        key={value.id}
-                        className="col-12"
+                return (<CardColumns
+                    key={value.id}
+                    className="col-12"
+                >
+                    <Card
+                        className="_card_border"
                     >
-                        <Card
-                            className="_card_border"
-                        >
-                            <CardBody>
-                                <span
-                                    className="_card_detail_username"
-                                >
-                                    {value.username}
-                                </span>
-                                <span
-                                    className="_card_detail_comment"
-                                >
-                                    {value.comment}
-                                </span>
-                                <br />
-                                <span
-                                    className="_card_detail_date me-2"
-                                >
-                                    {value.commentDate}
-                                </span>
-                                {
-                                    value.username == props.loginUsername &&
-                                    <>
-                                        <EditIcon
-                                            className="me-2"
-                                            fill="#351c75"
-                                            width="10px"
-                                            height="10px"
-                                            style={{ cursor: "pointer" }}
-                                            onClick={() => setSelectedIdx(index)}
-                                        />
-                                        <BinIcon
-                                            fill="#351c75"
-                                            width="10px"
-                                            height="10px"
-                                            style={{ cursor: "pointer" }}
-                                            onClick={() => handleDelete(index)}
-                                        />
-                                    </>
-                                }
-                            </CardBody>
-                        </Card>
-                    </CardColumns >
+                        <CardBody>
+                            <span
+                                className="_card_detail_username"
+                            >
+                                {value.username}
+                            </span>
+                            <span
+                                className="_card_detail_comment"
+                            >
+                                {value.comment}
+                            </span>
+                            <br />
+                            <span
+                                className="_card_detail_date me-2"
+                            >
+                                {value.commentDate}
+                            </span>
+                            {
+                                value.username == props.loginUsername &&
+                                <>
+                                    <EditIcon
+                                        className="me-2"
+                                        fill="#351c75"
+                                        width="10px"
+                                        height="10px"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() => setSelectedIdx(index)}
+                                    />
+                                    <BinIcon
+                                        fill="#351c75"
+                                        width="10px"
+                                        height="10px"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() => handleDelete(index)}
+                                    />
+                                </>
+                            }
+                        </CardBody>
+                    </Card>
+                </CardColumns >
                 )
             }
         }
@@ -183,7 +183,8 @@ const CardsForComments = (props) => {
 
     return (
         <div
-            className="row"
+            id="scrollableDiv"
+            style={{height: 150, overflow: "auto"}}
         >
             <Modal
                 isOpen={openDelete}
@@ -217,7 +218,26 @@ const CardsForComments = (props) => {
                     </div>
                 </ModalBody>
             </Modal>
-            {printCard()}
+            <InfiniteScroll
+                dataLength={data.length}
+                next={props.fetchData}
+                hasMore={props.hasMore}
+                loader={<p
+                    style={{ textAlign: "center" }}
+                    className="lighter fs-6"
+                >Loading...</p>}
+                endMessage={<p
+                    style={{ textAlign: "center" }}
+                    className="lighter fs-6"
+                >End of Comments...</p>}
+                scrollableTarget="scrollableDiv"
+            >
+                <div
+                    className="row"
+                >
+                    {printCard()}
+                </div>
+            </InfiniteScroll>
 
         </div>
     )

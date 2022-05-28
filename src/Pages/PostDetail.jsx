@@ -11,27 +11,33 @@ import { Input, Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Mo
 import { useDispatch, useSelector } from 'react-redux';
 import { getPostsAction } from "../redux/actions/postsActions";
 import { updateLikesAction } from "../redux/actions/usersActions";
+import { getCommentsAction } from "../redux/actions/commentsActions";
 
 const PostDetailPage = (props) => {
 
     const { state, search } = useLocation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const [detail, setDetail] = useState({});
-    // const [favoriteFill, setFavoriteFill] = useState("#351c75");
     const [favoriteFill, setFavoriteFill] = useState("#e13b6e");
     const [dropOpen, setDropOpen] = useState(false);
     const [selectedEdit, setSelectedEdit] = useState(0);
     const [inputCaption, setInputCaption] = useState(detail.caption);
     const [inputComment, setInputComment] = useState("");
-    const [openDelete, setOpenDelete] = useState(false)
+    const [openDelete, setOpenDelete] = useState(false);
+    const [query, setQuery] = useState(search.split("=")[1]);
+    const [commentsArr, setCommentsArr] = useState([]);
+    const [hasMore, setHasMore] = useState(true);
+    const [pageNumber, setPageNumber] = useState(2);
 
-    const { userid, username, likes, posts } = useSelector((state) => {
+    const { userid, username, likes, posts, comments } = useSelector((state) => {
         return {
             userid: state.usersReducer.id,
             username: state.usersReducer.username,
             likes: state.usersReducer.likes,
             posts: state.postsReducer.posts,
+            // comments: state.commentsReducer.comments
         }
     })
 
@@ -41,14 +47,45 @@ const PostDetailPage = (props) => {
     useEffect(() => {
         getDetail()
         favoriteFillTrigger()
+        getCommentsForThisPost()
     }, []);
+
+    const getCommentsForThisPost = async () => {
+        const res = await fetch(`${API_URL}/comments?postId=${query}&_page=1&_limit=3`);
+
+        const data = await res.json();
+        setCommentsArr(data);
+    }
+
+    console.log("isi commentsArr", commentsArr)
+
+    const fetchComments = async () => {
+        const res = await fetch(`${API_URL}/comments?postId=${query}&_page=${pageNumber}&_limit=3`);
+
+        const data = await res.json();
+        return data;
+    }
+
+    const fetchData = async () => {
+        const commentsFromServer = await fetchComments();
+
+        setCommentsArr([...commentsArr, ...commentsFromServer]);
+
+        if (commentsFromServer.length === 0 || commentsFromServer.length < 3) {
+            setHasMore(false);
+        }
+
+        let temp = pageNumber;
+        temp++;
+        setPageNumber(temp);
+    }
 
     const getDetail = () => {
         console.log("isi search", search)
         Axios.get(`${API_URL}/posts${search}`)
             .then((response) => {
-                console.log("isi detail", response.data[0])
-                setDetail(response.data[0])
+                console.log("isi detail", response.data[0]);
+                setDetail(response.data[0]);
             })
             .catch((error) => { console.log(error) })
     };
@@ -306,7 +343,6 @@ const PostDetailPage = (props) => {
                     className="_detail_font_content d-flex align-items-center"
                 >
                     <FavIcon
-                        // fill="#e13b6e"
                         fill={favoriteFill}
                         width="22px"
                         height="22px"
@@ -365,6 +401,13 @@ const PostDetailPage = (props) => {
                     <CardsForComments
                         detail={detail}
                         loginUsername={username}
+
+                        // query={query}
+                        // pageNumber={pageNumber}
+
+                        commentsArr={commentsArr}
+                        fetchData={fetchData}
+                        hasMore={hasMore}
                     />
                 }
 
