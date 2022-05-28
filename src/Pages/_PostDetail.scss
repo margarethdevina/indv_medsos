@@ -24,10 +24,12 @@
 
     &_button{
         background-color: $basic-color-darkpurple;
-        // width: fit-content;
-        height: 2.5rem
+        height: 2.5rem;
+        
+        @media (min-width: 768px){
+            width: fit-content;
+        }
     }
-
 }
 
 ._profile{
@@ -35,5 +37,13 @@
         border-radius: 100%;
         width: 20px;
         height: 20px;
+    }
+}
+
+._comment{
+    width: 75%;
+
+    @media (max-width: 768px){
+        width: 100%;
     }
 }

@@ -20,6 +20,7 @@ const PostDetailPage = (props) => {
     const navigate = useNavigate();
 
     const [detail, setDetail] = useState({});
+    const [allComments, setAllComments] = useState([]);
     const [favoriteFill, setFavoriteFill] = useState("#e13b6e");
     const [dropOpen, setDropOpen] = useState(false);
     const [selectedEdit, setSelectedEdit] = useState(0);
@@ -48,7 +49,17 @@ const PostDetailPage = (props) => {
         getDetail()
         favoriteFillTrigger()
         getCommentsForThisPost()
+        getAllComments()
     }, []);
+
+    const getAllComments = () => {
+        Axios.get(`${API_URL}/comments`)
+            .then((res) => {
+                setAllComments(res.data)
+            }).catch((err) => {
+                console.log(err)
+            })
+    }
 
     const getCommentsForThisPost = async () => {
         const res = await fetch(`${API_URL}/comments?postId=${query}&_page=1&_limit=3`);
@@ -57,7 +68,7 @@ const PostDetailPage = (props) => {
         setCommentsArr(data);
     }
 
-    console.log("isi commentsArr", commentsArr)
+    // console.log("isi commentsArr", commentsArr)
 
     const fetchComments = async () => {
         const res = await fetch(`${API_URL}/comments?postId=${query}&_page=${pageNumber}&_limit=3`);
@@ -205,18 +216,20 @@ const PostDetailPage = (props) => {
     }
 
     const handlePost = () => {
-        // console.log("isi komen2 awal",detail.comments)
+        console.log("isi komen2 awal tanpa filter postId", allComments)
 
-        if (detail.comments.length > 0) {
-            detail.comments.push({
-                id: detail.comments[detail.comments.length - 1].id + 1,
+        if (allComments.length > 0) {
+            allComments.push({
+                postId: query,
+                id: allComments[allComments.length - 1].id + 1,
                 username,
                 commentDate: latestDate,
                 editedDate: "",
                 comment: inputComment
             })
         } else {
-            detail.comments.push({
+            allComments.push({
+                postId: query,
                 id: 0,
                 username,
                 commentDate: latestDate,
@@ -225,13 +238,14 @@ const PostDetailPage = (props) => {
             })
         }
 
-        console.log("isi detail comment setelah post", detail.comments)
+        console.log("isi allComments setelah post", allComments)
 
-        Axios.patch(`${API_URL}/posts/${detail.id}`, {
-            comments: detail.comments
+        Axios.put(`${API_URL}/comments`, {
+            allComments
         }).then((res) => {
             console.log("isi res.data pas klik handlePost", res.data)
-            getDetail()
+            getCommentsForThisPost()
+            getAllComments()
             setInputComment("")
         }).catch((err) => {
             console.log(err)
@@ -402,9 +416,6 @@ const PostDetailPage = (props) => {
                         detail={detail}
                         loginUsername={username}
 
-                        // query={query}
-                        // pageNumber={pageNumber}
-
                         commentsArr={commentsArr}
                         fetchData={fetchData}
                         hasMore={hasMore}
@@ -417,7 +428,7 @@ const PostDetailPage = (props) => {
                     className="row mx-auto"
                 >
                     <Input
-                        className="col-12 col-md-10 w-75 mb-0 order-md-1"
+                        className="col-12 col-md-10 mb-0 order-md-1 _comment"
                         type="text"
                         placeholder="Share your thought..."
                         bsSize="md"
