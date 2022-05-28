@@ -61,16 +61,14 @@ const PostDetailPage = (props) => {
     }
 
     const getCommentsForThisPost = async () => {
-        const res = await fetch(`${API_URL}/comments?postId=${query}&_page=1&_limit=3`);
+        const res = await fetch(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=1&_limit=3`);
 
         const data = await res.json();
         setCommentsArr(data);
     }
 
-    // console.log("isi commentsArr", commentsArr)
-
     const fetchComments = async () => {
-        const res = await fetch(`${API_URL}/comments?postId=${query}&_page=${pageNumber}&_limit=3`);
+        const res = await fetch(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=${pageNumber}&_limit=3`);
 
         const data = await res.json();
         return data;
@@ -412,7 +410,7 @@ const PostDetailPage = (props) => {
                 {
                     detail.id &&
                     <CardsForComments
-                        detail={detail}
+                        // detail={detail}
                         loginUsername={username}
 
                         commentsArr={commentsArr}

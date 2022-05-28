@@ -112,7 +112,11 @@ kalau di berbagai page bisa gunakan reducer.
 
 20. kalau komen yg muncul cuma 1, loading... akan muncul terus jg, begini gpp?
 
-21. 
+21. pas tambah komen, fetch ga berfungsi jadinya ga bisa ambil komen2 yg lama..kenapa ya?
+
+22. untuk 5 most recent comments sortir descending berdasarkan tanggal aja boleh? kalau berdasarkan timestamp bgm caranyanya?
+
+23. pas delete, pagination ga bisa keupdate pada sudah update reducer, pakai state juga tidak bisa ubah ke latest changes.
 
 
 ==========

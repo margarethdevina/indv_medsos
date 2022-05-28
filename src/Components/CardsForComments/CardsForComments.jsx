@@ -5,7 +5,6 @@ import { ReactComponent as EditIcon } from '../../Assets/IconRef/edit.svg';
 import { ReactComponent as BinIcon } from '../../Assets/IconRef/garbage.svg';
 import { CardColumns, Card, CardBody, Input, Button, Modal, ModalBody } from "reactstrap";
 import { useDispatch, useSelector } from 'react-redux';
-import { getPostsAction } from "../../redux/actions/postsActions";
 import { getCommentsAction } from "../../redux/actions/commentsActions";
 import { API_URL } from "../../helper";
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -17,40 +16,35 @@ const CardsForComments = (props) => {
     const [selectedIdx, setSelectedIdx] = useState(null);
     const [openDelete, setOpenDelete] = useState(false);
 
-    let data = props.commentsArr;
+    let data = [...props.commentsArr];
+    // const [data, setData] = useState([])
+
+    // useEffect(()=>{
+    //     setData([...props.commentsArr])
+    // },[])
 
     const [inputComment, setInputComment] = useState("");
 
     const currentDate = new Date();
     const latestDate = `${currentDate.getFullYear()}/${(currentDate.getMonth() + 1) < 10 ? `0${(currentDate.getMonth() + 1)}` : `${(currentDate.getMonth() + 1)}`}/${currentDate.getDate()}`;
 
-    // untuk dispatch post ulang supaya reducer keupdate
-    const getPosts = () => {
-        Axios.get(`${API_URL}/posts`)
-            .then((response) => {
-                dispatch(getPostsAction(response.data))
-            }).catch((error) => {
-                console.log(error)
-            })
-    }
-
     // untuk dispatch comment ulang supaya reducer keupdate
     const getComments = () => {
         Axios.get(`${API_URL}/comments`)
             .then((res) => {
                 dispatch(getCommentsAction(res.data))
+                // setData([...props.commentsArr])
             }).catch((err) => {
                 console.log(err)
             })
     }
 
     const handleSave = () => {
-        // untuk patch comment dan editedDate
-        console.log("yg ingin disave", inputComment)
-        // data[selectedIdx].comment = inputComment
-        // data[selectedIdx].editedDate = latestDate
+        // console.log("yg ingin disave", inputComment)
+        data[selectedIdx].comment = inputComment
+        data[selectedIdx].editedDate = latestDate
 
-        Axios.patch(`${API_URL}/comments/${props.commentsArr.id}`, {
+        Axios.patch(`${API_URL}/comments/${props.commentsArr[selectedIdx].id}`, {
             comment: inputComment,
             editedDate: latestDate
         }).then((res) => {
@@ -61,7 +55,6 @@ const CardsForComments = (props) => {
             console.log(err)
         })
 
-        //untuk reset selectedIdx
         setSelectedIdx(null)
     }
 
@@ -71,16 +64,16 @@ const CardsForComments = (props) => {
     }
 
     const confirmDelete = () => {
-        //data.splice(selectedIdx, 1)
+        data.splice(selectedIdx, 1)
 
-        Axios.delete(`${API_URL}/comments/${props.commentsArr.id}`).
-        then((res) => {
-            getComments()
-            setSelectedIdx(null)
-            setOpenDelete(!openDelete)
-        }).catch((err) => {
-            console.log(err)
-        })
+        Axios.delete(`${API_URL}/comments/${props.commentsArr[selectedIdx].id}`).
+            then((res) => {
+                getComments()
+                setSelectedIdx(null)
+                setOpenDelete(!openDelete)
+            }).catch((err) => {
+                console.log(err)
+            })
     }
 
     const handleCancelDelete = () => {
