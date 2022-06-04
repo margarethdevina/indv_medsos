@@ -1,6 +1,5 @@
 import React from "react";
 import './_CardsInYourPosts.scss';
-import { ReactComponent as FavIcon } from '../../Assets/IconRef/love-letter.svg';
 import { CardColumns, Card, CardImg, CardTitle, CardSubtitle } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +15,7 @@ const CardsInYourPosts = (props) => {
                     className="col-12 col-md-6"
                 >
                     <Card
+                        className="border-0 shadow-sm"
                         onClick={() => navigate(`/postdetail?id=${value.id}`)}
                     >
                         <CardImg

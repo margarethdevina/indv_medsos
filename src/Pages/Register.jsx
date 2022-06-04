@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import '../index.scss';
 import { useDispatch } from 'react-redux';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -213,12 +214,13 @@ const RegisterPage = (props) => {
 
             <Toast
                 isOpen={openToast}
-                style={{ position: "fixed", right: "10px", backgroundColor: "#efffe9", zIndex: "999"}}
+                className="gen_font_content"
+                style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999"}}
             >
                 <ToastHeader
                     icon="warning"
                     toggle={() => setOpenToast(!openToast)}
-                    style={{ backgroundColor: "#efffe9" }}
+                    style={{ backgroundColor: "#f3f6f4" }}
                 >
                     Registration warning
                 </ToastHeader>
@@ -244,7 +246,10 @@ const RegisterPage = (props) => {
                 <Form
                     className="text-start"
                 >
-                    <FormGroup row>
+                    <FormGroup 
+                    row
+                    className="gen_font_content"
+                    >
                         <Label
                             sm={2}
                             for="inputEmail"
@@ -266,7 +271,10 @@ const RegisterPage = (props) => {
                             </p>
                         </Col>
                     </FormGroup>
-                    <FormGroup row>
+                    <FormGroup 
+                    row
+                    className="gen_font_content"
+                    >
                         <Label
                             sm={2}
                             for="inputUsername"
@@ -288,7 +296,10 @@ const RegisterPage = (props) => {
                             </p>
                         </Col>
                     </FormGroup>
-                    <FormGroup row>
+                    <FormGroup 
+                    row
+                    className="gen_font_content"
+                    >
                         <Label
                             sm={2}
                             for="inputPassword"
@@ -326,7 +337,7 @@ const RegisterPage = (props) => {
                     </FormGroup>
                     <FormGroup
                         row
-                        className="align-items-center"
+                        className="align-items-center gen_font_content"
                     >
                         <Label
                             sm={2}
@@ -346,7 +357,7 @@ const RegisterPage = (props) => {
                         </Col>
                     </FormGroup>
                     <Button
-                        className="col-12 mb-3"
+                        className="col-12 mb-3 gen_btn_success"
                         color="success"
                         onClick={handleRegister}
                     >

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import '../../index.scss';
 import Axios from "axios";
 import './_CardsForComments.scss';
 import { ReactComponent as EditIcon } from '../../Assets/IconRef/edit.svg';
@@ -110,7 +111,7 @@ const CardsForComments = (props) => {
                             </span>
                             <Input
                                 type="text"
-                                className="mb-2"
+                                className="mb-2 _card_font"
                                 placeholder={value.comment}
                                 maxLength={300}
                                 onChange={(e) => setInputComment(e.target.value)}
@@ -119,16 +120,19 @@ const CardsForComments = (props) => {
                                 className="d-md-flex justify-content-end"
                             >
                                 <Button
-                                    className="col-12 col-md-2 mb-2 me-md-2"
+                                    className="col-12 col-md-2 mb-2 me-md-2 _card_button"
                                     size="sm"
-                                    color="success"
+                                    color="warning"
+                                    outline
                                     onClick={handleSave}
                                 >
                                     Save
                                 </Button>
                                 <Button
-                                    className="col-12 col-md-2 mb-2"
+                                    className="col-12 col-md-2 mb-2 _card_button"
                                     size="sm"
+                                    color="secondary"
+                                    outline
                                     onClick={() => setSelectedIdx(null)}
                                 >
                                     Cancel
@@ -207,7 +211,7 @@ const CardsForComments = (props) => {
             >
                 <ModalBody>
                     <span
-                        className="me-1"
+                        className="me-1 gen_font_content"
                     >Are you sure you want to delete this comment?</span>
                     <i>Deleted comment can't be returned.</i>
                     <div
@@ -215,16 +219,19 @@ const CardsForComments = (props) => {
                     >
                         <Button
                             onClick={confirmDelete}
-                            color="danger"
+                            color="warning"
+                            outline
                             size="sm"
-                            className="me-2"
+                            className="me-2 gen_btn_warning_secondary"
                         >
                             Yes
                         </Button>
                         <Button
                             onClick={handleCancelDelete}
                             color="secondary"
+                            outline
                             size="sm"
+                            className="gen_btn_warning_secondary"
                         >
                             No
                         </Button>
@@ -239,17 +246,17 @@ const CardsForComments = (props) => {
                     ?
                     <p
                         style={{ textAlign: "center" }}
-                        className="lighter fs-6"
+                        className="gen_font_content"
                     >No comment(s) yet</p>
                     :
                     <p
                         style={{ textAlign: "center" }}
-                        className="lighter fs-6"
+                        className="gen_font_content"
                     >Loading...</p>
                 }
                 endMessage={<p
                     style={{ textAlign: "center" }}
-                    className="lighter fs-6"
+                    className="gen_font_content"
                 >End of comment(s)...</p>}
                 scrollableTarget="scrollableDiv"
             >

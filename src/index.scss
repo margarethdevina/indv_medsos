@@ -41,7 +41,7 @@ hr {
       font-weight: bold;
       font-size  : 22px;
     }
-
+    
     &_content {
       font-family: $font-content;
       font-weight: normal;
@@ -66,6 +66,15 @@ hr {
       border-radius   : 0.3rem;
     }
 
+    &_warning_secondary {
+      cursor       : pointer;
+      font-family  : $font-content;
+      font-weight  : normal;
+      font-size    : 18px;
+      color        : black;
+      border-radius: 0.3rem;
+    }
+
     // &_cancel {
     //   cursor          : pointer;
     //   font-family     : $font-content;
@@ -77,36 +86,20 @@ hr {
     // }
   }
 
-  &_tab {
-    &:active {
-      font-family: $font-content;
-      font-weight: normal;
-      font-size  : 18px;
-      color      : black;
-    }
-
-    &:inactive {
-      font-family: $font-content;
-      font-weight: normal;
-      font-size  : 18px;
-      color      : grey;
-    }
-  }
-
 }
 
 .nav-link {
-  font-family: $font-content;
-  font-weight: normal;
-  font-size  : 18px;
-  &:active{
-    color: black;
-  }
-  &:disabled{
-    color: grey;
-  }
-  &:hover{
-    color: black;
+  font-family  : $font-content;
+  font-weight  : normal;
+  font-size    : 18px;
+  color        : grey;
+  border       : none;
+  box-shadow   : 0 .125rem .25rem rgba(black, .075);
+  border-radius: 0.3rem;
+
+  &:hover {
+    color      : black;
+    font-weight: bold;
   }
 }
 

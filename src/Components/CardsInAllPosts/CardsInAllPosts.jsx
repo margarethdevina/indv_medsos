@@ -96,6 +96,7 @@ const CardsInAllPosts = (props) => {
                     className="col-12 col-md-6"
                 >
                     <Card
+                    className="border-0 shadow-sm"
                     >
                         <CardImg
                             onClick={() => navigate(`/postdetail?id=${value.id}`)}
@@ -145,6 +146,7 @@ const CardsInAllPosts = (props) => {
                     className="col-12 col-md-6"
                 >
                     <Card
+                    className="border-0 shadow-sm"
                     >
                         <CardImg
                             onClick={() => navigate(`/postdetail?id=${value.id}`)}

@@ -3,13 +3,13 @@ import '../index.scss';
 import Axios from 'axios';
 import { API_URL } from "../helper";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Nav, NavItem, NavLink } from "reactstrap";
 import CardsInYourPosts from "../Components/CardsInYourPosts/CardsInYourPosts";
 
 const YourPostsPage = (props) => {
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [dbPosts, setDbPosts] = useState([]);
@@ -34,9 +34,12 @@ const YourPostsPage = (props) => {
 
     return (
         <div
-        className="container"
+        className="container border-0"
         >
-            <Nav tabs>
+            <Nav 
+            tabs
+            className="border-0"
+            >
                 <NavItem>
                     <NavLink
                         className="active"
@@ -47,7 +50,6 @@ const YourPostsPage = (props) => {
                 </NavItem>
                 <NavItem>
                     <NavLink
-                        className=""
                         onClick={() => navigate("/yourlikes")}
                     >
                         Your Likes
@@ -56,7 +58,7 @@ const YourPostsPage = (props) => {
             </Nav>
 
             <CardsInYourPosts 
-            data = {dbPosts.filter(val => val.username == username)}
+            data = {dbPosts.filter(val => val.username === username)}
             />
         </div>
     )

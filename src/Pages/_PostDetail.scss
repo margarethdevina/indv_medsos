@@ -8,7 +8,7 @@
         font-weight: bold;
         text-align : left;
         margin-left: 1rem;
-        margin-top: 1rem;
+        margin-top : 1rem;
 
         &_content {
             font-weight: lighter !important;
@@ -19,31 +19,43 @@
     }
 
     &_hr {
-        color: $basic-color-green;
+        border-top: 1px solid $basic-color-darkpurple !important;
     }
 
-    &_button{
+    &_button_post {
+        height          : 2.5rem;
+        font-family     : $font-content;
+        font-weight     : normal;
+        font-size       : 18px;
+        color           : white;
         background-color: $basic-color-darkpurple;
-        height: 2.5rem;
-        
-        @media (min-width: 768px){
+        border-radius   : 0.3rem;
+
+        @media (min-width: 768px) {
             width: fit-content;
         }
+
+        &:hover {
+            color           : black;
+            background-color: lightgrey;
+            border-radius   : 0.3rem;
+          }
     }
 }
 
-._profile{
-    &_border{
+._profile {
+    &_border {
         border-radius: 100%;
-        width: 20px;
-        height: 20px;
+        width        : 20px;
+        height       : 20px;
     }
 }
 
-._comment{
+._comment {
+    font-family: $font-content;
     width: 75%;
 
-    @media (max-width: 768px){
+    @media (max-width: 768px) {
         width: 100%;
     }
 }

@@ -2,9 +2,16 @@
 
 ._card {
 
-    &_border{
-    text-align : left !important;
-    border-radius: 1%;
+    &_font{
+        font-family  : $font-content;
+    }
+
+    &_border {
+        text-align   : left !important;
+        border-radius: 1%;
+        border-color : $basic-color-lightgrey;
+        border-width : 0.1px;
+        box-shadow   : 0 .125rem .25rem rgba(black, .075);
     }
 
     &_profile {
@@ -17,7 +24,7 @@
     &_detail {
         &_username {
             padding-top: 0;
-            margin-top: 0;
+            margin-top : 0;
             margin-left: 1rem;
             font-family: $font-content;
             color      : $basic-color-darkpurple;
@@ -25,7 +32,8 @@
             font-weight: bold;
             text-align : left !important;
         }
-        &_comment{
+
+        &_comment {
             margin-left: 0.2rem;
             font-family: $font-content;
             color      : $basic-color-purple;
@@ -33,15 +41,24 @@
             font-weight: lighter;
             text-align : left !important;
         }
-        &_date{
+
+        &_date {
             padding-bottom: 0;
-            margin-left: 1rem;
-            margin-bottom: 0;
-            font-family: $font-content;
-            font-size  : 10px;
-            font-weight: light;
-            text-align : left !important;
+            margin-left   : 1rem;
+            margin-bottom : 0;
+            font-family   : $font-content;
+            font-size     : 10px;
+            font-weight   : light;
+            text-align    : left !important;
         }
+    }
+
+    &_button {
+        cursor       : pointer;
+        font-family  : $font-content;
+        font-weight  : normal;
+        color        : black;
+        border-radius: 0.3rem;
     }
 
 }

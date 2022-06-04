@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import '../index.scss';
 import './_PostDetail.scss';
 import { ReactComponent as FavIcon } from '../Assets/IconRef/love-letter.svg';
 import { ReactComponent as ShareIcon } from '../Assets/IconRef/share.svg';
@@ -282,6 +283,7 @@ const PostDetailPage = (props) => {
                 toggle={() => setOpenDelete(!openDelete)}
                 size="sm"
                 centered
+                className="gen_font_content"
             >
                 <ModalBody
 
@@ -295,16 +297,19 @@ const PostDetailPage = (props) => {
                     >
                         <Button
                             onClick={confirmDelete}
-                            color="danger"
+                            color="warning"
+                            outline
                             size="sm"
-                            className="me-2"
+                            className="me-2 gen_btn_warning_secondary"
                         >
                             Yes
                         </Button>
                         <Button
                             onClick={() => setOpenDelete(!openDelete)}
                             color="secondary"
+                            outline
                             size="sm"
+                            className="gen_btn_warning_secondary"
                         >
                             No
                         </Button>
@@ -330,7 +335,7 @@ const PostDetailPage = (props) => {
                     {detail.username}
                 </p>
 
-                <hr className="_detail_hr" />
+                {/* <hr className="_detail_hr" /> */}
 
                 {
                     selectedEdit == 0
@@ -352,16 +357,19 @@ const PostDetailPage = (props) => {
                                 className="d-md-flex justify-content-end"
                             >
                                 <Button
-                                    className="col-12 col-md-2 mb-2 me-md-2"
+                                    className="col-12 col-md-2 mb-2 me-md-2 gen_btn_warning_secondary"
                                     size="sm"
-                                    color="success"
+                                    color="warning"
+                                    outline
                                     onClick={handleSave}
                                 >
                                     Save
                                 </Button>
                                 <Button
-                                    className="col-12 col-md-2 mb-2"
+                                    className="col-12 col-md-2 mb-2 gen_btn_warning_secondary"
                                     size="sm"
+                                    color="secondary"
+                                    outline
                                     onClick={() => setSelectedEdit(0)}
                                 >
                                     Cancel
@@ -370,10 +378,10 @@ const PostDetailPage = (props) => {
                         </>
                 }
 
-                <hr className="_detail_hr" />
+                {/* <hr className="_detail_hr" /> */}
 
                 <div
-                    className="_detail_font_content d-flex align-items-center"
+                    className="_detail_font_content d-flex align-items-center mt-2 mb-4"
                 >
                     <FavIcon
                         fill={favoriteFill}
@@ -427,7 +435,7 @@ const PostDetailPage = (props) => {
 
                 </div>
 
-                <hr className="_detail_hr" />
+                {/* <hr className="_detail_hr" /> */}
 
                 {
                     detail.id &&
@@ -458,13 +466,13 @@ const PostDetailPage = (props) => {
                         onChange={(e) => setInputComment(e.target.value)}
                     />
                     <span
-                        className="text-start mt-0 mb-1 mb-md-0 order-md-3"
-                        style={{ fontWeight: "normal", fontSize: "9px" }}
+                        className="text-start mt-0 mb-1 mb-md-0 order-md-3 gen_font_content"
+                        style={{fontSize: "11px"}}
                     >
                         Limited to 300 characters
                     </span>
                     <Button
-                        className="col-12 col-md-2 text-center _detail_button order-md-2"
+                        className="col-12 col-md-2 text-center _detail_button_post order-md-2"
                         onClick={handlePost}
                     >
                         Post

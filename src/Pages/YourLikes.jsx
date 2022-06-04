@@ -1,12 +1,12 @@
 import React, { useState } from "react";
+import '../index.scss';
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Nav, NavItem, NavLink } from "reactstrap";
 import CardsInAllPosts from "../Components/CardsInAllPosts/CardsInAllPosts";
 
 const YourLikesPage = (props) => {
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const { username, likes, posts } = useSelector((state) => {
@@ -38,12 +38,14 @@ const YourLikesPage = (props) => {
 
     return (
         <div
-            className="container"
+            className="container border-0"
         >
-            <Nav tabs>
+            <Nav 
+            tabs
+            className="border-0"
+            >
                 <NavItem>
                     <NavLink
-                        className=""
                         onClick={() => navigate("/yourposts")}
                     >
                         Your Posts
