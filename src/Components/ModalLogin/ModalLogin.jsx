@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import '../../index.scss';
 import {
-    Modal, ModalHeader, ModalBody, Button, FormGroup, Label, Input, InputGroup, InputGroupText, Toast, ToastHeader, ToastBody
+    Modal, ModalBody, Button, FormGroup, Label, Input, InputGroup, InputGroupText, Toast, ToastHeader, ToastBody
 } from 'reactstrap';
 import Axios from 'axios';
 import { API_URL } from '../../helper';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginAction } from "../../redux/actions/usersActions";
 
@@ -114,12 +115,13 @@ const ModalLogin = (props) => {
 
             <Toast
                 isOpen={openToast}
-                style={{ position: "fixed", right: "10px", backgroundColor: "#efffe9" }}
+                className="gen_font_content"
+                style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999"}}
             >
                 <ToastHeader
                     icon="warning"
                     toggle={() => setOpenToast(!openToast)}
-                    style={{ backgroundColor: "#efffe9" }}
+                    style={{ backgroundColor: "#f3f6f4" }}
                 >
                     Login warning
                 </ToastHeader>
@@ -129,12 +131,14 @@ const ModalLogin = (props) => {
             </Toast>
 
             <ModalBody>
-                <h5
-                    className="mb-4 mt-3 fw-bold"
+                <p
+                    className="mb-4 mt-1 gen_font_title"
                 >
                     Login with your account
-                </h5>
-                <FormGroup>
+                </p>
+                <FormGroup
+                className="gen_font_content"
+                >
                     <Label>Username or Email</Label>
                     <Input
                         type="text"
@@ -142,7 +146,9 @@ const ModalLogin = (props) => {
                         onChange={(event) => handleInput(event.target.value, "usernameOrEmail")}
                     />
                 </FormGroup>
-                <FormGroup>
+                <FormGroup
+                className="gen_font_content"
+                >
                     <Label>Password</Label>
                     <InputGroup>
                         <Input
@@ -170,7 +176,7 @@ const ModalLogin = (props) => {
                 </FormGroup>
                 <Button
                     type="button"
-                    className="w-100 mt-2 mb-2"
+                    className="w-100 mt-2 mb-2 gen_btn_success"
                     color="primary"
                     onClick={handleLogin}
                 >

@@ -15,8 +15,18 @@ const CardsForComments = (props) => {
 
     const [selectedIdx, setSelectedIdx] = useState(null);
     const [openDelete, setOpenDelete] = useState(false);
+    
+    const { commentsFiltered } = useSelector((state) => {
+        return {
+            commentsFiltered: state.commentsReducer.comments.filter(val=>val.postId == props.query)
+        }
+    })
 
     let data = [...props.commentsArr];
+    console.log("isi props.commentsArr terbaru", data);
+
+    console.log("isi commentsFiltered",commentsFiltered)
+
     // const [data, setData] = useState([])
 
     // useEffect(()=>{
@@ -182,6 +192,8 @@ const CardsForComments = (props) => {
         )
     }
 
+    console.log("isi hasMore",props.hasMore)
+
     return (
         <div
             id="scrollableDiv"
@@ -221,16 +233,24 @@ const CardsForComments = (props) => {
             </Modal>
             <InfiniteScroll
                 dataLength={data.length}
-                next={props.fetchData}
-                hasMore={props.hasMore}
-                loader={<p
-                    style={{ textAlign: "center" }}
-                    className="lighter fs-6"
-                >Loading...</p>}
+                // dataLength={commentsFiltered.length}
+                next={props.fetchData}                hasMore={props.hasMore}
+                loader={commentsFiltered.length === 0
+                    ?
+                    <p
+                        style={{ textAlign: "center" }}
+                        className="lighter fs-6"
+                    >No comment(s) yet</p>
+                    :
+                    <p
+                        style={{ textAlign: "center" }}
+                        className="lighter fs-6"
+                    >Loading...</p>
+                }
                 endMessage={<p
                     style={{ textAlign: "center" }}
                     className="lighter fs-6"
-                >End of Comments...</p>}
+                >End of comment(s)...</p>}
                 scrollableTarget="scrollableDiv"
             >
                 <div

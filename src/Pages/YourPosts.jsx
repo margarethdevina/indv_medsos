@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import '../index.scss';
 import Axios from 'axios';
 import { API_URL } from "../helper";
 import { useNavigate } from "react-router-dom";

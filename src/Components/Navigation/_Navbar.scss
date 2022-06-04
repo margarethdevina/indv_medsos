@@ -20,15 +20,15 @@
                 font-family         : $font-content;
                 font-weight         : normal;
                 font-size           : 18px;
-                color               : black;
+                color               : grey;
                 text-decoration-line: none;
                 margin              : 0 2rem;
             }
 
             &_link:hover {
-                color           : $basic-color-purple;
-                background-color: #d9ead3;
-                border-radius   : 0.2rem;
+                color              : black;
+                // background-color: #d9ead3;
+                border-radius      : 0.2rem;
             }
         }
     }
@@ -39,8 +39,7 @@
         font-weight  : normal;
         font-size    : 18px;
         color        : black;
-        border-width : 1.5px;
-        border-radius: 0.2rem;
+        border-radius: 0.3rem;
 
         &_user {
             font-family     : $font-content;
@@ -48,13 +47,12 @@
             font-size       : 18px;
             color           : white;
             background-color: $basic-color-darkpurple;
-            border-width    : 1.5px;
             border-radius   : 0.3rem;
         }
 
         &_user:hover {
-            color           : $basic-color-purple;
-            background-color: #d9ead3;
+            color           : black;
+            background-color: lightgrey;
             border-radius   : 0.3rem;
         }
     }
@@ -63,21 +61,11 @@
 
 .tooltip-inner {
     // opacity         : 0.8 !important;
-    color           : black !important;
+    color           : white !important;
     font-family     : $font-content !important;
     font-weight     : normal !important;
     font-size       : 18px !important;
-    background-color: #d9ead3 !important;
-}
-
-// .tooltip-arrow{
-//     color: #d9ead3 !important;
-//     // border-bottom-color: #d9ead3 !important;
-// }
-
-.bs-tooltip-auto[x-placement^="bottom"] span.arrow::before,
-.bs-tooltip-bottom .arrow::before {
-    border-bottom-color: #d9ead3 !important;
+    background-color: black !important;
 }
 
 .navbar-toggler {
@@ -90,5 +78,16 @@
     &-icon:focus {
         outline   : none;
         box-shadow: none;
+    }
+}
+
+.dropdown-item {
+    &:hover {
+        font-family     : $font-content;
+        font-weight     : normal;
+        font-size       : 18px;
+        color           : white;
+        background-color: $basic-color-darkpurple;
+        border-radius   : 0.3rem;
     }
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import '../../index.scss';
 import Axios from 'axios';
 import { useDispatch, useSelector } from "react-redux";
 import { API_URL } from "../../helper";
@@ -10,6 +11,9 @@ const AddPostComponent = (props) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const [openToast, setOpenToast] = useState(false);
+    const [toastMsg, setToastMsg] = useState("");
 
     const currentDate = new Date();
     const uploadDate = `${currentDate.getFullYear()}/${(currentDate.getMonth() + 1) < 10 ? `0${(currentDate.getMonth() + 1)}` : `${(currentDate.getMonth() + 1)}`}/${currentDate.getDate()}`
@@ -50,7 +54,9 @@ const AddPostComponent = (props) => {
         let { username, media, caption, uploadDate, editedDate, numberOfLikes, comments } = newPost
         try {
             if (media == "" || caption == "") {
-                alert("Fill in all form")
+                console.log("Fill in all form")
+                setOpenToast(!openToast)
+                setToastMsg("Fill in all form")
             } else {
                 let res = await Axios.post(`${API_URL}/posts`, {
                     username,
@@ -72,19 +78,43 @@ const AddPostComponent = (props) => {
         }
     }
 
+    if (openToast) {
+        setTimeout(() => setOpenToast(!openToast), 3500)
+    }
+
     return (
         <div
             className="container mx-auto col-10 col-md-6 py-3"
         >
-            <fieldset
-                className="border border-2 shadow-lg bg-white rounded py-3 row"
+
+            <Toast
+                isOpen={openToast}
+                className="gen_font_content"
+                style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999"}}
             >
-                <h1>
+                <ToastHeader
+                    icon="warning"
+                    toggle={() => setOpenToast(!openToast)}
+                    style={{ backgroundColor: "#f3f6f4" }}
+                >
+                    Add a new post warning
+                </ToastHeader>
+                <ToastBody>
+                    <span>{toastMsg}</span>
+                </ToastBody>
+            </Toast>
+
+            <fieldset
+                className="border border-0 shadow-sm bg-white rounded py-3 row"
+            >
+                <p
+                    className="gen_font_title"
+                >
                     Add a New Post
-                </h1>
+                </p>
                 <hr />
                 <Form
-                    className="text-start"
+                    className="text-start gen_font_content"
                 >
                     <FormGroup row>
                         <Label
@@ -123,8 +153,8 @@ const AddPostComponent = (props) => {
                         </Col>
                     </FormGroup>
                     <Button
-                        className="col-12 mb-2"
-                        color="success"
+                        className="col-12 mb-2 gen_btn_success"
+                        // color="success"
                         onClick={handleUpload}
                     >
                         Upload

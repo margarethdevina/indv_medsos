@@ -33,11 +33,13 @@ const NavbarComponent = (props) => {
     return (
         <div
             style={{
-                backgroundImage: `url(${backgroundNavbar})`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-                // position: "sticky",
-                // top: 0
+                // backgroundImage: `url(${backgroundNavbar})`,
+                // backgroundRepeat: "no-repeat",
+                // backgroundSize: "cover",
+                // backgroundColor: "white",
+                position: "sticky",
+                top: 0,
+                zIndex: 99
             }}
         >
             <ModalLogin
@@ -47,9 +49,12 @@ const NavbarComponent = (props) => {
 
             <Navbar
                 expand="md"
-                className="container"
-                color="transparent"
+                container="fluid"
+                className="px-md-5"
+                color="white"
                 light
+                sticky="top"
+                // fixed="top"
             >
                 <NavbarBrand
                     onClick={() => navigate("/")}
@@ -80,7 +85,9 @@ const NavbarComponent = (props) => {
                     </Tooltip>
                 </span>
 
-                <NavbarToggler onClick={() => setOpenCollapse(!openCollapse)} />
+                <NavbarToggler 
+                onClick={() => setOpenCollapse(!openCollapse)} 
+                />
 
                 <Collapse navbar isOpen={openCollapse}>
 
@@ -119,7 +126,9 @@ const NavbarComponent = (props) => {
                                                 {username}
                                             </DropdownToggle>
                                             <DropdownMenu end>
-                                                <DropdownItem onClick={() => navigate("/userprofile")}>
+                                                <DropdownItem 
+                                                // className="app_navbar_btn_user"
+                                                onClick={() => navigate("/userprofile")}>
                                                     Your Profile
                                                 </DropdownItem>
                                                 <DropdownItem onClick={handleLogout}>

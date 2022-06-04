@@ -20,7 +20,6 @@ const PostDetailPage = (props) => {
     const navigate = useNavigate();
 
     const [detail, setDetail] = useState({});
-    const [allComments, setAllComments] = useState([]);
     const [favoriteFill, setFavoriteFill] = useState("#e13b6e");
     const [dropOpen, setDropOpen] = useState(false);
     const [selectedEdit, setSelectedEdit] = useState(0);
@@ -32,12 +31,14 @@ const PostDetailPage = (props) => {
     const [hasMore, setHasMore] = useState(true);
     const [pageNumber, setPageNumber] = useState(2);
 
-    const { userid, username, likes, posts, comments } = useSelector((state) => {
+    const { userid, username, likes, posts, comments, commentsFiltered } = useSelector((state) => {
         return {
             userid: state.usersReducer.id,
             username: state.usersReducer.username,
             likes: state.usersReducer.likes,
             posts: state.postsReducer.posts,
+            comments: state.commentsReducer.comments,
+            commentsFiltered: state.commentsReducer.comments.filter(val=>val.postId == props.query)
         }
     })
 
@@ -54,21 +55,30 @@ const PostDetailPage = (props) => {
     const getAllComments = () => {
         Axios.get(`${API_URL}/comments`)
             .then((res) => {
-                setAllComments(res.data)
+                dispatch(getCommentsAction(res.data))
             }).catch((err) => {
                 console.log(err)
             })
     }
 
     const getCommentsForThisPost = async () => {
-        const res = await fetch(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=1&_limit=3`);
+        const res = await fetch(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=1&_limit=5`);
 
         const data = await res.json();
         setCommentsArr(data);
+
+        // if (commentsFiltered.length === 0 || commentsFiltered.length < 5) {
+        //     setHasMore(false);
+        // }
+        if (data.length === 0 || data.length < 5) {
+            setHasMore(false);
+        }
+        
+        setPageNumber(2)
     }
 
     const fetchComments = async () => {
-        const res = await fetch(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=${pageNumber}&_limit=3`);
+        const res = await fetch(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=${pageNumber}&_limit=5`);
 
         const data = await res.json();
         return data;
@@ -77,14 +87,20 @@ const PostDetailPage = (props) => {
     const fetchData = async () => {
         const commentsFromServer = await fetchComments();
 
+        console.log("isi commentsFromServer", commentsFromServer)
+        //console.log commentsFromServer komen kurang dr 5
+        //console.log commentsFromServer komen > 5
+
         setCommentsArr([...commentsArr, ...commentsFromServer]);
 
-        if (commentsFromServer.length === 0 || commentsFromServer.length < 3) {
+        if (commentsFromServer.length === 0 || commentsFromServer.length < 5) {
             setHasMore(false);
+            // setPageNumber(2)
         }
 
         let temp = pageNumber;
         temp++;
+        console.log("isi increment temp", temp)
         setPageNumber(temp);
     }
 
@@ -215,26 +231,29 @@ const PostDetailPage = (props) => {
     const handlePost = () => {
         // console.log("isi komen2 awal tanpa filter postId", allComments)
 
-        if (allComments.length > 0) {
+        if (comments.length > 0) {
             Axios.post(`${API_URL}/comments`, {
-                postId: query,
-                id: allComments[allComments.length - 1].id + 1,
+                postId: parseInt(query),
+                id: comments[comments.length - 1].id + 1,
                 username,
                 commentDate: latestDate,
                 editedDate: "",
                 comment: inputComment
             }).then((res) => {
                 console.log("isi res.data pas klik handlePost", res.data)
-                getCommentsForThisPost()
                 getAllComments()
                 setInputComment("")
+                getCommentsForThisPost()
+                // if(hasMore){
+                //     fetchData()
+                // }
             }).catch((err) => {
                 console.log(err)
             })
 
         } else {
             Axios.post(`${API_URL}/comments`, {
-                postId: query,
+                postId: parseInt(query),
                 id: 0,
                 username,
                 commentDate: latestDate,
@@ -242,9 +261,12 @@ const PostDetailPage = (props) => {
                 comment: inputComment
             }).then((res) => {
                 // console.log("isi res.data pas klik handlePost", res.data)
-                getCommentsForThisPost()
                 getAllComments()
                 setInputComment("")
+                getCommentsForThisPost()
+                // if(hasMore){
+                //     fetchData()
+                // }
             }).catch((err) => {
                 console.log(err)
             })
@@ -414,6 +436,7 @@ const PostDetailPage = (props) => {
                         loginUsername={username}
 
                         commentsArr={commentsArr}
+                        query={query}
                         fetchData={fetchData}
                         hasMore={hasMore}
                     />

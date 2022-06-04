@@ -1,13 +1,8 @@
-import React, { useState, useEffect } from "react";
-import Axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { API_URL } from "../helper";
+import React from "react";
+import { useSelector } from "react-redux";
 import AddPostComponent from "../Components/AddPost/AddPost";
-import { Form, FormGroup, Label, Input, InputGroup, InputGroupText, Button, Col, Toast, ToastHeader, ToastBody } from "reactstrap";
 
 const UploadPostPage = (props) => {
-
-    const dispatch = useDispatch();
 
     const { username, posts } = useSelector((state) => {
         return {
@@ -16,7 +11,7 @@ const UploadPostPage = (props) => {
         }
     })
 
-    console.log("isi state di uploadPost page", username, posts)
+    // console.log("isi state di uploadPost page", username, posts)
 
     return (
         <div>
@@ -25,8 +20,6 @@ const UploadPostPage = (props) => {
                 username={username}
                 posts={posts}
             />
-
-
 
         </div>
     )

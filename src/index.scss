@@ -1,24 +1,114 @@
 body {
-  margin: 0;
+  margin : 0;
   padding: 0;
 
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
 
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing : antialiased;
   -moz-osx-font-smoothing: grayscale;
 
 }
 
-$basic-color-purple: #c4558f;
+$basic-color-purple    : #c4558f;
 $basic-color-darkpurple: #351c75;
-$basic-color-white: white;
-$basic-color-green: #8ac400;
+$basic-color-white     : white;
+$basic-color-green     : #8ac400;
 $basic-color-lightgreen: #efffe9;
+$basic-color-lightgrey : #f3f6f4;
 // $basic-color-blue: #3d85c6;
-$font-brand: Georgia, 'Times New Roman', Times, serif;
-$font-content: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+$font-brand            : Georgia,
+'Times New Roman',
+Times,
+serif;
+$font-content: 'Gill Sans',
+'Gill Sans MT',
+Calibri,
+'Trebuchet MS',
+sans-serif;
+
+hr {
+  border    : none;
+  height    : 0px;
+  border-top: 1px solid $basic-color-darkpurple;
+}
+
+.gen {
+  &_font {
+    &_title {
+      font-family: $font-content;
+      font-weight: bold;
+      font-size  : 22px;
+    }
+
+    &_content {
+      font-family: $font-content;
+      font-weight: normal;
+      font-size  : 18px;
+    }
+  }
+
+  &_btn {
+    &_success {
+      cursor          : pointer;
+      font-family     : $font-content;
+      font-weight     : normal;
+      font-size       : 18px;
+      color           : white;
+      background-color: $basic-color-darkpurple;
+      border-radius   : 0.3rem;
+    }
+
+    &_success:hover {
+      color           : black;
+      background-color: lightgrey;
+      border-radius   : 0.3rem;
+    }
+
+    // &_cancel {
+    //   cursor          : pointer;
+    //   font-family     : $font-content;
+    //   font-weight     : normal;
+    //   font-size       : 18px;
+    //   color           : white;
+    //   background-color: $basic-color-darkpurple;
+    //   border-radius   : 0.3rem;
+    // }
+  }
+
+  &_tab {
+    &:active {
+      font-family: $font-content;
+      font-weight: normal;
+      font-size  : 18px;
+      color      : black;
+    }
+
+    &:inactive {
+      font-family: $font-content;
+      font-weight: normal;
+      font-size  : 18px;
+      color      : grey;
+    }
+  }
+
+}
+
+.nav-link {
+  font-family: $font-content;
+  font-weight: normal;
+  font-size  : 18px;
+  &:active{
+    color: black;
+  }
+  &:disabled{
+    color: grey;
+  }
+  &:hover{
+    color: black;
+  }
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
