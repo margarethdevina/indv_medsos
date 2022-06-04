@@ -36,12 +36,14 @@ hr {
 
 .gen {
   &_font {
+    font-family: $font-content;
+
     &_title {
       font-family: $font-content;
       font-weight: bold;
       font-size  : 22px;
     }
-    
+
     &_content {
       font-family: $font-content;
       font-weight: normal;
@@ -75,15 +77,6 @@ hr {
       border-radius: 0.3rem;
     }
 
-    // &_cancel {
-    //   cursor          : pointer;
-    //   font-family     : $font-content;
-    //   font-weight     : normal;
-    //   font-size       : 18px;
-    //   color           : white;
-    //   background-color: $basic-color-darkpurple;
-    //   border-radius   : 0.3rem;
-    // }
   }
 
 }

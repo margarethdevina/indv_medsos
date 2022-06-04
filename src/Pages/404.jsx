@@ -1,4 +1,5 @@
 import React from "react";
+import '../index.scss';
 import { useSelector } from 'react-redux';
 
 const NotFoundPage = (props) => {
@@ -9,7 +10,9 @@ const NotFoundPage = (props) => {
     })
     
     return (
-        <div>
+        <div
+        className="gen_font"
+        >
             {status === "unverified"
                 ?
                 <>

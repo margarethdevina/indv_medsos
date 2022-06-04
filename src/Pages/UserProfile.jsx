@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import '../index.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import Axios from 'axios';
 import { API_URL } from "../helper";
@@ -54,7 +55,7 @@ const UserProfilePage = (props) => {
         if (selectedEdit == 0) {
             return (
                 <Card
-                    className="px-1 py-3 border-2 shadow-lg"
+                    className="px-1 py-3 border-0 shadow-sm gen_font"
                 >
                     <div className="container">
                         {
@@ -151,7 +152,7 @@ const UserProfilePage = (props) => {
         } else {
             return (
                 <Card
-                    className="px-1 py-3 border-2 shadow-lg"
+                    className="px-1 py-3 border-0 shadow-sm gen_font"
                 >
                     <div className="container">
                         <Input
@@ -283,7 +284,7 @@ const UserProfilePage = (props) => {
 
     return (
         <div
-            className="row container mx-auto py-3"
+            className="row container mx-auto py-3 gen_font"
         >
             <div
                 className="col-12 col-md-6 order-md-1"
@@ -303,7 +304,9 @@ const UserProfilePage = (props) => {
                             ?
                             <>
                                 <Button
-                                    className="col-12"
+                                    className="col-12 gen_btn_warning_secondary"
+                                    color="warning"
+                                    outline
                                     >
                                     Verify your Account
                                 </Button>
@@ -313,9 +316,10 @@ const UserProfilePage = (props) => {
                                     ?
                                     <>
                                         <Button
-                                            className="col-12 mb-2"
+                                            className="col-12 mb-2 gen_btn_warning_secondary"
                                             onClick={handleEdit}
                                             color="warning"
+                                            outline
                                         >
                                             Edit Profile
                                         </Button>
@@ -323,15 +327,18 @@ const UserProfilePage = (props) => {
                                     :
                                     <>
                                         <Button
-                                            className="col-12 mb-2"
+                                            className="col-12 mb-2 gen_btn_warning_secondary"
                                             onClick={handleSave}
-                                            color="success"
+                                            color="warning"
+                                            outline
                                         >
                                             Save
                                         </Button>
                                         <Button
-                                            className="col-12 mb-2"
+                                            className="col-12 mb-2 gen_btn_warning_secondary"
                                             onClick={handleCancel}
+                                            color="secondary"
+                                            outline
                                         >
                                             Cancel
                                         </Button>
@@ -340,7 +347,7 @@ const UserProfilePage = (props) => {
                     </CardBody>
                 </Card>
                 <Card
-                    className="d-none d-md-flex border-2 shadow-lg"
+                    className="d-none d-md-flex border-0 shadow-sm"
                 >
                     <CardBody>
                         <div
@@ -358,8 +365,6 @@ const UserProfilePage = (props) => {
                     </CardBody>
                 </Card>
             </div>
-
-
 
         </div>
     )
