@@ -129,9 +129,6 @@ infinite loop data comment berubah ga (untuk salurin ke props nya itu)
 pakai kondisi res nya untuk bisa boleh klik tombol lainnya
 di res nya 
 
-25. 
-
-
 ==========
 
     {
@@ -155,3 +152,10 @@ di res nya
       "comments": []
     }
     
+==========
+
+25. yg biasa dishare link nya itu kayak gmn ka? saat ini localhost yg bisa dishare
+
+26. di post detail, saat klik share icon niatnya munculkan modal. Saat layar desktop modal bisa dicentered tapi saat layar mobile phone modal mepet kiri. Di css nya diedit bgm ya supaya tetap di tengah?
+
+27. 

@@ -39,7 +39,7 @@
             color           : black;
             background-color: lightgrey;
             border-radius   : 0.3rem;
-          }
+        }
     }
 }
 
@@ -53,9 +53,26 @@
 
 ._comment {
     font-family: $font-content;
-    width: 75%;
+    width      : 75%;
 
     @media (max-width: 768px) {
         width: 100%;
+    }
+}
+
+.share__socials {
+    display: flex;
+    gap    : 0 20px;
+    cursor : pointer;
+    
+    &__icons {
+        fill  : $basic-color-darkpurple;
+        align-items: center;
+        width : 30px;
+        height: 30px;
+
+        &:hover {
+            fill: $basic-color-purple;
+        }
     }
 }

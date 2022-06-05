@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import '../index.scss';
 import './_PostDetail.scss';
+import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";
+import { ReactComponent as CopyIcon } from '../Assets/IconRef/copylink.svg';
 import { ReactComponent as FavIcon } from '../Assets/IconRef/love-letter.svg';
 import { ReactComponent as ShareIcon } from '../Assets/IconRef/share.svg';
 import { ReactComponent as ThreeDotsIcon } from '../Assets/IconRef/more-with-three-dots-button.svg';
+import { ReactComponent as WaIcon } from '../Assets/IconRef/icons8-whatsapp.svg';
+import { ReactComponent as TwitterIcon } from '../Assets/IconRef/icons8-twitter.svg';
+import { ReactComponent as FbIcon } from '../Assets/IconRef/icons8-facebook.svg';
 import CardsForComments from "../Components/CardsForComments/CardsForComments";
 import Axios from 'axios';
 import { API_URL } from "../helper";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Input, Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalBody } from "reactstrap";
+import { Input, Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalBody, Toast, ToastBody } from "reactstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { getPostsAction } from "../redux/actions/postsActions";
 import { updateLikesAction } from "../redux/actions/usersActions";
@@ -32,6 +37,10 @@ const PostDetailPage = (props) => {
     const [hasMore, setHasMore] = useState(true);
     const [pageNumber, setPageNumber] = useState(2);
 
+    const [openShare, setOpenShare] = useState(false);
+    const [openToast, setOpenToast] = useState(false);
+    const [toastMsg, setToastMsg] = useState("");
+
     const { userid, username, likes, posts, comments, commentsFiltered } = useSelector((state) => {
         return {
             userid: state.usersReducer.id,
@@ -39,7 +48,7 @@ const PostDetailPage = (props) => {
             likes: state.usersReducer.likes,
             posts: state.postsReducer.posts,
             comments: state.commentsReducer.comments,
-            commentsFiltered: state.commentsReducer.comments.filter(val=>val.postId == props.query)
+            commentsFiltered: state.commentsReducer.comments.filter(val => val.postId == props.query)
         }
     })
 
@@ -74,7 +83,7 @@ const PostDetailPage = (props) => {
         if (data.length === 0 || data.length < 5) {
             setHasMore(false);
         }
-        
+
         setPageNumber(2)
     }
 
@@ -274,6 +283,18 @@ const PostDetailPage = (props) => {
         }
     }
 
+    const handleCopyLink = () => {
+        navigator.clipboard.writeText(`http://localhost:3001/postdetail${search}`)
+
+        setOpenShare(!openShare)
+        setOpenToast(!openToast)
+        setToastMsg("Link copied")
+    }
+
+    if (openToast) {
+        setTimeout(() => setOpenToast(!openToast), 3500)
+    }
+
     return (
         <div
             className="row container py-3 mx-auto"
@@ -316,6 +337,57 @@ const PostDetailPage = (props) => {
                     </div>
                 </ModalBody>
             </Modal>
+            <Modal
+                isOpen={openShare}
+                toggle={() => setOpenShare(!openShare)}
+                // size="sm"
+                style={{ width: "220px" }}
+                centered
+                className="gen_font_content"
+            >
+                <ModalBody
+                    className="share__socials"
+                >
+                    <WhatsappShareButton
+                        url={`http://localhost:3001/postdetail${search}`}
+                    >
+                        <WaIcon
+                            className="share__socials__icons"
+                            onClick={()=>setOpenShare(!openShare)}
+                        />
+                    </WhatsappShareButton>
+                    <TwitterShareButton
+                        url={`http://localhost:3001/postdetail${search}`}
+                    >
+                        <TwitterIcon
+                            className="share__socials__icons"
+                            onClick={()=>setOpenShare(!openShare)}
+                        />
+                    </TwitterShareButton>
+                    <FacebookShareButton
+                        url={`http://localhost:3001/postdetail${search}`}
+                    >
+                        <FbIcon
+                            className="share__socials__icons"
+                            onClick={()=>setOpenShare(!openShare)}
+                        />
+                    </FacebookShareButton>
+                    <CopyIcon
+                        className="share__socials__icons"
+                        style={{ width: "25px", height: "30px" }}
+                        onClick={handleCopyLink}
+                    />
+                </ModalBody>
+            </Modal>
+            <Toast
+                isOpen={openToast}
+                className="gen_font_content"
+                style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999" }}
+            >
+                <ToastBody>
+                    <span>{toastMsg}</span>
+                </ToastBody>
+            </Toast>
             <div
                 className="col-12 col-md-7 order-md-1"
             >
@@ -398,13 +470,14 @@ const PostDetailPage = (props) => {
                         height="22px"
                         className="me-3"
                         style={{ cursor: "pointer" }}
+                        onClick={() => setOpenShare(!openShare)}
                     />
 
                     {
                         detail.username == username &&
                         <Dropdown
                             isOpen={dropOpen}
-                            toggle={() => { setDropOpen(!dropOpen) }}
+                            toggle={() => setDropOpen(!dropOpen)}
                             direction="end"
                         >
                             <DropdownToggle
@@ -467,7 +540,7 @@ const PostDetailPage = (props) => {
                     />
                     <span
                         className="text-start mt-0 mb-1 mb-md-0 order-md-3 gen_font_content"
-                        style={{fontSize: "11px"}}
+                        style={{ fontSize: "11px" }}
                     >
                         Limited to 300 characters
                     </span>
