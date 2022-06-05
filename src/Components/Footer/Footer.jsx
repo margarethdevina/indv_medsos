@@ -43,6 +43,7 @@ const FooterComponent = (props) => {
                 <div className="footer__socials">
                     <WhatsappShareButton
                         url="http://localhost:3001/"
+                        className="footer__socials__icons"
                     >
                         <WaIcon
                             className="footer__socials__icons"
@@ -50,6 +51,7 @@ const FooterComponent = (props) => {
                     </WhatsappShareButton>
                     <TwitterShareButton
                         url="http://localhost:3001/"
+                        className="footer__socials__icons"
                     >
                         <TwitterIcon
                             className="footer__socials__icons"
@@ -57,6 +59,7 @@ const FooterComponent = (props) => {
                     </TwitterShareButton>
                     <FacebookShareButton
                         url="http://localhost:3001/"
+                        className="footer__socials__icons"
                     >
                         <FbIcon
                             className="footer__socials__icons"
