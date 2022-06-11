@@ -4,8 +4,9 @@ import AddPostComponent from "../Components/AddPost/AddPost";
 
 const UploadPostPage = (props) => {
 
-    const { username, posts } = useSelector((state) => {
+    const { userId, username, posts } = useSelector((state) => {
         return {
+            userId: state.usersReducer.id,
             username: state.usersReducer.username,
             posts: state.postsReducer.posts
         }
@@ -17,6 +18,7 @@ const UploadPostPage = (props) => {
         <div>
 
             <AddPostComponent
+                userId = {userId}
                 username={username}
                 posts={posts}
             />

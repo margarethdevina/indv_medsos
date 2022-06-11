@@ -57,7 +57,7 @@ const CardsForComments = (props) => {
 
         Axios.patch(`${API_URL}/comments/${props.commentsArr[selectedIdx].id}`, {
             comment: inputComment,
-            editedDate: latestDate
+            editedDate: latestDate //pas konek ke express API ini bisa didelete
         }).then((res) => {
             console.log("isi res.data pas klik save", res.data)
             getComments()

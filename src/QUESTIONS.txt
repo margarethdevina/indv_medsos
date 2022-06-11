@@ -153,9 +153,81 @@ di res nya
     }
     
 ==========
+12/06/2022
 
-25. yg biasa dishare link nya itu kayak gmn ka? saat ini localhost yg bisa dishare
+1. yg biasa dishare link nya itu kayak gmn ka? saat ini localhost yg bisa dishare
 
-26. di post detail, saat klik share icon niatnya munculkan modal. Saat layar desktop modal bisa dicentered tapi saat layar mobile phone modal mepet kiri. Di css nya diedit bgm ya supaya tetap di tengah?
+2. di post detail, saat klik share icon niatnya munculkan modal. Saat layar desktop modal bisa dicentered tapi saat layar mobile phone modal mepet kiri. Di css nya diedit bgm ya supaya tetap di tengah?
 
-27. 
+3. kemarin restriction bisa dr token untuk edit product dan delete product krn sbg admin. Bedain admin dan user dr tokennya bgm caranya ya?
+
+4. datetime di sql diinterpretasi beda di thunderclient, supaya sama bgm caranya ya? bisa pilih region di query sql nya / di express api?
+
+5. di mysql query tidak ada fetch, kalau ingin pagination seperti contoh FE (yg ada loading dan end of comments seperti itu) bgm cara paginationnya?
+
+6. 
+
+{
+    "fullname": "Yummy Bear",
+    "username": "dummyDummy1",
+    "bio": "tester diedit",
+    "profilePicture": ""
+}
+
+{
+  "id": 17,
+  "username": "dummyDummy1",
+  "email": "dummy1@mail.com",
+  "status": "verified",
+  "role": "user",
+  "fullname": "Yummy Bear",
+  "bio": "tester diedit",
+  "profilePicture": "",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInVzZXJuYW1lIjoiZHVtbXlEdW1teTEiLCJlbWFpbCI6ImR1bW15MUBtYWlsLmNvbSIsInN0YXR1cyI6InZlcmlmaWVkIiwicm9sZSI6InVzZXIiLCJmdWxsbmFtZSI6Ill1bW15IEJlYXIiLCJiaW8iOiJ0ZXN0ZXIgZGllZGl0IiwicHJvZmlsZVBpY3R1cmUiOiIiLCJpYXQiOjE2NTQ3ODI3NDcsImV4cCI6MTY1NTM4NzU0N30.6R7emixnKl6lIFMaysCGP7JEAdTZj7eZuw-paW5BszY"
+}
+
+{
+    "username": "dummyDummy1",
+    "password": "DUM1234!"
+}
+
+NAMBAH
+{
+    "likes": [
+    2,
+    3,
+    11,
+    12
+  ]
+}
+
+NGURANG
+{
+    "likes": [
+    3,
+    11
+  ]
+}
+
+edit caption post
+{
+    "caption": "looks delizciouz"
+}
+
+add new post
+{
+    "userId": 17,
+    "media": "https://64.media.tumblr.com/a8c254b677d8e65e63d2f4677e33c472/8c09d984bb62d73d-ff/s540x810/cce331cc755de7bb77d671d95dbbd288b8971976.gifv",
+    "caption": "no coffee no food"
+}
+
+{
+    "userId": 17,
+    "media": "https://data.whicdn.com/images/324871699/original.gif",
+    "caption": "looks delizciouz"
+}
+
+edit comment
+{
+    "comment": "test express"
+}

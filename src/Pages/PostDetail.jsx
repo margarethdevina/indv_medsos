@@ -139,7 +139,7 @@ const PostDetailPage = (props) => {
 
         Axios.patch(`${API_URL}/posts/${detail.id}`, {
             caption: inputCaption,
-            editedDate: latestDate
+            editedDate: latestDate // pas sambung ke express api bisa diganti penanggalan dari sql query
         }).then((res) => {
             console.log("isi res.data pas klik save", res.data)
             getDetail()

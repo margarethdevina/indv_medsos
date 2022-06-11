@@ -26,16 +26,15 @@ const AddPostComponent = (props) => {
             }).catch((error) => { console.log(error) })
     };
 
-    let { username, posts } = props;
+    let { userId, username, posts } = props;
 
     const [newPost, setNewPost] = useState({
-        username,
+        userId, //diganti jadi userid krn express api akan return si usernamenya
         media: "",
         caption: "",
-        uploadDate,
-        editedDate: "",
-        numberOfLikes: 0,
-        comments: []
+        uploadDate, //pas sambung ke express api, ini bisa dihapus
+        editedDate: "", //pas sambung ke express api, ini bisa dihapus
+        numberOfLikes: 0 //pas sambung ke express api, ini bisa dihapus
     })
 
     const handleImage = (value) => {
@@ -51,7 +50,7 @@ const AddPostComponent = (props) => {
         console.log("cek caption yg masuk", newPost.caption)
         console.log("cek uploadDate yg masuk", newPost.uploadDate)
 
-        let { username, media, caption, uploadDate, editedDate, numberOfLikes, comments } = newPost
+        let { userId, username, media, caption, uploadDate, editedDate, numberOfLikes } = newPost
         try {
             if (media == "" || caption == "") {
                 console.log("Fill in all form")
@@ -59,15 +58,14 @@ const AddPostComponent = (props) => {
                 setToastMsg("Fill in all form")
             } else {
                 let res = await Axios.post(`${API_URL}/posts`, {
-                    username,
+                    userId, //diganti jadi userid krn express api akan return si usernamenya
                     media,
                     caption,
-                    uploadDate,
-                    editedDate,
-                    numberOfLikes,
-                    comments
+                    uploadDate, //pas sambung ke express api, ini bisa dihapus
+                    editedDate, //pas sambung ke express api, ini bisa dihapus
+                    numberOfLikes //pas sambung ke express api, ini bisa dihapus
                 })
-                console.log("post yg terupload", res.data);
+                console.log("post yg terupload", res.data); // yg direturn jadi res.data si id:idPost, username, media, caption, uploadDate, editedDate, numberOfLikes
                 dispatch(getPostsAction(res.data));
                 getPosts();
                 setNewPost({ ...newPost, media: "", caption: "" })
