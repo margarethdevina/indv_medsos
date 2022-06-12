@@ -157,15 +157,29 @@ di res nya
 
 1. yg biasa dishare link nya itu kayak gmn ka? saat ini localhost yg bisa dishare
 
+metatag bisa dishare?
+
 2. di post detail, saat klik share icon niatnya munculkan modal. Saat layar desktop modal bisa dicentered tapi saat layar mobile phone modal mepet kiri. Di css nya diedit bgm ya supaya tetap di tengah?
+
+mesti buka class dr modalnya, pk inpsect element di console log dan lihat class modalnya itu apa
 
 3. kemarin restriction bisa dr token untuk edit product dan delete product krn sbg admin. Bedain admin dan user dr tokennya bgm caranya ya?
 
+create token cm di user aja, tapi di post bisa apply readtoken
+
 4. datetime di sql diinterpretasi beda di thunderclient, supaya sama bgm caranya ya? bisa pilih region di query sql nya / di express api?
+a. library moment.js
+b. bawaan javascript toLocaleStrng()
+c. new Date()
 
 5. di mysql query tidak ada fetch, kalau ingin pagination seperti contoh FE (yg ada loading dan end of comments seperti itu) bgm cara paginationnya?
 
-6. 
+pakai axios get saja, nanti sort, limit, offset bisa dari BE
+
+6. metatag jgn lupa
+library untuk add metatag di tiap page
+
+=====
 
 {
     "fullname": "Yummy Bear",

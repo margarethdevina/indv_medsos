@@ -73,6 +73,7 @@ const PostDetailPage = (props) => {
 
     const getCommentsForThisPost = async () => {
         const res = await fetch(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=1&_limit=5`);
+        //bisa pakai axios pagination nya
 
         const data = await res.json();
         setCommentsArr(data);
@@ -241,46 +242,47 @@ const PostDetailPage = (props) => {
     const handlePost = () => {
         // console.log("isi komen2 awal tanpa filter postId", allComments)
 
-        if (comments.length > 0) {
-            Axios.post(`${API_URL}/comments`, {
-                postId: parseInt(query),
-                id: comments[comments.length - 1].id + 1,
-                username,
-                commentDate: latestDate,
-                editedDate: "",
-                comment: inputComment
-            }).then((res) => {
-                console.log("isi res.data pas klik handlePost", res.data)
-                getAllComments()
-                setInputComment("")
-                getCommentsForThisPost()
-                // if(hasMore){
-                //     fetchData()
-                // }
-            }).catch((err) => {
-                console.log(err)
-            })
+        // if (comments.length > 0) {
+        Axios.post(`${API_URL}/comments`, {
+            postId: parseInt(query),
+            // id: comments[comments.length - 1].id + 1,
+            username,
+            commentDate: latestDate, //pas konek express bisa dihapus
+            editedDate: "", //pas konek express bisa dihapus
+            comment: inputComment
+        }).then((res) => {
+            console.log("isi res.data pas klik handlePost", res.data)
+            getAllComments()
+            setInputComment("")
+            getCommentsForThisPost()
+            // if(hasMore){
+            //     fetchData()
+            // }
+        }).catch((err) => {
+            console.log(err)
+        })
 
-        } else {
-            Axios.post(`${API_URL}/comments`, {
-                postId: parseInt(query),
-                id: 0,
-                username,
-                commentDate: latestDate,
-                editedDate: "",
-                comment: inputComment
-            }).then((res) => {
-                // console.log("isi res.data pas klik handlePost", res.data)
-                getAllComments()
-                setInputComment("")
-                getCommentsForThisPost()
-                // if(hasMore){
-                //     fetchData()
-                // }
-            }).catch((err) => {
-                console.log(err)
-            })
-        }
+        // } 
+        // else {
+        //     Axios.post(`${API_URL}/comments`, {
+        //         postId: parseInt(query),
+        //         id: 0,
+        //         username,
+        //         commentDate: latestDate,
+        //         editedDate: "",
+        //         comment: inputComment
+        //     }).then((res) => {
+        //         // console.log("isi res.data pas klik handlePost", res.data)
+        //         getAllComments()
+        //         setInputComment("")
+        //         getCommentsForThisPost()
+        //         // if(hasMore){
+        //         //     fetchData()
+        //         // }
+        //     }).catch((err) => {
+        //         console.log(err)
+        //     })
+        // }
     }
 
     const handleCopyLink = () => {
@@ -353,7 +355,7 @@ const PostDetailPage = (props) => {
                     >
                         <WaIcon
                             className="share__socials__icons"
-                            onClick={()=>setOpenShare(!openShare)}
+                            onClick={() => setOpenShare(!openShare)}
                         />
                     </WhatsappShareButton>
                     <TwitterShareButton
@@ -361,7 +363,7 @@ const PostDetailPage = (props) => {
                     >
                         <TwitterIcon
                             className="share__socials__icons"
-                            onClick={()=>setOpenShare(!openShare)}
+                            onClick={() => setOpenShare(!openShare)}
                         />
                     </TwitterShareButton>
                     <FacebookShareButton
@@ -369,7 +371,7 @@ const PostDetailPage = (props) => {
                     >
                         <FbIcon
                             className="share__socials__icons"
-                            onClick={()=>setOpenShare(!openShare)}
+                            onClick={() => setOpenShare(!openShare)}
                         />
                     </FacebookShareButton>
                     <CopyIcon
