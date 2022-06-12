@@ -72,10 +72,14 @@ const PostDetailPage = (props) => {
     }
 
     const getCommentsForThisPost = async () => {
-        const res = await fetch(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=1&_limit=5`);
+        const res = await Axios.get(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=1&_limit=5`);
+        //pas konek express API _limit, _sort dan _order dah ga dibutuhin krn fixed sql query harus sort dan order nya begitu ❗❗❗
+
+        // const res = await fetch(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=1&_limit=5`);
         //bisa pakai axios pagination nya
 
-        const data = await res.json();
+        const data = res.data;
+        // const data = await res.json();
         setCommentsArr(data);
 
         // if (commentsFiltered.length === 0 || commentsFiltered.length < 5) {
@@ -89,9 +93,13 @@ const PostDetailPage = (props) => {
     }
 
     const fetchComments = async () => {
-        const res = await fetch(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=${pageNumber}&_limit=5`);
+        const res = await Axios.get(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=${pageNumber}&_limit=5`);
+        //pas konek express API _limit, _sort dan _order dah ga dibutuhin krn fixed sql query harus sort dan order nya begitu ❗❗❗
 
-        const data = await res.json();
+        // const res = await fetch(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=${pageNumber}&_limit=5`);
+
+        const data = res.data;
+        // const data = await res.json();
         return data;
     }
 
@@ -246,7 +254,7 @@ const PostDetailPage = (props) => {
         Axios.post(`${API_URL}/comments`, {
             postId: parseInt(query),
             // id: comments[comments.length - 1].id + 1,
-            username,
+            username,//pas konek express bisa dihapus
             commentDate: latestDate, //pas konek express bisa dihapus
             editedDate: "", //pas konek express bisa dihapus
             comment: inputComment

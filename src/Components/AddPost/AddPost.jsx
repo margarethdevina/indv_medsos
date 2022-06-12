@@ -58,7 +58,7 @@ const AddPostComponent = (props) => {
                 setToastMsg("Fill in all form")
             } else {
                 let res = await Axios.post(`${API_URL}/posts`, {
-                    userId, //diganti jadi userid krn express api akan return si usernamenya
+                    userId, // pas sambung ke express api, ini bisa dihapus karena userId diambil dari readToken
                     media,
                     caption,
                     uploadDate, //pas sambung ke express api, ini bisa dihapus

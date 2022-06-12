@@ -179,6 +179,18 @@ pakai axios get saja, nanti sort, limit, offset bisa dari BE
 6. metatag jgn lupa
 library untuk add metatag di tiap page
 
+7. saat post di delete, komen dan likes di soft delete jadi ada status archived di database ❗❗❗
+
+8. deactivate account menggunakan konsep sm dgn nomor 7 jadi ada status deactivated.
+Saat deactivated, user ga bisa login jadi klo mau bisa login, harus request activate lgi dengan input email terus, link activatenya dikirim lewat email.
+
+9. bug di deleted post dan comment modal (font ada beda) ❗❗❗
+
+10. forget password maksudnya buang password lama lalu hashPassword password baru. Cara simpennya di middleware baru aja krn khusus password aja
+
+11. 
+
+
 =====
 
 {
@@ -197,12 +209,17 @@ library untuk add metatag di tiap page
   "fullname": "Yummy Bear",
   "bio": "tester diedit",
   "profilePicture": "",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInVzZXJuYW1lIjoiZHVtbXlEdW1teTEiLCJlbWFpbCI6ImR1bW15MUBtYWlsLmNvbSIsInN0YXR1cyI6InZlcmlmaWVkIiwicm9sZSI6InVzZXIiLCJmdWxsbmFtZSI6Ill1bW15IEJlYXIiLCJiaW8iOiJ0ZXN0ZXIgZGllZGl0IiwicHJvZmlsZVBpY3R1cmUiOiIiLCJpYXQiOjE2NTQ3ODI3NDcsImV4cCI6MTY1NTM4NzU0N30.6R7emixnKl6lIFMaysCGP7JEAdTZj7eZuw-paW5BszY"
+  "likes": [
+    2,
+    3,
+    11
+  ],
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInVzZXJuYW1lIjoiZHVtbXlEdW1teTEiLCJlbWFpbCI6ImR1bW15MUBtYWlsLmNvbSIsInN0YXR1cyI6InZlcmlmaWVkIiwicm9sZSI6InVzZXIiLCJmdWxsbmFtZSI6Ill1bW15IEJlYXIiLCJiaW8iOiJ0ZXN0ZXIgZGllZGl0IiwicHJvZmlsZVBpY3R1cmUiOiIiLCJpYXQiOjE2NTUwMDk3OTUsImV4cCI6MTY1NTYxNDU5NX0.VUIdRg1iQd9aEkbFokHPv2xmgGxPgQ0ufgEA3SmOm7g"
 }
 
 {
     "username": "dummyDummy1",
-    "password": "DUM1234!"
+    "password": "DUMMY123!"
 }
 
 NAMBAH
@@ -230,7 +247,7 @@ edit caption post
 
 add new post
 {
-    "userId": 17,
+    "userId": 17, // udah dari readToken
     "media": "https://64.media.tumblr.com/a8c254b677d8e65e63d2f4677e33c472/8c09d984bb62d73d-ff/s540x810/cce331cc755de7bb77d671d95dbbd288b8971976.gifv",
     "caption": "no coffee no food"
 }
@@ -241,7 +258,24 @@ add new post
     "caption": "looks delizciouz"
 }
 
+new comment
+{
+    "postId": 14,
+    "comment": "test 12062022-14:02"
+}
+
 edit comment
 {
     "comment": "test express"
+}
+
+forgetPassword
+{
+    "email": "zenitsu@mail.com",
+    "password": "ZEN1234!"
+}
+
+{
+    "username": "dummy1@mail.com",
+    "password": "DUMMY123!"
 }
