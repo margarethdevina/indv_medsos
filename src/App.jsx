@@ -26,7 +26,7 @@ function App() {
   const dispatch = useDispatch();
 
   const getPosts = () => {
-    Axios.get(`${API_URL}/posts`)
+    Axios.get(`${API_URL}/posts/get`)
       .then((response) => {
         console.log("data posts terambil smua?", response.data)
         dispatch(getPostsAction(response.data))
@@ -36,7 +36,7 @@ function App() {
   }
 
   const getComments = () => {
-    Axios.get(`${API_URL}/comments`)
+    Axios.get(`${API_URL}/comments/get`)
       .then((res) => {
         dispatch(getCommentsAction(res.data))
       }).catch((err) => {
@@ -47,10 +47,14 @@ function App() {
   const keepLogin = () => {
     let token = localStorage.getItem("tokenIdUser")
     if (token) {
-      Axios.get(`${API_URL}/users?id=${token}`)
+      Axios.get(`${API_URL}/users/keep`,{
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
         .then((res) => {
-          localStorage.setItem("tokenIdUser", res.data[0].id)
-          dispatch(loginAction(res.data[0]));
+          localStorage.setItem("tokenIdUser", res.data.token)
+          dispatch(loginAction(res.data));
         }).catch((error) => {
           console.log(error);
         })

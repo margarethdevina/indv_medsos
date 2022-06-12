@@ -19,7 +19,7 @@ const ModalLogin = (props) => {
     }, []);
 
     const getUsers = () => {
-        Axios.get(`${API_URL}/users`)
+        Axios.get(`${API_URL}/users/get`)
             .then((response) => {
                 dispatch(loginAction(response.data))
             }).catch((error) => {
@@ -49,11 +49,14 @@ const ModalLogin = (props) => {
             console.log("isi email", inForm.usernameOrEmail)
             console.log("inForm.password", inForm.password)
 
-            Axios.get(`${API_URL}/users?email=${inForm.usernameOrEmail}&password=${inForm.password}`)
+            Axios.post(`${API_URL}/users/login`, {
+                email: inForm.usernameOrEmail,
+                password: inForm.password
+            })
                 .then((response) => {
                     console.log("data saat masuk lwt email", response.data)
-                    localStorage.setItem("tokenIdUser", response.data[0].id)
-                    dispatch(loginAction(response.data[0]))
+                    localStorage.setItem("tokenIdUser", response.data.token)
+                    dispatch(loginAction(response.data))
                     props.toggleOpen();
                     navigate("/")
                 }).catch((error) => {
@@ -67,11 +70,14 @@ const ModalLogin = (props) => {
             console.log("isi username", inForm.usernameOrEmail)
             console.log("inForm.password", inForm.password)
 
-            Axios.get(`${API_URL}/users?username=${inForm.usernameOrEmail}&password=${inForm.password}`)
+            Axios.post(`${API_URL}/users/login`, {
+                username: inForm.usernameOrEmail,
+                password: inForm.password
+            })
                 .then((response) => {
                     console.log("data saat masuk lwt username", response.data)
-                    localStorage.setItem("tokenIdUser", response.data[0].id)
-                    dispatch(loginAction(response.data[0]))
+                    localStorage.setItem("tokenIdUser", response.data.token)
+                    dispatch(loginAction(response.data))
                     props.toggleOpen();
                     navigate("/")
                 }).catch((error) => {
@@ -116,7 +122,7 @@ const ModalLogin = (props) => {
             <Toast
                 isOpen={openToast}
                 className="gen_font_content"
-                style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999"}}
+                style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999" }}
             >
                 <ToastHeader
                     icon="warning"
@@ -137,7 +143,7 @@ const ModalLogin = (props) => {
                     Login with your account
                 </p>
                 <FormGroup
-                className="gen_font_content"
+                    className="gen_font_content"
                 >
                     <Label>Username or Email</Label>
                     <Input
@@ -147,7 +153,7 @@ const ModalLogin = (props) => {
                     />
                 </FormGroup>
                 <FormGroup
-                className="gen_font_content"
+                    className="gen_font_content"
                 >
                     <Label>Password</Label>
                     <InputGroup>

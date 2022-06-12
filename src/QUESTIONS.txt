@@ -218,6 +218,25 @@ Saat deactivated, user ga bisa login jadi klo mau bisa login, harus request acti
 }
 
 {
+  "id": 3,
+  "username": "zenitsu",
+  "email": "zenitsu@mail.com",
+  "status": "verified",
+  "role": "user",
+  "fullname": "kakoizenitsu",
+  "bio": "i love nezuko!",
+  "profilePicture": "https://cdna.artstation.com/p/assets/images/images/028/841/736/large/khandaker-shahariar-junk-6.jpg?1595681961",
+  "likes": [
+    2,
+    3,
+    4,
+    1,
+    14
+  ],
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJ6ZW5pdHN1IiwiZW1haWwiOiJ6ZW5pdHN1QG1haWwuY29tIiwic3RhdHVzIjoidmVyaWZpZWQiLCJyb2xlIjoidXNlciIsImZ1bGxuYW1lIjoia2Frb2l6ZW5pdHN1IiwiYmlvIjoiaSBsb3ZlIG5lenVrbyEiLCJwcm9maWxlUGljdHVyZSI6Imh0dHBzOi8vY2RuYS5hcnRzdGF0aW9uLmNvbS9wL2Fzc2V0cy9pbWFnZXMvaW1hZ2VzLzAyOC84NDEvNzM2L2xhcmdlL2toYW5kYWtlci1zaGFoYXJpYXItanVuay02LmpwZz8xNTk1NjgxOTYxIiwiaWF0IjoxNjU1MDIyNTc5LCJleHAiOjE2NTU2MjczNzl9.xeZHOs2lYYit5RVFYV2th3xuUKUQ3UYABJ-qhGahlFM"
+}
+
+{
     "username": "dummyDummy1",
     "password": "DUMMY123!"
 }

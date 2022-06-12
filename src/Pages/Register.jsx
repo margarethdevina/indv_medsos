@@ -44,7 +44,7 @@ const RegisterPage = (props) => {
     }, []);
 
     const getUsers = () => {
-        Axios.get(`${API_URL}/users`)
+        Axios.get(`${API_URL}/users/get`)
             .then((response) => {
                 // console.log("isi dbUsers", response.data)
                 setDbUsers(response.data)
@@ -151,9 +151,10 @@ const RegisterPage = (props) => {
                     setEmailValidity("❌ Used Email")
                 } else if (emailValidity == "✅ Valid Email") {
 
-                    alert("Registrasi berhasil")
+                    // alert("Registrasi berhasil")
+                    setToastMsg("Registrasi berhasil")
 
-                    let res = await Axios.post(`${API_URL}/users`, {
+                    let res = await Axios.post(`${API_URL}/users/regis`, {
                         email,
                         username,
                         password,
@@ -161,13 +162,12 @@ const RegisterPage = (props) => {
                         role: "user",
                         fullname: "",
                         bio: "",
-                        profilePicture: "",
-                        likes: []
+                        profilePicture: ""
                     })
 
                     console.log("data yg teregister", res.data)
 
-                    localStorage.setItem("tokenIdUser", res.data.id)
+                    localStorage.setItem("tokenIdUser", res.data.token)
                     dispatch(loginAction(res.data))
                     navigate("/")
 

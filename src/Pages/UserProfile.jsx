@@ -35,10 +35,14 @@ const UserProfilePage = (props) => {
     const keepLogin = () => {
         let token = localStorage.getItem("tokenIdUser")
         if (token) {
-            Axios.get(`${API_URL}/users?id=${token}`)
+            Axios.get(`${API_URL}/users/keep`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
                 .then((res) => {
-                    localStorage.setItem("tokenIdUser", res.data[0].id)
-                    dispatch(loginAction(res.data[0]));
+                    localStorage.setItem("tokenIdUser", res.data.token)
+                    dispatch(loginAction(res.data));
                 }).catch((error) => {
                     console.log(error);
                 })
@@ -265,17 +269,25 @@ const UserProfilePage = (props) => {
         setSelectedEdit(0);
         console.log("yang ingin disave", inputFullName, inputUserName, inputBio, inputPicture)
 
-        Axios.patch(`${API_URL}/users/${id}`, {
-            fullname: inputFullName,
-            username: inputUserName,
-            bio: inputBio,
-            profilePicture: inputPicture
-        }).then((res) => {
-            console.log("isi res.data pas klik save", res.data)
-            keepLogin()
-        }).catch((err) => {
-            console.log(err)
-        })
+        let token = localStorage.getItem("tokenIdUser")
+        if (token) {
+            Axios.patch(`${API_URL}/users/edit`, {
+                fullname: inputFullName,
+                username: inputUserName,
+                bio: inputBio,
+                profilePicture: inputPicture
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then((res) => {
+                console.log("isi res.data pas klik save", res.data)
+                keepLogin()
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+
     }
 
     const handleCancel = () => {
@@ -301,17 +313,17 @@ const UserProfilePage = (props) => {
                     <CardBody>
                         {
                             status == "unverified"
-                            ?
-                            <>
-                                <Button
-                                    className="col-12 gen_btn_warning_secondary"
-                                    color="warning"
-                                    outline
+                                ?
+                                <>
+                                    <Button
+                                        className="col-12 gen_btn_warning_secondary"
+                                        color="warning"
+                                        outline
                                     >
-                                    Verify your Account
-                                </Button>
-                            </>
-                            :
+                                        Verify your Account
+                                    </Button>
+                                </>
+                                :
                                 selectedEdit == 0
                                     ?
                                     <>
