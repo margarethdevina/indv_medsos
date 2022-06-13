@@ -25,61 +25,78 @@ const CardsInAllPosts = (props) => {
     const handleLike = (IdPost) => {
         let tempLike = [...likes];
         let tempPosts = [...posts];
+        let token = localStorage.getItem("tokenIdUser");
+
         if (!tempLike.includes(IdPost)) {
             tempLike.push(IdPost);
             let idxInPost = tempPosts.findIndex(val => val.id == IdPost);
+
             console.log("index di post", idxInPost)
             console.log("NOL di post itu saat ini", tempPosts[idxInPost].numberOfLikes)
-            let tempNoOfLikes = tempPosts[idxInPost].numberOfLikes;
-            tempNoOfLikes++;
-            console.log("number of likes nambah?", tempNoOfLikes)
+
+            // let tempNoOfLikes = tempPosts[idxInPost].numberOfLikes;
+            // tempNoOfLikes++;
+            // console.log("number of likes nambah?", tempNoOfLikes)
 
             //axios patch user likes
-            Axios.patch(`${API_URL}/users/${userid}`, {
-                likes: tempLike
-            }).then((res) => {
-                dispatch(updateLikesAction(res.data.likes))
-
-                //axios patch posts number of likes
-                updateNumberofLikes(IdPost, tempNoOfLikes)
-            }).catch((err) => {
-                console.log(err)
-            });
+            if (token) {
+                Axios.patch(`${API_URL}/users/edit`, {
+                    likes: tempLike
+                }, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then((res) => {
+                    dispatch(updateLikesAction(res.data))
+                    getPosts()
+                    //axios patch posts number of likes
+                    // updateNumberofLikes(IdPost, tempNoOfLikes)
+                }).catch((err) => {
+                    console.log(err)
+                })
+            };
 
         } else {
             let idxInLikes = tempLike.indexOf(IdPost);
             tempLike.splice(idxInLikes, 1);
             let idxInPost = tempPosts.findIndex(val => val.id == IdPost);
-            let tempNoOfLikes = tempPosts[idxInPost].numberOfLikes;
-            tempNoOfLikes--;
-            console.log("number of likes berkurang?", tempNoOfLikes)
+
+            // let tempNoOfLikes = tempPosts[idxInPost].numberOfLikes;
+            // tempNoOfLikes--;
+            // console.log("number of likes berkurang?", tempNoOfLikes)
 
             //axios patch user likes
-            Axios.patch(`${API_URL}/users/${userid}`, {
-                likes: tempLike
-            }).then((res) => {
-                dispatch(updateLikesAction(res.data.likes))
-
-                //axios patch posts number of likes
-                updateNumberofLikes(IdPost, tempNoOfLikes)
-            }).catch((err) => {
-                console.log(err)
-            });
+            if (token) {
+                Axios.patch(`${API_URL}/users/edit`, {
+                    likes: tempLike
+                }, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then((res) => {
+                    dispatch(updateLikesAction(res.data))
+                    getPosts()
+                    //axios patch posts number of likes
+                    // updateNumberofLikes(IdPost, tempNoOfLikes)
+                }).catch((err) => {
+                    console.log(err)
+                })
+            };
         }
     }
 
-    const updateNumberofLikes = (Id, tempNoOfLikes) => {
-        Axios.patch(`${API_URL}/posts/${Id}`, {
-            numberOfLikes: tempNoOfLikes
-        }).then((res) => {
-            getPosts()
-        }).catch((err) => {
-            console.log(err)
-        })
-    }
+    // const updateNumberofLikes = (Id, tempNoOfLikes) => {
+    //     Axios.patch(`${API_URL}/posts/${Id}`, {
+    //         numberOfLikes: tempNoOfLikes
+    //     }).then((res) => {
+    //         getPosts()
+    //     }).catch((err) => {
+    //         console.log(err)
+    //     })
+    // }
 
     const getPosts = () => {
-        Axios.get(`${API_URL}/posts`)
+        Axios.get(`${API_URL}/posts/get`)
             .then((response) => {
                 dispatch(getPostsAction(response.data))
                 props.handleCallBack(response.data)
@@ -96,7 +113,7 @@ const CardsInAllPosts = (props) => {
                     className="col-12 col-md-6"
                 >
                     <Card
-                    className="border-0 shadow-sm"
+                        className="border-0 shadow-sm"
                     >
                         <CardImg
                             onClick={() => navigate(`/postdetail?id=${value.id}`)}
@@ -146,7 +163,7 @@ const CardsInAllPosts = (props) => {
                     className="col-12 col-md-6"
                 >
                     <Card
-                    className="border-0 shadow-sm"
+                        className="border-0 shadow-sm"
                     >
                         <CardImg
                             onClick={() => navigate(`/postdetail?id=${value.id}`)}

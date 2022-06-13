@@ -63,7 +63,7 @@ const PostDetailPage = (props) => {
     }, []);
 
     const getAllComments = () => {
-        Axios.get(`${API_URL}/comments`)
+        Axios.get(`${API_URL}/comments/get`)
             .then((res) => {
                 dispatch(getCommentsAction(res.data))
             }).catch((err) => {
@@ -72,7 +72,8 @@ const PostDetailPage = (props) => {
     }
 
     const getCommentsForThisPost = async () => {
-        const res = await Axios.get(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=1&_limit=5`);
+        const res = await Axios.get(`${API_URL}/comments/paginate?postId=${query}&_page=1`);
+        // const res = await Axios.get(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=1&_limit=5`);
         //pas konek express API _limit, _sort dan _order dah ga dibutuhin krn fixed sql query harus sort dan order nya begitu ❗❗❗
 
         // const res = await fetch(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=1&_limit=5`);
@@ -93,7 +94,8 @@ const PostDetailPage = (props) => {
     }
 
     const fetchComments = async () => {
-        const res = await Axios.get(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=${pageNumber}&_limit=5`);
+        const res = await Axios.get(`${API_URL}/comments/paginate?postId=${query}&_page=${pageNumber}`);
+        // const res = await Axios.get(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=${pageNumber}&_limit=5`);
         //pas konek express API _limit, _sort dan _order dah ga dibutuhin krn fixed sql query harus sort dan order nya begitu ❗❗❗
 
         // const res = await fetch(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=${pageNumber}&_limit=5`);
@@ -125,10 +127,10 @@ const PostDetailPage = (props) => {
 
     const getDetail = () => {
         console.log("isi search", search)
-        Axios.get(`${API_URL}/posts${search}`)
+        Axios.get(`${API_URL}/posts/detail${search}`)
             .then((response) => {
-                console.log("isi detail", response.data[0]);
-                setDetail(response.data[0]);
+                console.log("isi detail", response.data);
+                setDetail(response.data);
             })
             .catch((error) => { console.log(error) })
     };
@@ -146,15 +148,22 @@ const PostDetailPage = (props) => {
         setSelectedEdit(0);
         console.log("yang ingin disave", inputCaption)
 
-        Axios.patch(`${API_URL}/posts/${detail.id}`, {
-            caption: inputCaption,
-            editedDate: latestDate // pas sambung ke express api bisa diganti penanggalan dari sql query
-        }).then((res) => {
-            console.log("isi res.data pas klik save", res.data)
-            getDetail()
-        }).catch((err) => {
-            console.log(err)
-        })
+        let token = localStorage.getItem("tokenIdUser");
+        if (token) {
+            Axios.patch(`${API_URL}/posts/${detail.id}`, {
+                caption: inputCaption
+                // editedDate: latestDate // pas sambung ke express api bisa diganti penanggalan dari sql query
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then((res) => {
+                console.log("isi res.data pas klik save", res.data)
+                getDetail()
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
     }
 
     const handleDelete = () => {
@@ -165,7 +174,12 @@ const PostDetailPage = (props) => {
     const confirmDelete = () => {
         setOpenDelete(!openDelete);
 
-        Axios.delete(`${API_URL}/posts/${detail.id}`)
+        let token = localStorage.getItem("tokenIdUser");
+        Axios.delete(`${API_URL}/posts/${detail.id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then((res) => {
                 getPosts()
             }).catch((err) => {
@@ -178,67 +192,87 @@ const PostDetailPage = (props) => {
         let IdPost = parseInt(search.split("=")[1]);
         let tempLike = [...likes];
         let tempPosts = [...posts];
+        let token = localStorage.getItem("tokenIdUser");
+
         if (!tempLike.includes(IdPost)) {
             tempLike.push(IdPost);
             let idxInPost = tempPosts.findIndex(val => val.id == IdPost);
+
             console.log("index di post", idxInPost)
             console.log("NOL di post itu saat ini", tempPosts[idxInPost].numberOfLikes)
-            let tempNoOfLikes = tempPosts[idxInPost].numberOfLikes;
-            tempNoOfLikes++;
-            console.log("number of likes nambah?", tempNoOfLikes)
+
+            // let tempNoOfLikes = tempPosts[idxInPost].numberOfLikes;
+            // tempNoOfLikes++;
+            // console.log("number of likes nambah?", tempNoOfLikes)
 
             //axios patch user likes
-            Axios.patch(`${API_URL}/users/${userid}`, {
-                likes: tempLike
-            }).then((res) => {
-                dispatch(updateLikesAction(res.data.likes))
+            if (token) {
+                Axios.patch(`${API_URL}/users/edit`, {
+                    likes: tempLike
+                }, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then((res) => {
+                    dispatch(updateLikesAction(res.data))
+                    getPosts()
+                    //axios patch posts number of likes
+                    // updateNumberofLikes(IdPost, tempNoOfLikes)
 
-                //axios patch posts number of likes
-                updateNumberofLikes(IdPost, tempNoOfLikes)
+                    //set warna fill like iconnya
+                    setFavoriteFill("#e13b6e")
+                }).catch((err) => {
+                    console.log(err)
+                });
+            }
 
-                //set warna fill like iconnya
-                setFavoriteFill("#e13b6e")
-            }).catch((err) => {
-                console.log(err)
-            });
 
         } else {
+
             let idxInLikes = tempLike.indexOf(IdPost);
             tempLike.splice(idxInLikes, 1);
             let idxInPost = tempPosts.findIndex(val => val.id == IdPost);
-            let tempNoOfLikes = tempPosts[idxInPost].numberOfLikes;
-            tempNoOfLikes--;
-            console.log("number of likes berkurang?", tempNoOfLikes)
+
+            // let tempNoOfLikes = tempPosts[idxInPost].numberOfLikes;
+            // tempNoOfLikes--;
+            // console.log("number of likes berkurang?", tempNoOfLikes)
 
             //axios patch user likes
-            Axios.patch(`${API_URL}/users/${userid}`, {
-                likes: tempLike
-            }).then((res) => {
-                dispatch(updateLikesAction(res.data.likes))
+            if (token) {
+                Axios.patch(`${API_URL}/users/edit`, {
+                    likes: tempLike
+                },{
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then((res) => {
+                    dispatch(updateLikesAction(res.data))
+                    getPosts()
+                    //axios patch posts number of likes
+                    // updateNumberofLikes(IdPost, tempNoOfLikes)
 
-                //axios patch posts number of likes
-                updateNumberofLikes(IdPost, tempNoOfLikes)
+                    //set warna fill like iconnya
+                    setFavoriteFill("#351c75")
+                }).catch((err) => {
+                    console.log(err)
+                });
+            }
 
-                //set warna fill like iconnya
-                setFavoriteFill("#351c75")
-            }).catch((err) => {
-                console.log(err)
-            });
         }
     }
 
-    const updateNumberofLikes = (Id, tempNoOfLikes) => {
-        Axios.patch(`${API_URL}/posts/${Id}`, {
-            numberOfLikes: tempNoOfLikes
-        }).then((res) => {
-            getPosts()
-        }).catch((err) => {
-            console.log(err)
-        })
-    }
+    // const updateNumberofLikes = (Id, tempNoOfLikes) => {
+    //     Axios.patch(`${API_URL}/posts/${Id}`, {
+    //         numberOfLikes: tempNoOfLikes
+    //     }).then((res) => {
+    //         getPosts()
+    //     }).catch((err) => {
+    //         console.log(err)
+    //     })
+    // }
 
     const getPosts = () => {
-        Axios.get(`${API_URL}/posts`)
+        Axios.get(`${API_URL}/posts/get`)
             .then((response) => {
                 console.log("data posts terambil smua?", response.data)
                 dispatch(getPostsAction(response.data))

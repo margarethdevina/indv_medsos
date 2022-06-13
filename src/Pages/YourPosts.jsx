@@ -19,7 +19,7 @@ const YourPostsPage = (props) => {
     }, []);
 
     const getPosts = () => {
-        Axios.get(`${API_URL}/posts`)
+        Axios.get(`${API_URL}/posts/get`)
             .then((response) => {
                 console.log("isi dbPosts", response.data)
                 setDbPosts(response.data)

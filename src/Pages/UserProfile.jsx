@@ -269,7 +269,7 @@ const UserProfilePage = (props) => {
         setSelectedEdit(0);
         console.log("yang ingin disave", inputFullName, inputUserName, inputBio, inputPicture)
 
-        let token = localStorage.getItem("tokenIdUser")
+        let token = localStorage.getItem("tokenIdUser");
         if (token) {
             Axios.patch(`${API_URL}/users/edit`, {
                 fullname: inputFullName,
