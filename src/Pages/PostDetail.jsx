@@ -199,7 +199,7 @@ const PostDetailPage = (props) => {
             let idxInPost = tempPosts.findIndex(val => val.id == IdPost);
 
             console.log("index di post", idxInPost)
-            console.log("NOL di post itu saat ini", tempPosts[idxInPost].numberOfLikes)
+            // console.log("NOL di post itu saat ini", tempPosts[idxInPost].numberOfLikes)
 
             // let tempNoOfLikes = tempPosts[idxInPost].numberOfLikes;
             // tempNoOfLikes++;
@@ -288,9 +288,9 @@ const PostDetailPage = (props) => {
         Axios.post(`${API_URL}/comments`, {
             postId: parseInt(query),
             // id: comments[comments.length - 1].id + 1,
-            username,//pas konek express bisa dihapus
-            commentDate: latestDate, //pas konek express bisa dihapus
-            editedDate: "", //pas konek express bisa dihapus
+            // username,//pas konek express bisa dihapus
+            // commentDate: latestDate, //pas konek express bisa dihapus
+            // editedDate: "", //pas konek express bisa dihapus
             comment: inputComment
         }).then((res) => {
             console.log("isi res.data pas klik handlePost", res.data)

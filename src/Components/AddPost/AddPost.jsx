@@ -19,7 +19,7 @@ const AddPostComponent = (props) => {
     const uploadDate = `${currentDate.getFullYear()}/${(currentDate.getMonth() + 1) < 10 ? `0${(currentDate.getMonth() + 1)}` : `${(currentDate.getMonth() + 1)}`}/${currentDate.getDate()}`
 
     const getPosts = () => {
-        Axios.get(`${API_URL}/posts`)
+        Axios.get(`${API_URL}/posts/get`)
             .then((response) => {
                 console.log("isi dbPosts", response.data)
                 dispatch(getPostsAction(response.data))
