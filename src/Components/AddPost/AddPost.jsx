@@ -29,12 +29,12 @@ const AddPostComponent = (props) => {
     let { userId, username, posts } = props;
 
     const [newPost, setNewPost] = useState({
-        userId, //diganti jadi userid krn express api akan return si usernamenya
+        // userId, //diganti jadi userid krn express api akan return si usernamenya
         media: "",
         caption: "",
-        uploadDate, //pas sambung ke express api, ini bisa dihapus
-        editedDate: "", //pas sambung ke express api, ini bisa dihapus
-        numberOfLikes: 0 //pas sambung ke express api, ini bisa dihapus
+        // uploadDate, //pas sambung ke express api, ini bisa dihapus
+        // editedDate: "", //pas sambung ke express api, ini bisa dihapus
+        // numberOfLikes: 0 //pas sambung ke express api, ini bisa dihapus
     })
 
     const handleImage = (value) => {
@@ -50,26 +50,35 @@ const AddPostComponent = (props) => {
         console.log("cek caption yg masuk", newPost.caption)
         console.log("cek uploadDate yg masuk", newPost.uploadDate)
 
-        let { userId, username, media, caption, uploadDate, editedDate, numberOfLikes } = newPost
+        let { userId, username, media, caption, uploadDate, editedDate, numberOfLikes } = newPost;
+
+        let token = localStorage.getItem("tokenIdUser");
+
         try {
             if (media == "" || caption == "") {
                 console.log("Fill in all form")
                 setOpenToast(!openToast)
                 setToastMsg("Fill in all form")
             } else {
-                let res = await Axios.post(`${API_URL}/posts`, {
-                    userId, // pas sambung ke express api, ini bisa dihapus karena userId diambil dari readToken
-                    media,
-                    caption,
-                    uploadDate, //pas sambung ke express api, ini bisa dihapus
-                    editedDate, //pas sambung ke express api, ini bisa dihapus
-                    numberOfLikes //pas sambung ke express api, ini bisa dihapus
-                })
-                console.log("post yg terupload", res.data); // yg direturn jadi res.data si id:idPost, username, media, caption, uploadDate, editedDate, numberOfLikes
-                dispatch(getPostsAction(res.data));
-                getPosts();
-                setNewPost({ ...newPost, media: "", caption: "" })
-                navigate("/yourposts")
+                if (token) {
+                    let res = await Axios.post(`${API_URL}/posts/add`, {
+                        // userId, // pas sambung ke express api, ini bisa dihapus karena userId diambil dari readToken
+                        media,
+                        caption,
+                        // uploadDate, //pas sambung ke express api, ini bisa dihapus
+                        // editedDate, //pas sambung ke express api, ini bisa dihapus
+                        // numberOfLikes //pas sambung ke express api, ini bisa dihapus
+                    }, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    console.log("post yg terupload", res.data); // yg direturn jadi res.data si id:idPost, username, media, caption, uploadDate, editedDate, numberOfLikes
+                    dispatch(getPostsAction(res.data));
+                    getPosts();
+                    setNewPost({ ...newPost, media: "", caption: "" })
+                    navigate("/yourposts")
+                }
             }
         } catch (error) {
             console.log(error)
@@ -88,7 +97,7 @@ const AddPostComponent = (props) => {
             <Toast
                 isOpen={openToast}
                 className="gen_font_content"
-                style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999"}}
+                style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999" }}
             >
                 <ToastHeader
                     icon="warning"
