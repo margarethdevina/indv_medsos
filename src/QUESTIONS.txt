@@ -298,3 +298,19 @@ forgetPassword
     "username": "dummy1@mail.com",
     "password": "DUMMY123!"
 }
+
+{
+"username": "DummyDeveloper",
+"email":"dummydeveloper97@gmail.com",
+"password": "DUM1234!"
+}
+
+======= BUGS ======== ❗❗❗❗❗❗
+
+1. del comment berhasil tp state ga langsung keupdate
+
+2. del post berhasil tp state ga langsung keupdate
+
+3. perbaiki footer yg tiap kali ganti page naik ke atas
+
+4. 

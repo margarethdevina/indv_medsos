@@ -241,7 +241,7 @@ const PostDetailPage = (props) => {
             if (token) {
                 Axios.patch(`${API_URL}/users/edit`, {
                     likes: tempLike
-                },{
+                }, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -284,14 +284,19 @@ const PostDetailPage = (props) => {
     const handlePost = () => {
         // console.log("isi komen2 awal tanpa filter postId", allComments)
 
+        let token = localStorage.getItem("tokenIdUser");
         // if (comments.length > 0) {
-        Axios.post(`${API_URL}/comments`, {
+        Axios.post(`${API_URL}/comments/add`, {
             postId: parseInt(query),
             // id: comments[comments.length - 1].id + 1,
             // username,//pas konek express bisa dihapus
             // commentDate: latestDate, //pas konek express bisa dihapus
             // editedDate: "", //pas konek express bisa dihapus
             comment: inputComment
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         }).then((res) => {
             console.log("isi res.data pas klik handlePost", res.data)
             getAllComments()

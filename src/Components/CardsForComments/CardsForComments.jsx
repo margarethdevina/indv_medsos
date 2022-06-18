@@ -16,17 +16,17 @@ const CardsForComments = (props) => {
 
     const [selectedIdx, setSelectedIdx] = useState(null);
     const [openDelete, setOpenDelete] = useState(false);
-    
+
     const { commentsFiltered } = useSelector((state) => {
         return {
-            commentsFiltered: state.commentsReducer.comments.filter(val=>val.postId == props.query)
+            commentsFiltered: state.commentsReducer.comments.filter(val => val.postId == props.query)
         }
     })
 
     let data = [...props.commentsArr];
     console.log("isi props.commentsArr terbaru", data);
 
-    console.log("isi commentsFiltered",commentsFiltered)
+    console.log("isi commentsFiltered", commentsFiltered)
 
     // const [data, setData] = useState([])
 
@@ -41,7 +41,7 @@ const CardsForComments = (props) => {
 
     // untuk dispatch comment ulang supaya reducer keupdate
     const getComments = () => {
-        Axios.get(`${API_URL}/comments`)
+        Axios.get(`${API_URL}/comments/get`)
             .then((res) => {
                 dispatch(getCommentsAction(res.data))
                 // setData([...props.commentsArr])
@@ -51,13 +51,18 @@ const CardsForComments = (props) => {
     }
 
     const handleSave = () => {
-        // console.log("yg ingin disave", inputComment)
+        // console.log("yg ingin disave", inputComment)❗❗❗
         data[selectedIdx].comment = inputComment
         data[selectedIdx].editedDate = latestDate
 
+        let token = localStorage.getItem("tokenIdUser");
         Axios.patch(`${API_URL}/comments/${props.commentsArr[selectedIdx].id}`, {
-            comment: inputComment,
-            editedDate: latestDate //pas konek ke express API ini bisa didelete
+            comment: inputComment
+            // editedDate: latestDate //pas konek ke express API ini bisa didelete
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         }).then((res) => {
             console.log("isi res.data pas klik save", res.data)
             getComments()
@@ -77,7 +82,12 @@ const CardsForComments = (props) => {
     const confirmDelete = () => {
         data.splice(selectedIdx, 1)
 
-        Axios.delete(`${API_URL}/comments/${props.commentsArr[selectedIdx].id}`).
+        let token = localStorage.getItem("tokenIdUser");
+        Axios.delete(`${API_URL}/comments/${props.commentsArr[selectedIdx].id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).
             then((res) => {
                 getComments()
                 setSelectedIdx(null)
@@ -196,7 +206,7 @@ const CardsForComments = (props) => {
         )
     }
 
-    console.log("isi hasMore",props.hasMore)
+    console.log("isi hasMore", props.hasMore)
 
     return (
         <div
@@ -241,7 +251,7 @@ const CardsForComments = (props) => {
             <InfiniteScroll
                 dataLength={data.length}
                 // dataLength={commentsFiltered.length}
-                next={props.fetchData}                hasMore={props.hasMore}
+                next={props.fetchData} hasMore={props.hasMore}
                 loader={commentsFiltered.length === 0
                     ?
                     <p
