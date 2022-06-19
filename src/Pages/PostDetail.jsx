@@ -130,6 +130,7 @@ const PostDetailPage = (props) => {
         Axios.get(`${API_URL}/posts/detail${search}`)
             .then((response) => {
                 console.log("isi detail", response.data);
+                console.log("isi detail.media", response.data.media);
                 setDetail(response.data);
             })
             .catch((error) => { console.log(error) })
@@ -207,9 +208,11 @@ const PostDetailPage = (props) => {
 
             //axios patch user likes
             if (token) {
-                Axios.patch(`${API_URL}/users/edit`, {
-                    likes: tempLike
-                }, {
+                let formData = new FormData();
+                let data = { likes: tempLike };
+                console.log("data", data);
+                formData.append('data', JSON.stringify(data));
+                Axios.patch(`${API_URL}/users/edit`, formData, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -239,9 +242,11 @@ const PostDetailPage = (props) => {
 
             //axios patch user likes
             if (token) {
-                Axios.patch(`${API_URL}/users/edit`, {
-                    likes: tempLike
-                }, {
+                let formData = new FormData();
+                let data = { likes: tempLike };
+                console.log("data", data);
+                formData.append('data', JSON.stringify(data));
+                Axios.patch(`${API_URL}/users/edit`, formData, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -441,7 +446,15 @@ const PostDetailPage = (props) => {
                 className="col-12 col-md-7 order-md-1"
             >
                 <img
-                    src={detail.media}
+                    src={
+                        detail.media
+                            &&
+                            detail.media.includes("http")
+                            ?
+                            detail.media
+                            :
+                            `${API_URL}${detail.media}`
+                    }
                     alt={`${detail.id}-${detail.uploadDate}-media`}
                     width="100%"
                 />

@@ -40,9 +40,11 @@ const CardsInAllPosts = (props) => {
 
             //axios patch user likes
             if (token) {
-                Axios.patch(`${API_URL}/users/edit`, {
-                    likes: tempLike
-                }, {
+                let formData = new FormData();
+                let data = { likes: tempLike };
+                console.log("data", data);
+                formData.append('data', JSON.stringify(data));
+                Axios.patch(`${API_URL}/users/edit`, formData, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -67,9 +69,11 @@ const CardsInAllPosts = (props) => {
 
             //axios patch user likes
             if (token) {
-                Axios.patch(`${API_URL}/users/edit`, {
-                    likes: tempLike
-                }, {
+                let formData = new FormData();
+                let data = { likes: tempLike };
+                console.log("data", data);
+                formData.append('data', JSON.stringify(data));
+                Axios.patch(`${API_URL}/users/edit`, formData, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -117,7 +121,7 @@ const CardsInAllPosts = (props) => {
                     >
                         <CardImg
                             onClick={() => navigate(`/postdetail?id=${value.id}`)}
-                            src={value.media}
+                            src={value.media.includes("http") ? value.media : `${API_URL}${value.media}`}
                             alt={`${value.id}-${value.username}-media`}
                             // top
                             className="_card_media"
@@ -167,7 +171,7 @@ const CardsInAllPosts = (props) => {
                     >
                         <CardImg
                             onClick={() => navigate(`/postdetail?id=${value.id}`)}
-                            src={value.media}
+                            src={value.media.includes("http") ? value.media : `${API_URL}${value.media}`}
                             alt={`${value.id}-${value.username}-media`}
                             // top
                             className="_card_media"

@@ -38,6 +38,7 @@ const AddPostComponent = (props) => {
     })
 
     const handleImage = (value) => {
+        console.log("value handleImage", value)
         setNewPost({ ...newPost, media: value });
     }
 
@@ -48,7 +49,7 @@ const AddPostComponent = (props) => {
     const handleUpload = async () => {
         console.log("cek image yg masuk ke newPost", newPost.media)
         console.log("cek caption yg masuk", newPost.caption)
-        console.log("cek uploadDate yg masuk", newPost.uploadDate)
+        // console.log("cek uploadDate yg masuk", newPost.uploadDate)
 
         let { userId, username, media, caption, uploadDate, editedDate, numberOfLikes } = newPost;
 
@@ -61,19 +62,27 @@ const AddPostComponent = (props) => {
                 setToastMsg("Fill in all form")
             } else {
                 if (token) {
-                    let res = await Axios.post(`${API_URL}/posts/add`, {
-                        // userId, // pas sambung ke express api, ini bisa dihapus karena userId diambil dari readToken
-                        media,
-                        caption,
-                        // uploadDate, //pas sambung ke express api, ini bisa dihapus
-                        // editedDate, //pas sambung ke express api, ini bisa dihapus
-                        // numberOfLikes //pas sambung ke express api, ini bisa dihapus
-                    }, {
+                    let formData = new FormData();
+                    let data = { caption };
+                    console.log("data", data);
+                    formData.append('data', JSON.stringify(data));
+                    formData.append('media', media);
+                    // console.log("formData",formData)
+
+                    // userId, // pas sambung ke express api, ini bisa dihapus karena userId diambil dari readToken
+                    // {media,
+                    // caption}
+                    // uploadDate, //pas sambung ke express api, ini bisa dihapus
+                    // editedDate, //pas sambung ke express api, ini bisa dihapus
+                    // numberOfLikes //pas sambung ke express api, ini bisa dihapus
+
+                    let res = await Axios.post(`${API_URL}/posts/add`, formData, {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
-                    })
-                    console.log("post yg terupload", res.data); // yg direturn jadi res.data si id:idPost, username, media, caption, uploadDate, editedDate, numberOfLikes
+                    });
+                    console.log("post yg terupload", res.data);
+                    // yg direturn jadi res.data si id:idPost, username, media, caption, uploadDate, editedDate, numberOfLikes
                     dispatch(getPostsAction(res.data));
                     getPosts();
                     setNewPost({ ...newPost, media: "", caption: "" })
@@ -133,12 +142,12 @@ const AddPostComponent = (props) => {
                         <Col sm={8}>
                             <Input
                                 id="inputImage"
-                                value={newPost.media}
-                                placeholder="Insert a media / image"
-                                type="text"
-                                onChange={(e) => handleImage(e.target.value)}
-                            // type="file"
-                            // onChange={(e) => handleImage(e.target.files[0])}
+                                // value={newPost.media}
+                                // placeholder="Insert a media / image"
+                                // type="text"
+                                // onChange={(e) => handleImage(e.target.value)}
+                                type="file"
+                                onChange={(e) => handleImage(e.target.files[0])}
                             />
                         </Col>
                     </FormGroup>

@@ -67,7 +67,16 @@ const UserProfilePage = (props) => {
                                 ?
                                 <>
                                     <CardImg
-                                        src={profilePic}
+                                        // ❗❗❗
+                                        src={
+                                            profilePic
+                                            &&
+                                            profilePic.includes("http")
+                                            ?
+                                            profilePic
+                                            :
+                                            `${API_URL}${profilePic}`
+                                        }
                                         alt={`${fullname}'s profile picture`}
                                         top
                                         style={{
@@ -160,9 +169,12 @@ const UserProfilePage = (props) => {
                 >
                     <div className="container">
                         <Input
-                            type="text"
-                            placeholder={`Insert new image: ${profilePic}`}
-                            onChange={(e) => handlePicture(e.target.value)}
+                            // ❗❗❗
+                            // type="text"
+                            type="file"
+                            // placeholder={`Insert new image: ${profilePic}`}
+                            // onChange={(e) => handlePicture(e.target.value)}
+                            onChange={(e) => handlePicture(e.target.files[0])}
                         />
                     </div>
                     <div
@@ -262,7 +274,7 @@ const UserProfilePage = (props) => {
 
     const handlePicture = (value) => {
         setInputPicture(value)
-        // console.log(inputPicture)
+        console.log("inputPicture",inputPicture)
     }
 
     const handleSave = () => {
@@ -271,12 +283,16 @@ const UserProfilePage = (props) => {
 
         let token = localStorage.getItem("tokenIdUser");
         if (token) {
-            Axios.patch(`${API_URL}/users/edit`, {
+            let formData = new FormData();
+            let data = {
                 fullname: inputFullName,
                 username: inputUserName,
-                bio: inputBio,
-                profilePicture: inputPicture
-            }, {
+                bio: inputBio
+            };
+            console.log("data", data);
+            formData.append('data', JSON.stringify(data));
+            formData.append('profilePicture', inputPicture);
+            Axios.patch(`${API_URL}/users/edit`, formData, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -286,6 +302,23 @@ const UserProfilePage = (props) => {
             }).catch((err) => {
                 console.log(err)
             })
+
+            //❗❗❗
+            // Axios.patch(`${API_URL}/users/edit`, {
+            //     fullname: inputFullName,
+            //     username: inputUserName,
+            //     bio: inputBio,
+            //     profilePicture: inputPicture
+            // }, {
+            //     headers: {
+            //         'Authorization': `Bearer ${token}`
+            //     }
+            // }).then((res) => {
+            //     console.log("isi res.data pas klik save", res.data)
+            //     keepLogin()
+            // }).catch((err) => {
+            //     console.log(err)
+            // })
         }
 
     }

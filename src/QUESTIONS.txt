@@ -305,7 +305,7 @@ forgetPassword
 "password": "DUM1234!"
 }
 
-======= BUGS ======== ❗❗❗❗❗❗
+======= BUGS / NEEDS UPDATE ======== ❗❗❗❗❗❗
 
 1. del comment berhasil tp state ga langsung keupdate
 
@@ -313,4 +313,12 @@ forgetPassword
 
 3. perbaiki footer yg tiap kali ganti page naik ke atas
 
-4. 
+4. perbaiki 404 not found di unverif user page selain landing page
+
+5. add icon supaya your post dan your likes dr new verif user ga kosong2 amat
+
+6. beda font di modal delete dan edit
+
+7. moment.js diinstal di FE krn untuk ubah tampilan dari interpretasi datetime saja
+
+8. 

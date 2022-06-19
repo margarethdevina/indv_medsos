@@ -1,4 +1,5 @@
 import React from "react";
+import { API_URL } from "../../helper";
 import './_CardsInYourPosts.scss';
 import { CardColumns, Card, CardImg, CardTitle, CardSubtitle } from "reactstrap";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +10,7 @@ const CardsInYourPosts = (props) => {
 
     const printCard = () => {
         return props.data.map((value, index) => {
+            console.log("value.media",value.media)
             return (
                 <CardColumns
                     key={value.id}
@@ -19,7 +21,7 @@ const CardsInYourPosts = (props) => {
                         onClick={() => navigate(`/postdetail?id=${value.id}`)}
                     >
                         <CardImg
-                            src={value.media}
+                            src={value.media.includes("http") ? value.media : `${API_URL}${value.media}`}
                             alt={`${value.id}-${value.username}-media`}
                             // top
                             className="_card_media"
