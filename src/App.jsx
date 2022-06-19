@@ -12,6 +12,7 @@ import PostDetailPage from './Pages/PostDetail';
 import RegisterPage from './Pages/Register';
 import UserProfilePage from './Pages/UserProfile';
 import NotFoundPage from './Pages/404';
+import VerificationUser from './Pages/VerificationPage';
 import Axios from 'axios';
 import { API_URL } from './helper';
 import React, { useEffect } from 'react';
@@ -47,7 +48,7 @@ function App() {
   const keepLogin = () => {
     let token = localStorage.getItem("tokenIdUser")
     if (token) {
-      Axios.get(`${API_URL}/users/keep`,{
+      Axios.get(`${API_URL}/users/keep`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -79,9 +80,7 @@ function App() {
   return (
     <div className="App">
 
-      <NavbarComponent 
-      
-      />
+      <NavbarComponent />
 
       <Routes>
 
@@ -93,6 +92,8 @@ function App() {
               ?
               <>
                 <Route path='/userprofile' element={<UserProfilePage />} />
+                <Route path='/allposts' element={<AllPostsPage />} />
+                <Route path='/verification/:token' element={<VerificationUser />} />
               </>
               :
               <>

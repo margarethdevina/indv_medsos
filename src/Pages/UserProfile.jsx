@@ -5,12 +5,14 @@ import Axios from 'axios';
 import { API_URL } from "../helper";
 import { loginAction } from "../redux/actions/usersActions";
 import { Card, CardImg, CardBody, Button, Input } from "reactstrap";
+import { useNavigate } from 'react-router-dom';
 import adminPic from "../Assets/SampleProfilePic/Admin.png";
 import { ReactComponent as VerifIcon } from '../Assets/IconRef/verified.svg';
 
 const UserProfilePage = (props) => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { id, fullname, bio, username, email, profilePic, status, likes, posts } = useSelector((state) => {
         return {
@@ -70,12 +72,12 @@ const UserProfilePage = (props) => {
                                         // ❗❗❗
                                         src={
                                             profilePic
-                                            &&
-                                            profilePic.includes("http")
-                                            ?
-                                            profilePic
-                                            :
-                                            `${API_URL}${profilePic}`
+                                                &&
+                                                profilePic.includes("http")
+                                                ?
+                                                profilePic
+                                                :
+                                                `${API_URL}${profilePic}`
                                         }
                                         alt={`${fullname}'s profile picture`}
                                         top
@@ -274,7 +276,7 @@ const UserProfilePage = (props) => {
 
     const handlePicture = (value) => {
         setInputPicture(value)
-        console.log("inputPicture",inputPicture)
+        console.log("inputPicture", inputPicture)
     }
 
     const handleSave = () => {
@@ -327,6 +329,26 @@ const UserProfilePage = (props) => {
         setSelectedEdit(0);
     }
 
+    const resendVerif = () => {
+        let token = localStorage.getItem("tokenIdUser");
+        if (token) {
+            Axios.get(`${API_URL}/users/resendVerif`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then((res) => {
+                if (res.data.success) {
+                    localStorage.setItem("tokenIdUser", res.data.token);
+                    dispatch(loginAction(res.data));
+                    alert("Your request for Account Verification Link has been sent. Please check your email inbox")
+                }
+            }).catch((error) => {
+                console.log(error);
+            })
+            navigate('/');
+        }
+    }
+
     return (
         <div
             className="row container mx-auto py-3 gen_font"
@@ -352,6 +374,7 @@ const UserProfilePage = (props) => {
                                         className="col-12 gen_btn_warning_secondary"
                                         color="warning"
                                         outline
+                                        onClick={resendVerif}
                                     >
                                         Verify your Account
                                     </Button>

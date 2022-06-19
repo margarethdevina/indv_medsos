@@ -151,9 +151,6 @@ const RegisterPage = (props) => {
                     setEmailValidity("❌ Used Email")
                 } else if (emailValidity == "✅ Valid Email") {
 
-                    // alert("Registrasi berhasil")
-                    setToastMsg("Registrasi berhasil")
-
                     let res = await Axios.post(`${API_URL}/users/regis`, {
                         email,
                         username,
@@ -164,6 +161,9 @@ const RegisterPage = (props) => {
                         bio: "",
                         profilePicture: ""
                     })
+
+                    // alert("Registrasi berhasil")
+                    setToastMsg("Registration successful, account verification link has been sent to your email")
 
                     console.log("data yg teregister", res.data)
 
@@ -215,7 +215,7 @@ const RegisterPage = (props) => {
             <Toast
                 isOpen={openToast}
                 className="gen_font_content"
-                style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999"}}
+                style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999" }}
             >
                 <ToastHeader
                     icon="warning"
@@ -246,9 +246,9 @@ const RegisterPage = (props) => {
                 <Form
                     className="text-start"
                 >
-                    <FormGroup 
-                    row
-                    className="gen_font_content"
+                    <FormGroup
+                        row
+                        className="gen_font_content"
                     >
                         <Label
                             sm={2}
@@ -269,11 +269,17 @@ const RegisterPage = (props) => {
                             >
                                 {emailValidity}
                             </p>
+                            <p
+                                className="mb-0"
+                                style={{ fontWeight: "lighter", fontSize: "12px" }}
+                            >
+                                Account verification link will be sent to this email once the registration is completed. 
+                            </p>
                         </Col>
                     </FormGroup>
-                    <FormGroup 
-                    row
-                    className="gen_font_content"
+                    <FormGroup
+                        row
+                        className="gen_font_content"
                     >
                         <Label
                             sm={2}
@@ -296,9 +302,9 @@ const RegisterPage = (props) => {
                             </p>
                         </Col>
                     </FormGroup>
-                    <FormGroup 
-                    row
-                    className="gen_font_content"
+                    <FormGroup
+                        row
+                        className="gen_font_content"
                     >
                         <Label
                             sm={2}

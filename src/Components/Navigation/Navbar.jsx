@@ -3,6 +3,7 @@ import backgroundNavbar from "../../Assets/NavbarRef/background_greenlime.jpg";
 import loginIcon from "../../Assets/IconRef/login.png";
 import regisIcon from "../../Assets/IconRef/register.png";
 import addPostIcon from "../../Assets/IconRef/add_post.png";
+import { ReactComponent as VerifIcon } from '../../Assets/IconRef/verified.svg';
 import './_Navbar.scss';
 import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, Button, NavbarText, Tooltip, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 import { useNavigate } from "react-router-dom";
@@ -19,9 +20,10 @@ const NavbarComponent = (props) => {
     const [openLogin, setOpenLogin] = useState(false);
     const [dropOpen, setDropOpen] = React.useState(false);
 
-    const { username } = useSelector((state) => {
+    const { username, status } = useSelector((state) => {
         return {
             username: state.usersReducer.username,
+            status: state.usersReducer.status
         }
     })
 
@@ -54,7 +56,7 @@ const NavbarComponent = (props) => {
                 color="white"
                 light
                 sticky="top"
-                // fixed="top"
+            // fixed="top"
             >
                 <NavbarBrand
                     onClick={() => navigate("/")}
@@ -85,8 +87,8 @@ const NavbarComponent = (props) => {
                     </Tooltip>
                 </span>
 
-                <NavbarToggler 
-                onClick={() => setOpenCollapse(!openCollapse)} 
+                <NavbarToggler
+                    onClick={() => setOpenCollapse(!openCollapse)}
                 />
 
                 <Collapse navbar isOpen={openCollapse}>
@@ -126,9 +128,47 @@ const NavbarComponent = (props) => {
                                                 {username}
                                             </DropdownToggle>
                                             <DropdownMenu end>
-                                                <DropdownItem 
-                                                // className="app_navbar_btn_user"
-                                                onClick={() => navigate("/userprofile")}>
+                                                <DropdownItem
+                                                    className="disabled"
+                                                >
+                                                    {
+                                                        status == "verified"
+                                                            ?
+                                                            <>
+                                                                <span>
+                                                                    <VerifIcon
+                                                                        fill="green"
+                                                                        style={{ width: "15px", height: "15px" }}
+                                                                    />
+                                                                </span>
+                                                                <span
+                                                                    className="mx-1"
+                                                                    style={{ fontWeight: "normal" }}
+                                                                >
+                                                                    Verified
+                                                                </span>
+                                                            </>
+                                                            :
+                                                            <>
+                                                                <span>
+                                                                    <VerifIcon
+                                                                        fill="red"
+                                                                        style={{ width: "15px", height: "15px" }}
+                                                                    />
+                                                                </span>
+                                                                <span
+                                                                    className="mx-1"
+                                                                    style={{ fontWeight: "normal" }}
+                                                                >
+                                                                    Unverified
+                                                                </span>
+                                                            </>
+                                                    }
+                                                </DropdownItem>
+                                                <DropdownItem divider />
+                                                <DropdownItem
+                                                    // className="app_navbar_btn_user"
+                                                    onClick={() => navigate("/userprofile")}>
                                                     Your Profile
                                                 </DropdownItem>
                                                 <DropdownItem onClick={handleLogout}>
@@ -142,13 +182,39 @@ const NavbarComponent = (props) => {
                                     <div className="mx-md-3">
                                         <div
                                             className="d-md-none col-12 my-1">
-
-                                            <span
-                                                className="app_navbar_list_item_link"
-                                                onClick={() => navigate("/userprofile")}
-                                            >
-                                                Your Profile
-                                            </span>
+                                            {
+                                                status == "verified"
+                                                    ?
+                                                    <>
+                                                        <span>
+                                                            <VerifIcon
+                                                                fill="green"
+                                                                style={{ width: "11px", height: "11px" }}
+                                                            />
+                                                        </span>
+                                                        <span
+                                                            className="mx-1 app_navbar_list_item_link"
+                                                            onClick={() => navigate("/userprofile")}
+                                                        >
+                                                            Your Profile
+                                                        </span>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <span>
+                                                            <VerifIcon
+                                                                fill="red"
+                                                                style={{ width: "11px", height: "11px" }}
+                                                            />
+                                                        </span>
+                                                        <span
+                                                            className="mx-1 app_navbar_list_item_link"
+                                                            onClick={() => navigate("/userprofile")}
+                                                        >
+                                                            Your Profile
+                                                        </span>
+                                                    </>
+                                            }
 
                                             <br />
 
