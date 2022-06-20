@@ -13,6 +13,8 @@ import RegisterPage from './Pages/Register';
 import UserProfilePage from './Pages/UserProfile';
 import NotFoundPage from './Pages/404';
 import VerificationUser from './Pages/VerificationPage';
+import ForgotPassword from './Pages/ForgotPasswordPage';
+import NewPasswordPage from './Pages/NewPasswordPage';
 import Axios from 'axios';
 import { API_URL } from './helper';
 import React, { useEffect } from 'react';
@@ -105,7 +107,11 @@ function App() {
                 <Route path='/postdetail' element={<PostDetailPage />} />
               </>
             :
-            <Route path='/register' element={<RegisterPage />} />
+            <>
+              <Route path='/register' element={<RegisterPage />} />
+              <Route path='/forgot' element={<ForgotPassword />} />
+              <Route path='/newpassword/:token' element={<NewPasswordPage />} />
+            </>
         }
         <Route path='*' element={<NotFoundPage />} />
 

@@ -175,6 +175,7 @@ const ModalLogin = (props) => {
                     >
                         <a
                             className="btn p-0 text-muted"
+                            href="/forgot"
                         >
                             Forgot Password?
                         </a>
