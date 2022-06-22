@@ -3,14 +3,31 @@ import { API_URL } from "../../helper";
 import './_CardsInYourPosts.scss';
 import { CardColumns, Card, CardImg, CardTitle, CardSubtitle } from "reactstrap";
 import { useNavigate } from "react-router-dom";
+import { DateTime } from "luxon";
 
 const CardsInYourPosts = (props) => {
 
     const navigate = useNavigate();
-
+    // const endTime = DateTime.now().toFormat("FF");
+    
     const printCard = () => {
         return props.data.map((value, index) => {
-            console.log("value.media",value.media)
+            // let startTime = "";
+            // let endTime = "";
+
+            // console.log("value.media", value.media);
+
+            // console.log("DateTime Luxon", DateTime.fromISO(value.uploadDate).toFormat("FF"))
+            // console.log("typeof DateTime Luxon", typeof(DateTime.fromISO(value.uploadDate)))
+            
+            // endTime = DateTime.now().toFormat("FF");
+            // console.log("DateTime.now() Luxon", endTime);
+            // console.log("typeof DateTime.now() Luxon", typeof(endTime));
+
+            // startTime = DateTime.fromISO(value.uploadDate).toFormat("FF");
+
+            console.log("diffTime", DateTime.now().diff(DateTime.fromISO(value.uploadDate), ['weeks', 'days', 'hours', 'minutes', 'seconds']).toObject());
+            
             return (
                 <CardColumns
                     key={value.id}
@@ -33,7 +50,7 @@ const CardsInYourPosts = (props) => {
                         >
                             <p
                                 className="_card_cardsub_date"
-                            >{value.uploadDate}</p>
+                            >{DateTime.fromISO(value.uploadDate).toFormat("FF")}</p>
                             <p
                                 className="_card_cardsub_likes"
                             >

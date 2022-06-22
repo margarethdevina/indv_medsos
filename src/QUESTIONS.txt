@@ -319,6 +319,10 @@ forgetPassword
 
 6. beda font di modal delete dan edit
 
-7. moment.js diinstal di FE krn untuk ubah tampilan dari interpretasi datetime saja
+7. moment.js diinstal di FE krn untuk ubah tampilan dari interpretasi datetime saja >> pakai luxon
 
-8. 
+8. date di comment klo weeks > 0 ambil weeks
+    klo weeks == 0 && days > 0 ambil days
+    klo weeks == 0 && days == 0 && hours > 0 ambil hours
+    klo weeks == 0 && days == 0 && hours == 0 && minutes > 0 ambil minutes
+    klo weeks == 0 && days == 0 && hours == 0 && minutes == 0 && seconds > 0 ambil seconds

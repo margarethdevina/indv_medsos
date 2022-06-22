@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCommentsAction } from "../../redux/actions/commentsActions";
 import { API_URL } from "../../helper";
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { DateTime } from 'luxon';
 
 const CardsForComments = (props) => {
 
@@ -105,6 +106,52 @@ const CardsForComments = (props) => {
     const printCard = () => {
 
         return data.map((value, index) => {
+
+            let endDate = DateTime.now();
+
+            let startDate = DateTime.fromISO(value.commentDate);
+
+            let diffInterval = endDate.diff(startDate, ['weeks', 'days', 'hours', 'minutes', 'seconds']).toObject();
+
+            let { weeks, days, hours, minutes, seconds } = diffInterval;
+
+            console.log("diffInterval", diffInterval);
+            // console.log("diffInterval.weeks", weeks);
+
+            let intervalShown = ""
+            if (weeks > 0) {
+                if (weeks == 1) {
+                    intervalShown = `${weeks} week ago`
+                } else {
+                    intervalShown = `${weeks} weeks ago`
+                }
+            } else if (weeks == 0 && days > 0) {
+                if (days == 1) {
+                    intervalShown = `${days} day ago`
+                } else {
+                    intervalShown = `${days} days ago`
+                }
+            } else if (weeks == 0 && days == 0 && hours > 0){
+                if (hours == 1) {
+                    intervalShown = `${hours} hour ago`
+                } else {
+                    intervalShown = `${hours} hours ago`
+                }
+            } else if (weeks == 0 && days == 0 && hours == 0 && minutes > 0){
+                if (minutes == 1) {
+                    intervalShown = `${minutes} minute ago`
+                } else {
+                    intervalShown = `${minutes} minutes ago`
+                }
+            } else if (weeks == 0 && days == 0 && hours == 0 && minutes == 0 && seconds > 0){
+                if (seconds < 2) {
+                    intervalShown = `${Math.floor(seconds)} second ago`
+                } else {
+                    intervalShown = `${Math.floor(seconds)} seconds ago`
+                }
+            }
+            console.log("intervalShown", intervalShown);
+
             if (selectedIdx == index && openDelete == false) {
                 return (<CardColumns
                     key={value.id}
@@ -175,7 +222,7 @@ const CardsForComments = (props) => {
                             <span
                                 className="_card_detail_date me-2"
                             >
-                                {value.commentDate}
+                                {intervalShown}
                             </span>
                             {
                                 value.username == props.loginUsername &&

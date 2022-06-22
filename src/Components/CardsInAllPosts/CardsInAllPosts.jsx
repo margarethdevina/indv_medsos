@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { API_URL } from "../../helper";
 import { getPostsAction } from "../../redux/actions/postsActions";
 import { loginAction, updateLikesAction } from "../../redux/actions/usersActions";
+import { DateTime } from "luxon";
 
 const CardsInAllPosts = (props) => {
 
@@ -139,7 +140,7 @@ const CardsInAllPosts = (props) => {
                             <p
                                 className="_card_cardsub_date"
                             >
-                                {value.uploadDate}
+                                {DateTime.fromISO(value.uploadDate).toFormat("FF")}
                             </p>
                             <p
                                 className={props.displayLikes}
@@ -189,7 +190,7 @@ const CardsInAllPosts = (props) => {
                             <p
                                 className="_card_cardsub_date"
                             >
-                                {value.uploadDate}
+                                {DateTime.fromISO(value.uploadDate).toFormat("FF")}
                             </p>
                             <p
                                 className={props.displayLikes}
