@@ -15,7 +15,9 @@ const UploadPostPage = (props) => {
     // console.log("isi state di uploadPost page", username, posts)
 
     return (
-        <div>
+        <div
+        className="pb-md-5 mb-md-5"
+        >
 
             <AddPostComponent
                 userId = {userId}

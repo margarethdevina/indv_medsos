@@ -100,7 +100,7 @@ const AddPostComponent = (props) => {
 
     return (
         <div
-            className="container mx-auto col-10 col-md-6 py-3"
+            className="container mx-auto col-10 col-md-6 py-3 pb-md-5"
         >
 
             <Toast
