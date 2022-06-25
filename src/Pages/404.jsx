@@ -5,13 +5,15 @@ import { useSelector } from 'react-redux';
 const NotFoundPage = (props) => {
     const { status } = useSelector((state) => {
         return {
+            username: state.usersReducer.status,
             status: state.usersReducer.status
         }
     })
-    
+
     return (
         <div
-        className="gen_font"
+            className="gen_font"
+            style={{ minHeight: "100vh" }}
         >
             {status === "unverified"
                 ?

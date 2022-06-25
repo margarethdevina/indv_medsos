@@ -26,19 +26,73 @@ const YourPostsPage = (props) => {
             }).catch((error) => { console.log(error) })
     };
 
-    const { username } = useSelector((state) => {
+    const { username, status } = useSelector((state) => {
         return {
             username: state.usersReducer.username,
+            status: state.usersReducer.status
         }
     })
 
     return (
         <div
-        className="container border-0"
+            className="container border-0"
+            style={{minHeight:"100vh"}}
         >
-            <Nav 
-            tabs
-            className="border-0"
+            {
+                username
+                    ?
+                    status === "verified"
+                        ?
+                        <>
+                            <Nav
+                                tabs
+                                className="border-0"
+                            >
+                                <NavItem>
+                                    <NavLink
+                                        className="active"
+                                        onClick={() => navigate("/yourposts")}
+                                    >
+                                        Your Posts
+                                    </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink
+                                        onClick={() => navigate("/yourlikes")}
+                                    >
+                                        Your Likes
+                                    </NavLink>
+                                </NavItem>
+                            </Nav>
+
+                            <CardsInYourPosts
+                                data={dbPosts.filter(val => val.username === username)}
+                            />
+                        </>
+                        :
+                        <>
+                            <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
+                                <span class="material-symbols-outlined">
+                                    gpp_maybe
+                                </span>
+                            </span>
+                            <h5>401 - Please verify your email first to access this page</h5>
+                            <h5>To resend the verification link, please go to <i>Your Profile</i> page</h5>
+                        </>
+                    :
+                    <>
+                        <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
+                            <span class="material-symbols-outlined">
+                                login
+                            </span>
+                        </span>
+                        <h5>401 - Please sign in first to access this page</h5>
+                    </>
+            }
+
+            {/* <Nav
+                tabs
+                className="border-0"
             >
                 <NavItem>
                     <NavLink
@@ -57,9 +111,9 @@ const YourPostsPage = (props) => {
                 </NavItem>
             </Nav>
 
-            <CardsInYourPosts 
-            data = {dbPosts.filter(val => val.username === username)}
-            />
+            <CardsInYourPosts
+                data={dbPosts.filter(val => val.username === username)}
+            /> */}
         </div>
     )
 

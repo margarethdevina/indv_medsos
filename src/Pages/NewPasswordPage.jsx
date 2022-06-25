@@ -4,6 +4,7 @@ import Axios from "axios";
 import { API_URL } from "../helper";
 import { useDispatch } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
+import './_PostDetail.scss';
 
 const NewPasswordPage = (props) => {
 
@@ -63,11 +64,12 @@ const NewPasswordPage = (props) => {
 
     return (<div
         className="container p-5"
+        style={{ minHeight: "100vh" }}
     >
         <div
             className="col-12 col-md-6 mx-auto"
         >
-            <span className="material-icons d-flex justify-content-center" style={{ color: "#147347", fontSize: "150px" }}>
+            <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
                 lock_reset
             </span>
             <FormGroup>
@@ -92,9 +94,9 @@ const NewPasswordPage = (props) => {
                     onChange={(event) => setConfNewPassword(event.target.value)} />
             </FormGroup>
             <Button
-                className="w-100"
+                className="w-100 _detail_button_post"
                 type="button"
-                color="success"
+                // color="success"
                 onClick={handleReset}>Reset my password</Button>
         </div>
     </div>)

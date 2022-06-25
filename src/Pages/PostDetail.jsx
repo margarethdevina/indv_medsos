@@ -41,10 +41,11 @@ const PostDetailPage = (props) => {
     const [openToast, setOpenToast] = useState(false);
     const [toastMsg, setToastMsg] = useState("");
 
-    const { userid, username, likes, posts, comments, commentsFiltered } = useSelector((state) => {
+    const { userid, username, status, likes, posts, comments, commentsFiltered } = useSelector((state) => {
         return {
             userid: state.usersReducer.id,
             username: state.usersReducer.username,
+            status: state.usersReducer.status,
             likes: state.usersReducer.likes,
             posts: state.postsReducer.posts,
             comments: state.commentsReducer.comments,
@@ -352,270 +353,303 @@ const PostDetailPage = (props) => {
     return (
         <div
             className="row container py-3 mx-auto"
+            style={{ minHeight: "100vh" }}
         >
-            <Modal
-                isOpen={openDelete}
-                toggle={() => setOpenDelete(!openDelete)}
-                size="sm"
-                centered
-                className="gen_font_content"
-            >
-                <ModalBody
-
-                >
-                    <span
-                        className="me-1"
-                    >Are you sure you want to delete this post?</span>
-                    <i>Deleted post can't be returned.</i>
-                    <div
-                        className="d-flex justify-content-end align-items-center mt-2"
-                    >
-                        <Button
-                            onClick={confirmDelete}
-                            color="warning"
-                            outline
-                            size="sm"
-                            className="me-2 gen_btn_warning_secondary"
-                        >
-                            Yes
-                        </Button>
-                        <Button
-                            onClick={() => setOpenDelete(!openDelete)}
-                            color="secondary"
-                            outline
-                            size="sm"
-                            className="gen_btn_warning_secondary"
-                        >
-                            No
-                        </Button>
-                    </div>
-                </ModalBody>
-            </Modal>
-            <Modal
-                isOpen={openShare}
-                toggle={() => setOpenShare(!openShare)}
-                // size="sm"
-                style={{ width: "220px" }}
-                centered
-                className="gen_font_content"
-            >
-                <ModalBody
-                    className="share__socials"
-                >
-                    <WhatsappShareButton
-                        url={`http://localhost:3001/postdetail${search}`}
-                    >
-                        <WaIcon
-                            className="share__socials__icons"
-                            onClick={() => setOpenShare(!openShare)}
-                        />
-                    </WhatsappShareButton>
-                    <TwitterShareButton
-                        url={`http://localhost:3001/postdetail${search}`}
-                    >
-                        <TwitterIcon
-                            className="share__socials__icons"
-                            onClick={() => setOpenShare(!openShare)}
-                        />
-                    </TwitterShareButton>
-                    <FacebookShareButton
-                        url={`http://localhost:3001/postdetail${search}`}
-                    >
-                        <FbIcon
-                            className="share__socials__icons"
-                            onClick={() => setOpenShare(!openShare)}
-                        />
-                    </FacebookShareButton>
-                    <CopyIcon
-                        className="share__socials__icons"
-                        style={{ width: "25px", height: "30px" }}
-                        onClick={handleCopyLink}
-                    />
-                </ModalBody>
-            </Modal>
-            <Toast
-                isOpen={openToast}
-                className="gen_font_content"
-                style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999" }}
-            >
-                <ToastBody>
-                    <span>{toastMsg}</span>
-                </ToastBody>
-            </Toast>
-            <div
-                className="col-12 col-md-7 order-md-1"
-            >
-                <img
-                    src={
-                        detail.media
-                            &&
-                            detail.media.includes("http")
-                            ?
-                            detail.media
-                            :
-                            `${API_URL}${detail.media}`
-                    }
-                    alt={`${detail.id}-${detail.uploadDate}-media`}
-                    width="100%"
-                />
-            </div>
-
-            <div
-                className="col-12 col-md-5 order-md-2"
-            >
-                <p
-                    className="_detail_font"
-                >
-                    {detail.username}
-                </p>
-
-                {/* <hr className="_detail_hr" /> */}
-
-                {
-                    selectedEdit == 0
+            {
+                username
+                    ?
+                    status === "verified"
                         ?
-                        <p
-                            className="_detail_font_content"
-                        >
-                            {detail.caption}
-                        </p>
-                        :
                         <>
-                            <Input
-                                type="textarea"
-                                className="mb-2"
-                                placeholder={detail.caption}
-                                onChange={(e) => setInputCaption(e.target.value)}
-                            />
-                            <div
-                                className="d-md-flex justify-content-end"
+                            <Modal
+                                isOpen={openDelete}
+                                toggle={() => setOpenDelete(!openDelete)}
+                                size="sm"
+                                centered
+                                className="gen_font_content"
                             >
-                                <Button
-                                    className="col-12 col-md-2 mb-2 me-md-2 gen_btn_warning_secondary"
-                                    size="sm"
-                                    color="warning"
-                                    outline
-                                    onClick={handleSave}
+                                <ModalBody
+
                                 >
-                                    Save
-                                </Button>
-                                <Button
-                                    className="col-12 col-md-2 mb-2 gen_btn_warning_secondary"
-                                    size="sm"
-                                    color="secondary"
-                                    outline
-                                    onClick={() => setSelectedEdit(0)}
+                                    <span
+                                        className="me-1"
+                                    >Are you sure you want to delete this post?</span>
+                                    <i>Deleted post can't be returned.</i>
+                                    <div
+                                        className="d-flex justify-content-end align-items-center mt-2"
+                                    >
+                                        <Button
+                                            onClick={confirmDelete}
+                                            color="warning"
+                                            outline
+                                            size="sm"
+                                            className="me-2 gen_btn_warning_secondary"
+                                        >
+                                            Yes
+                                        </Button>
+                                        <Button
+                                            onClick={() => setOpenDelete(!openDelete)}
+                                            color="secondary"
+                                            outline
+                                            size="sm"
+                                            className="gen_btn_warning_secondary"
+                                        >
+                                            No
+                                        </Button>
+                                    </div>
+                                </ModalBody>
+                            </Modal>
+                            <Modal
+                                isOpen={openShare}
+                                toggle={() => setOpenShare(!openShare)}
+                                // size="sm"
+                                style={{ width: "220px" }}
+                                centered
+                                className="gen_font_content"
+                            >
+                                <ModalBody
+                                    className="share__socials"
                                 >
-                                    Cancel
-                                </Button>
+                                    <WhatsappShareButton
+                                        url={`http://localhost:3001/postdetail${search}`}
+                                    >
+                                        <WaIcon
+                                            className="share__socials__icons"
+                                            onClick={() => setOpenShare(!openShare)}
+                                        />
+                                    </WhatsappShareButton>
+                                    <TwitterShareButton
+                                        url={`http://localhost:3001/postdetail${search}`}
+                                    >
+                                        <TwitterIcon
+                                            className="share__socials__icons"
+                                            onClick={() => setOpenShare(!openShare)}
+                                        />
+                                    </TwitterShareButton>
+                                    <FacebookShareButton
+                                        url={`http://localhost:3001/postdetail${search}`}
+                                    >
+                                        <FbIcon
+                                            className="share__socials__icons"
+                                            onClick={() => setOpenShare(!openShare)}
+                                        />
+                                    </FacebookShareButton>
+                                    <CopyIcon
+                                        className="share__socials__icons"
+                                        style={{ width: "25px", height: "30px" }}
+                                        onClick={handleCopyLink}
+                                    />
+                                </ModalBody>
+                            </Modal>
+                            <Toast
+                                isOpen={openToast}
+                                className="gen_font_content"
+                                style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999" }}
+                            >
+                                <ToastBody>
+                                    <span>{toastMsg}</span>
+                                </ToastBody>
+                            </Toast>
+                            <div
+                                className="col-12 col-md-7 order-md-1"
+                            >
+                                <img
+                                    src={
+                                        detail.media
+                                            &&
+                                            detail.media.includes("http")
+                                            ?
+                                            detail.media
+                                            :
+                                            `${API_URL}${detail.media}`
+                                    }
+                                    alt={`${detail.id}-${detail.uploadDate}-media`}
+                                    width="100%"
+                                />
+                            </div>
+
+                            <div
+                                className="col-12 col-md-5 order-md-2"
+                            >
+                                <p
+                                    className="_detail_font"
+                                >
+                                    {detail.username}
+                                </p>
+
+                                {/* <hr className="_detail_hr" /> */}
+
+                                {
+                                    selectedEdit == 0
+                                        ?
+                                        <p
+                                            className="_detail_font_content"
+                                        >
+                                            {detail.caption}
+                                        </p>
+                                        :
+                                        <>
+                                            <Input
+                                                type="textarea"
+                                                className="mb-2"
+                                                placeholder={detail.caption}
+                                                onChange={(e) => setInputCaption(e.target.value)}
+                                            />
+                                            <div
+                                                className="d-md-flex justify-content-end"
+                                            >
+                                                <Button
+                                                    className="col-12 col-md-2 mb-2 me-md-2 gen_btn_warning_secondary"
+                                                    size="sm"
+                                                    color="warning"
+                                                    outline
+                                                    onClick={handleSave}
+                                                >
+                                                    Save
+                                                </Button>
+                                                <Button
+                                                    className="col-12 col-md-2 mb-2 gen_btn_warning_secondary"
+                                                    size="sm"
+                                                    color="secondary"
+                                                    outline
+                                                    onClick={() => setSelectedEdit(0)}
+                                                >
+                                                    Cancel
+                                                </Button>
+                                            </div>
+                                        </>
+                                }
+
+                                {/* <hr className="_detail_hr" /> */}
+
+                                <div
+                                    className="_detail_font_content d-flex align-items-center mt-2 mb-4"
+                                >
+                                    <FavIcon
+                                        fill={favoriteFill}
+                                        width="22px"
+                                        height="22px"
+                                        className="me-3"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={handleLike}
+                                    />
+
+                                    <ShareIcon
+                                        fill="#351c75"
+                                        width="22px"
+                                        height="22px"
+                                        className="me-3"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() => setOpenShare(!openShare)}
+                                    />
+
+                                    {
+                                        detail.username == username &&
+                                        <Dropdown
+                                            isOpen={dropOpen}
+                                            toggle={() => setDropOpen(!dropOpen)}
+                                            direction="end"
+                                        >
+                                            <DropdownToggle
+                                                onClick={() => setDropOpen(!dropOpen)}
+                                                style={{ backgroundColor: "transparent" }}
+                                                className="border border-0 p-0 mb-1"
+                                            >
+                                                <ThreeDotsIcon
+                                                    fill="#351c75"
+                                                    width="22px"
+                                                    height="22px"
+                                                />
+                                            </DropdownToggle>
+                                            <DropdownMenu>
+                                                <DropdownItem
+                                                    onClick={() => setSelectedEdit(1)}
+                                                >
+                                                    Edit
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                    onClick={handleDelete}
+                                                >
+                                                    Delete
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </Dropdown>
+                                    }
+
+                                </div>
+
+                                {/* <hr className="_detail_hr" /> */}
+
+                                {
+                                    detail.id &&
+                                    <CardsForComments
+                                        // detail={detail}
+                                        loginUsername={username}
+
+                                        commentsArr={commentsArr}
+                                        query={query}
+                                        fetchData={fetchData}
+                                        hasMore={hasMore}
+                                    />
+                                }
+
+                                <hr className="_detail_hr" />
+
+                                <div
+                                    className="row mx-auto"
+                                >
+                                    <Input
+                                        className="col-12 col-md-10 mb-0 order-md-1 _comment"
+                                        type="text"
+                                        placeholder="Share your thought..."
+                                        bsSize="md"
+                                        style={{ height: "2.5rem" }}
+                                        maxLength={300}
+                                        value={inputComment}
+                                        onChange={(e) => setInputComment(e.target.value)}
+                                    />
+                                    <span
+                                        className="text-start mt-0 mb-1 mb-md-0 order-md-3 gen_font_content"
+                                        style={{ fontSize: "11px" }}
+                                    >
+                                        Limited to 300 characters
+                                    </span>
+                                    <Button
+                                        className="col-12 col-md-2 text-center _detail_button_post order-md-2"
+                                        onClick={handlePost}
+                                    >
+                                        Post
+                                    </Button>
+
+                                </div>
+
                             </div>
                         </>
-                }
-
-                {/* <hr className="_detail_hr" /> */}
-
-                <div
-                    className="_detail_font_content d-flex align-items-center mt-2 mb-4"
-                >
-                    <FavIcon
-                        fill={favoriteFill}
-                        width="22px"
-                        height="22px"
-                        className="me-3"
-                        style={{ cursor: "pointer" }}
-                        onClick={handleLike}
-                    />
-
-                    <ShareIcon
-                        fill="#351c75"
-                        width="22px"
-                        height="22px"
-                        className="me-3"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => setOpenShare(!openShare)}
-                    />
-
-                    {
-                        detail.username == username &&
-                        <Dropdown
-                            isOpen={dropOpen}
-                            toggle={() => setDropOpen(!dropOpen)}
-                            direction="end"
-                        >
-                            <DropdownToggle
-                                onClick={() => setDropOpen(!dropOpen)}
-                                style={{ backgroundColor: "transparent" }}
-                                className="border border-0 p-0 mb-1"
-                            >
-                                <ThreeDotsIcon
-                                    fill="#351c75"
-                                    width="22px"
-                                    height="22px"
-                                />
-                            </DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem
-                                    onClick={() => setSelectedEdit(1)}
-                                >
-                                    Edit
-                                </DropdownItem>
-                                <DropdownItem
-                                    onClick={handleDelete}
-                                >
-                                    Delete
-                                </DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-                    }
-
-                </div>
-
-                {/* <hr className="_detail_hr" /> */}
-
-                {
-                    detail.id &&
-                    <CardsForComments
-                        // detail={detail}
-                        loginUsername={username}
-
-                        commentsArr={commentsArr}
-                        query={query}
-                        fetchData={fetchData}
-                        hasMore={hasMore}
-                    />
-                }
-
-                <hr className="_detail_hr" />
-
-                <div
-                    className="row mx-auto"
-                >
-                    <Input
-                        className="col-12 col-md-10 mb-0 order-md-1 _comment"
-                        type="text"
-                        placeholder="Share your thought..."
-                        bsSize="md"
-                        style={{ height: "2.5rem" }}
-                        maxLength={300}
-                        value={inputComment}
-                        onChange={(e) => setInputComment(e.target.value)}
-                    />
-                    <span
-                        className="text-start mt-0 mb-1 mb-md-0 order-md-3 gen_font_content"
-                        style={{ fontSize: "11px" }}
-                    >
-                        Limited to 300 characters
-                    </span>
-                    <Button
-                        className="col-12 col-md-2 text-center _detail_button_post order-md-2"
-                        onClick={handlePost}
-                    >
-                        Post
-                    </Button>
-
-                </div>
-
-            </div>
+                        :
+                        <>
+                            <div className="col-12">
+                                <span className="material-icons d-flex justify-content-center"
+                                    style={{ color: "#351c75", fontSize: "150px" }}>
+                                    <span class="material-symbols-outlined">
+                                        gpp_maybe
+                                    </span>
+                                </span>
+                                <h5>401 - Please verify your email first to access this page</h5>
+                                <h5>To resend the verification link, please go to <i>Your Profile</i> page</h5>
+                            </div>
+                        </>
+                    :
+                    <>
+                        <div className="col-12">
+                            <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
+                                <span class="material-symbols-outlined">
+                                    login
+                                </span>
+                            </span>
+                            <h5>401 - Please sign in first to access this page</h5>
+                        </div>
+                    </>
+            }
 
         </div>
     )

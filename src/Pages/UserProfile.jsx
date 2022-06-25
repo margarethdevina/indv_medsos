@@ -352,6 +352,7 @@ const UserProfilePage = (props) => {
     return (
         <div
             className="row container mx-auto py-3 gen_font"
+            style={{ minHeight: "100vh" }}
         >
             <div
                 className="col-12 col-md-6 order-md-1"

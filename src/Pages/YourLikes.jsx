@@ -9,9 +9,10 @@ const YourLikesPage = (props) => {
 
     const navigate = useNavigate();
 
-    const { username, likes, posts } = useSelector((state) => {
+    const { username, status, likes, posts } = useSelector((state) => {
         return {
             username: state.usersReducer.username,
+            status: state.usersReducer.status,
             likes: state.usersReducer.likes,
             posts: state.postsReducer.posts
         }
@@ -39,33 +40,90 @@ const YourLikesPage = (props) => {
     return (
         <div
             className="container border-0"
+            style={{ minHeight: "100vh" }}
         >
-            <Nav 
-            tabs
-            className="border-0"
-            >
-                <NavItem>
-                    <NavLink
-                        onClick={() => navigate("/yourposts")}
-                    >
-                        Your Posts
-                    </NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink
-                        className="active"
-                        onClick={() => navigate("/yourlikes")}
-                    >
-                        Your Likes
-                    </NavLink>
-                </NavItem>
-            </Nav>
+            {
+                username
+                    ?
+                    status === "verified"
+                        ?
+                        <>
+                            <Nav
+                                tabs
+                                className="border-0"
+                            >
+                                <NavItem>
+                                    <NavLink
+                                        onClick={() => navigate("/yourposts")}
+                                    >
+                                        Your Posts
+                                    </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink
+                                        className="active"
+                                        onClick={() => navigate("/yourlikes")}
+                                    >
+                                        Your Likes
+                                    </NavLink>
+                                </NavItem>
+                            </Nav>
 
-            <CardsInAllPosts
-                data={getYourLikes()}
-                displayLikes={displayLikes}
-                fromUrLikes={fromUrLikes}
-            />
+                            <CardsInAllPosts
+                                data={getYourLikes()}
+                                displayLikes={displayLikes}
+                                fromUrLikes={fromUrLikes}
+                            />
+                        </>
+                        :
+                        <>
+                            <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
+                                <span class="material-symbols-outlined">
+                                    gpp_maybe
+                                </span>
+                            </span>
+                            <h5>401 - Please verify your email first to access this page</h5>
+                            <h5>To resend the verification link, please go to <i>Your Profile</i> page</h5>
+                        </>
+                    :
+                    <>
+                        <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
+                            <span class="material-symbols-outlined">
+                                login
+                            </span>
+                        </span>
+                        <h5>401 - Please sign in first to access this page</h5>
+                    </>
+            }
+
+            {/* <>
+                <Nav
+                    tabs
+                    className="border-0"
+                >
+                    <NavItem>
+                        <NavLink
+                            onClick={() => navigate("/yourposts")}
+                        >
+                            Your Posts
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink
+                            className="active"
+                            onClick={() => navigate("/yourlikes")}
+                        >
+                            Your Likes
+                        </NavLink>
+                    </NavItem>
+                </Nav>
+
+                <CardsInAllPosts
+                    data={getYourLikes()}
+                    displayLikes={displayLikes}
+                    fromUrLikes={fromUrLikes}
+                />
+            </> */}
 
         </div>
     )

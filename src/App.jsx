@@ -80,9 +80,9 @@ function App() {
   console.log("status user yg login", status)
 
   return (
-    <div 
-    className="App"
-    style={{position: "relative", minHeight: "100vh"}}
+    <div
+      className="App"
+    // style={{position: "relative", minHeight: "100vh"}}
     >
 
       <NavbarComponent />
@@ -90,7 +90,19 @@ function App() {
       <Routes>
 
         <Route path='/' element={<LandingPage />} />
-        {
+        <Route path='/userprofile' element={<UserProfilePage />} />
+        <Route path='/register' element={<RegisterPage />} />
+        <Route path='/allposts' element={<AllPostsPage />} />
+        <Route path='/uploadpost' element={<UploadPostPage />} />
+        <Route path='/yourposts' element={<YourPostsPage />} />
+        <Route path='/yourlikes' element={<YourLikesPage />} />
+        <Route path='/postdetail' element={<PostDetailPage />} />
+
+        <Route path='/verification/:token' element={<VerificationUser />} />
+        <Route path='/forgot' element={<ForgotPassword />} />
+        <Route path='/newpassword/:token' element={<NewPasswordPage />} />
+
+        {/* {
           username
             ?
             status === "unverified"
@@ -99,6 +111,8 @@ function App() {
                 <Route path='/userprofile' element={<UserProfilePage />} />
                 <Route path='/allposts' element={<AllPostsPage />} />
                 <Route path='/verification/:token' element={<VerificationUser />} />
+                <Route path='/yourposts' element={<YourPostsPage />} />
+                <Route path='/uploadpost' element={<UploadPostPage />} />
               </>
               :
               <>
@@ -111,18 +125,21 @@ function App() {
               </>
             :
             <>
+              <Route path='/yourposts' element={<YourPostsPage />} />
+              <Route path='/uploadpost' element={<UploadPostPage />} />
               <Route path='/register' element={<RegisterPage />} />
               <Route path='/forgot' element={<ForgotPassword />} />
               <Route path='/newpassword/:token' element={<NewPasswordPage />} />
             </>
-        }
+        } */}
+        
         <Route path='*' element={<NotFoundPage />} />
 
       </Routes>
 
-      <FooterComponent 
-      style={{position: "absolute", left: 0, right: 0, bottom: 0}}
-      // style={{position: "fixed", left: 0, right: 0, bottom: 0}}
+      <FooterComponent
+        // style={{position: "absolute", left: 0, right: 0, bottom: 0}}
+        style={{ position: "fixed", left: 0, right: 0, bottom: 0 }}
       />
 
     </div>

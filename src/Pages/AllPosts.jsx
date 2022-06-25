@@ -10,8 +10,10 @@ const AllPostsPage = (props) => {
     const [displayLikes, setDisplayLikes] = useState("_card_cardsub_likes")
     const [fromUrLikes, setFromUrLikes] = useState(0)
 
-    const { likes } = useSelector((state) => {
+    const { username, status, likes } = useSelector((state) => {
         return {
+            username: state.usersReducer.username,
+            status: state.usersReducer.status,
             likes: state.usersReducer.likes
         }
     })
@@ -21,7 +23,7 @@ const AllPostsPage = (props) => {
     }, []);
 
     const handleCallBack = (dataFromCards) => {
-        if(dataFromCards.length>0){
+        if (dataFromCards.length > 0) {
             setDbPosts(dataFromCards)
         }
     }
@@ -59,16 +61,38 @@ const AllPostsPage = (props) => {
     // console.log("isi likedPosts",likedPosts())
 
     return (
-        <div className="container pt-3 pb-3 px-md-5">
+        <div className="container pt-3 pb-3 px-md-5" style={{ minHeight: "100vh" }}>
 
-            <CardsInAllPosts
+            {
+                username
+                    ?
+                    <CardsInAllPosts
+                        // data={dbPosts}
+                        data={likedPosts()}
+                        unlikedPosts={unlikedPosts()}
+                        displayLikes={displayLikes}
+                        fromUrLikes={fromUrLikes}
+                        handleCallBack={handleCallBack}
+                    />
+                    :
+                    <>
+                        <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
+                            <span class="material-symbols-outlined">
+                                login
+                            </span>
+                        </span>
+                        <h5>401 - Please sign in first to access this page</h5>
+                    </>
+            }
+
+            {/* <CardsInAllPosts
                 // data={dbPosts}
                 data={likedPosts()}
                 unlikedPosts={unlikedPosts()}
                 displayLikes={displayLikes}
                 fromUrLikes={fromUrLikes}
-                handleCallBack = {handleCallBack}
-            />
+                handleCallBack={handleCallBack}
+            /> */}
 
         </div>
     )

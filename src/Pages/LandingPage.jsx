@@ -5,7 +5,9 @@ import BannerBottom from "../Components/Banner/BannerBottom";
 const LandingPage = (props) => {
 
     return (
-        <div>
+        <div
+        style={{ minHeight: "100vh" }}
+        >
             
             <BannerTop />
 

@@ -358,6 +358,10 @@ Menyiapkan project untuk menggunakan git
 
 7. library metatag
 
-8. medsos sharing share link domain?
+========= Q26/06/2022 =========
 
-9. 
+1. Footer position di localhost dan saat published bisa beda
+
+3. medsos icon saat diklik berarti sharing link domain netlify FEnya?
+
+4. 

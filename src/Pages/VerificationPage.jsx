@@ -5,6 +5,7 @@ import { API_URL } from "../helper";
 import { useDispatch } from 'react-redux';
 import { loginAction } from "../redux/actions/usersActions";
 import { useParams, useNavigate } from 'react-router-dom';
+import './_PostDetail.scss';
 
 const VerificationUser = (props) => {
 
@@ -33,17 +34,17 @@ const VerificationUser = (props) => {
 
     return (<div
         className="container d-flex justify-content-center p-4"
+        style={{ minHeight: "100vh" }}
     >
         <div>
-            <span className="material-icons d-flex justify-content-center" style={{ color: "#0C6EFD", fontSize: "150px" }}>
+            <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
                 security
             </span>
             <h4>Yeay! Thanks for signing up!</h4>
             <h5>Please verify you account to enable all features in our website</h5>
             <Button
-                className="w-100 mx-auto mt-2"
+                className="w-100 mx-auto mt-2 _detail_button_post"
                 outline
-                color="primary"
                 onClick={handleVerify}
             >
                 Click here to verify your account

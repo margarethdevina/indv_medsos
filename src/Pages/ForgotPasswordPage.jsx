@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FormGroup, Input, Label, Button } from "reactstrap";
 import Axios from "axios";
 import { API_URL } from "../helper";
+import './_PostDetail.scss';
 
 const ForgotPassword = (props) => {
 
@@ -27,11 +28,12 @@ const ForgotPassword = (props) => {
 
     return (<div
         className="d-flex justify-content-center py-1 my-5"
+        style={{ minHeight: "100vh" }}
     >
         <div
             className="pt-5"
         >
-            <span className="material-icons d-flex justify-content-center" style={{ color: "#147347", fontSize: "150px" }}>
+            <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
                 contact_mail
             </span>
             <h3>Forgot your password?</h3>
@@ -50,9 +52,9 @@ const ForgotPassword = (props) => {
             </FormGroup>
             <Button
                 type="button"
-                className="w-100 mt-1"
+                className="w-100 mt-1 _detail_button_post"
                 onClick={handleEmail}
-                color="success"
+                // color="success"
             >Request Reset Password</Button>
         </div>
     </div>)
