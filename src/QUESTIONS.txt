@@ -305,6 +305,43 @@ forgetPassword
 "password": "DUM1234!"
 }
 
+=========== GITHUB =========== 😄😉😊
+
+Menyiapkan project untuk menggunakan git
+1. Inisialisasi git / mengaktifkan git pada project
+   - git init
+     - saat diketik akan buat nama file hijau di explorer dan ada inisial U / untracked (untracked berarti belum disimpan)
+   - pastikkan saat mau koding, buka langsung ke direktori projeknya bukan dari mydocument atau ke drive lain supaya terminal langsung dari folder projeknya.
+2. Melihat status git pada project
+   - git status di terminal = source control pada VS code
+     - dilakukan saat kita melakukan perubahan dan memastikan kita sudah simpan atau belum.
+3. Memindahkan ke staged session
+   - git add nama_file
+     - nama_file diperuntukkan jika file spesifik
+   - git add .
+     - . berarti mindahin semua file
+   - saat dipindah ke staged session, di source control akan dibilang file akan masuk ke tab staged changes dengan inisial A
+   - di git status file itu akan dibilang new file: xxx dan berwarna hijau.
+4. Menyimpan perubahan di commited session / kedalam git
+   - git commit -m "pesan_perubahan_yang_dilakukan"
+   - bagusnya tulis perubahan apa yg dilakukan pada saat commit, tulis secara singkat aja tapi jangan cuma bilang "revisi".
+   - Modified file akan dapat inisial M
+5. Melihat history commit
+   - git log
+6. Menambahkan link github
+   - git remote add alias_name link_github
+     - alias_name biasanya origin tapi biasanya bisa diganti2
+     - link_github berarti link repository nya
+   - git remote -v
+     - memeriksa link github repositori yang terdaftar pada projek
+7. Konfigurasi branch utama
+   - git branch -M nama_branch
+     - nama_branch utama biasanya main atau Master
+8. Mengupload / menyimpan ke github
+   - git push -u alias_name nama_branch
+     - contoh yg kita lakukan untuk fundamental: git push -u origin main
+
+
 ======= BUGS / NEEDS UPDATE ======== ❗❗❗❗❗❗
 
 1. del comment berhasil tp state ga langsung keupdate
@@ -318,3 +355,9 @@ forgetPassword
 5. add icon supaya your post dan your likes dr new verif user ga kosong2 amat
 
 6. beda font di modal delete dan edit
+
+7. library metatag
+
+8. medsos sharing share link domain?
+
+9. 

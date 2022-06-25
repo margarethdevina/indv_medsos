@@ -80,7 +80,10 @@ function App() {
   console.log("status user yg login", status)
 
   return (
-    <div className="App">
+    <div 
+    className="App"
+    style={{position: "relative", minHeight: "100vh"}}
+    >
 
       <NavbarComponent />
 
@@ -118,7 +121,8 @@ function App() {
       </Routes>
 
       <FooterComponent 
-      style={{position: "fixed", left: 0, right: 0, bottom: 0}}
+      style={{position: "absolute", left: 0, right: 0, bottom: 0}}
+      // style={{position: "fixed", left: 0, right: 0, bottom: 0}}
       />
 
     </div>
