@@ -348,20 +348,20 @@ Menyiapkan project untuk menggunakan git
 
 2. del post berhasil tp state ga langsung keupdate
 
-3. perbaiki footer yg tiap kali ganti page naik ke atas
+3. beda font di modal delete dan edit
 
-4. perbaiki 404 not found di unverif user page selain landing page
+4. library metatag
 
-5. add icon supaya your post dan your likes dr new verif user ga kosong2 amat
-
-6. beda font di modal delete dan edit
-
-7. library metatag
+5. user profile pic di std bulat / rectangle yg penting 1 ukuran
 
 ========= Q26/06/2022 =========
 
-1. Footer position di localhost dan saat published bisa beda
+1. Forgot password di netlify >> page not found padahal di localhost jalan?
 
-3. medsos icon saat diklik berarti sharing link domain netlify FEnya?
+2. di netlify saat refresh page >> page not found
 
-4. 
+3. di netlify saat request email reverif, link di email tetap kesambung ke localhost meskipun di BE env FE_URL sudah diganti ke netlify.
+
+4. medsos icon saat diklik berarti sharing link domain netlify FEnya?
+
+5. 

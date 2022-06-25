@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { Nav, NavItem, NavLink } from "reactstrap";
 import CardsInAllPosts from "../Components/CardsInAllPosts/CardsInAllPosts";
+import { ReactComponent as FavIcon } from '../Assets/IconRef/love-letter.svg';
 
 const YourLikesPage = (props) => {
 
@@ -47,34 +48,67 @@ const YourLikesPage = (props) => {
                     ?
                     status === "verified"
                         ?
-                        <>
-                            <Nav
-                                tabs
-                                className="border-0"
-                            >
-                                <NavItem>
-                                    <NavLink
-                                        onClick={() => navigate("/yourposts")}
-                                    >
-                                        Your Posts
-                                    </NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink
-                                        className="active"
-                                        onClick={() => navigate("/yourlikes")}
-                                    >
-                                        Your Likes
-                                    </NavLink>
-                                </NavItem>
-                            </Nav>
+                        getYourLikes().length > 0
+                            ?
+                            <>
+                                <Nav
+                                    tabs
+                                    className="border-0"
+                                >
+                                    <NavItem>
+                                        <NavLink
+                                            onClick={() => navigate("/yourposts")}
+                                        >
+                                            Your Posts
+                                        </NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink
+                                            className="active"
+                                            onClick={() => navigate("/yourlikes")}
+                                        >
+                                            Your Likes
+                                        </NavLink>
+                                    </NavItem>
+                                </Nav>
 
-                            <CardsInAllPosts
-                                data={getYourLikes()}
-                                displayLikes={displayLikes}
-                                fromUrLikes={fromUrLikes}
-                            />
-                        </>
+                                <CardsInAllPosts
+                                    data={getYourLikes()}
+                                    displayLikes={displayLikes}
+                                    fromUrLikes={fromUrLikes}
+                                />
+                            </>
+                            :
+                            <>
+                                <Nav
+                                    tabs
+                                    className="border-0"
+                                >
+                                    <NavItem>
+                                        <NavLink
+                                            onClick={() => navigate("/yourposts")}
+                                        >
+                                            Your Posts
+                                        </NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink
+                                            className="active"
+                                            onClick={() => navigate("/yourlikes")}
+                                        >
+                                            Your Likes
+                                        </NavLink>
+                                    </NavItem>
+                                </Nav>
+
+                                <FavIcon
+                                    fill="#351c75"
+                                    width="150px"
+                                    height="150px"
+                                />
+                                <h5>204 - No liked posts yet</h5>
+                                <h5>Let's see others' posts and give them your love!</h5>
+                            </>
                         :
                         <>
                             <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>

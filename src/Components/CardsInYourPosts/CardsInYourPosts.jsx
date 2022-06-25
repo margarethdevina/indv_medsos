@@ -9,7 +9,7 @@ const CardsInYourPosts = (props) => {
 
     const navigate = useNavigate();
     // const endTime = DateTime.now().toFormat("FF");
-    
+
     const printCard = () => {
         return props.data.map((value, index) => {
             // let startTime = "";
@@ -19,7 +19,7 @@ const CardsInYourPosts = (props) => {
 
             // console.log("DateTime Luxon", DateTime.fromISO(value.uploadDate).toFormat("FF"))
             // console.log("typeof DateTime Luxon", typeof(DateTime.fromISO(value.uploadDate)))
-            
+
             // endTime = DateTime.now().toFormat("FF");
             // console.log("DateTime.now() Luxon", endTime);
             // console.log("typeof DateTime.now() Luxon", typeof(endTime));
@@ -27,7 +27,7 @@ const CardsInYourPosts = (props) => {
             // startTime = DateTime.fromISO(value.uploadDate).toFormat("FF");
 
             console.log("diffTime", DateTime.now().diff(DateTime.fromISO(value.uploadDate), ['weeks', 'days', 'hours', 'minutes', 'seconds']).toObject());
-            
+
             return (
                 <CardColumns
                     key={value.id}
@@ -71,7 +71,25 @@ const CardsInYourPosts = (props) => {
         <div
             className="row"
         >
-            {printCard()}
+            {
+                props.data.length > 0
+                    ?
+                    <>
+                        {printCard()}
+                    </>
+                    :
+                    <>
+                        <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
+                            <span class="material-symbols-outlined">
+                                post_add
+                            </span>
+                        </span>
+                        <h5>204 - No posts yet</h5>
+                        <h5>Let's tell the world what's in your mind and heart by creating a new post...</h5>
+                    </>
+            }
+
+            {/* {printCard()} */}
 
         </div>
     )
