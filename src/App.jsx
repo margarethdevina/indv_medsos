@@ -1,5 +1,11 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Axios from 'axios';
+import { API_URL } from './helper';
+import { Toast, ToastBody } from "reactstrap";
+// import logo from './logo.svg';
 import './App.css';
+import './index.scss';
 import { Routes, Route } from 'react-router-dom';
 import NavbarComponent from './Components/Navigation/Navbar';
 import FooterComponent from "./Components/Footer/Footer";
@@ -15,10 +21,6 @@ import NotFoundPage from './Pages/404';
 import VerificationUser from './Pages/VerificationPage';
 import ForgotPassword from './Pages/ForgotPasswordPage';
 import NewPasswordPage from './Pages/NewPasswordPage';
-import Axios from 'axios';
-import { API_URL } from './helper';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { getPostsAction } from './redux/actions/postsActions';
 import { loginAction } from './redux/actions/usersActions';
 import { getCommentsAction } from './redux/actions/commentsActions';
@@ -77,6 +79,19 @@ function App() {
     }
   })
 
+  const [openToast, setOpenToast] = useState(false);
+  const [toastMsg, setToastMsg] = useState("");
+
+  const handleToastBack = (toastMessages) => {
+    if (toastMessages.length > 0) {
+      setToastMsg(toastMessages)
+    }
+  }
+
+  if (openToast) {
+    setTimeout(() => setOpenToast(!openToast, setToastMsg("")), 3500)
+  } // setToasMsg di reset disini pakai empty string boleh ga ya?
+
   console.log("status user yg login", status)
 
   return (
@@ -84,6 +99,16 @@ function App() {
       className="App"
     // style={{position: "relative", minHeight: "100vh"}}
     >
+      <Toast
+        id='toastGlobal'
+        isOpen={openToast}
+        className="gen_font_content"
+        style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999" }}
+      >
+        <ToastBody>
+          <span>{toastMsg}</span>
+        </ToastBody>
+      </Toast>
 
       <NavbarComponent />
 
@@ -99,7 +124,7 @@ function App() {
         <Route path='/postdetail' element={<PostDetailPage />} />
 
         <Route path='/verification/:token' element={<VerificationUser />} />
-        <Route path='/forgot' element={<ForgotPassword />} />
+        <Route path='/forgot' element={<ForgotPassword handleToastBack={handleToastBack} />} />
         <Route path='/newpassword/:token' element={<NewPasswordPage />} />
 
         {/* {
@@ -132,7 +157,7 @@ function App() {
               <Route path='/newpassword/:token' element={<NewPasswordPage />} />
             </>
         } */}
-        
+
         <Route path='*' element={<NotFoundPage />} />
 
       </Routes>

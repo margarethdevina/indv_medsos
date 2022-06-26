@@ -354,7 +354,14 @@ Menyiapkan project untuk menggunakan git
 
 5. library metatag
 
-6. double check requirement
+6. meskipun unverif bisa lihat semua post tapi ngelike di disabled dulu
+
+7. setelah teken button forget password, masuk ke landing page, muncul notif email sent.
+toast di global? pakai function callback di app.js? atau bisa pakai props ke app.js?
+
+8. liked posts begitu dah keisi ga bisa kosong sama sekali / begitu udah ngelike, minimal di liked post harus ada 1 post yg terlike dulu baru bisa unlike/like post2 lainnya
+
+8. double check requirement
 
 ========= Q26/06/2022 =========
 
@@ -369,3 +376,5 @@ Menyiapkan project untuk menggunakan git
 5. infinitescroll di BE itu maksudnya set pagination limit di BE? FE bisa pakai library infinite scroll component?
 
 6. handle loadmore button untuk pagination comment ditaruh pas fetchcomments  berikutnya atau di fetchData?
+
+7. toast message di app.jsx tidak bisa muncul?

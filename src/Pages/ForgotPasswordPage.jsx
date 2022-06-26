@@ -3,8 +3,11 @@ import { FormGroup, Input, Label, Button } from "reactstrap";
 import Axios from "axios";
 import { API_URL } from "../helper";
 import './_PostDetail.scss';
+import { useNavigate } from "react-router-dom";
 
 const ForgotPassword = (props) => {
+
+    const navigate = useNavigate();
 
     const [insertEmail, setInsertEmail] = useState("");
 
@@ -16,10 +19,11 @@ const ForgotPassword = (props) => {
                 })
     
                 if (res.data.success) {
-                    alert("Reset password link sent. Please check your email inbox")
+                    navigate("/", {replace: true})
+                    props.handleToastBack("Reset password link sent. Please check your email inbox")
                 }
             } else {
-                alert("Please insert your registered email first")
+                props.handleToastBack("Please insert your registered email first")
             }
         } catch (error) {
             console.log(error);

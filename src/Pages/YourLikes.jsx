@@ -112,7 +112,7 @@ const YourLikesPage = (props) => {
                         :
                         <>
                             <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
-                                <span class="material-symbols-outlined">
+                                <span className="material-symbols-outlined">
                                     gpp_maybe
                                 </span>
                             </span>
@@ -122,7 +122,7 @@ const YourLikesPage = (props) => {
                     :
                     <>
                         <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
-                            <span class="material-symbols-outlined">
+                            <span className="material-symbols-outlined">
                                 login
                             </span>
                         </span>
