@@ -3,6 +3,7 @@ import '../../index.scss';
 import {
     Modal, ModalBody, Button, FormGroup, Label, Input, InputGroup, InputGroupText, Toast, ToastHeader, ToastBody
 } from 'reactstrap';
+import { toast } from "react-toastify";
 import Axios from 'axios';
 import { API_URL } from '../../helper';
 import { useDispatch } from 'react-redux';

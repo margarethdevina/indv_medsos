@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { API_URL } from "../helper";
 import { loginAction } from "../redux/actions/usersActions";
 import { Form, FormGroup, Label, Input, InputGroup, InputGroupText, Button, Col, Toast, ToastHeader, ToastBody } from "reactstrap";
+import { toast } from "react-toastify";
 
 const RegisterPage = (props) => {
 
@@ -28,8 +29,10 @@ const RegisterPage = (props) => {
     const [confPassword, setConfPassword] = useState("");
     const [passStrength, setPassStrength] = useState("");
 
-    const [openToast, setOpenToast] = useState(false);
-    const [toastMsg, setToastMsg] = useState("");
+    const [buttonStatus, setButtonStatus] = useState(false);
+
+    // const [openToast, setOpenToast] = useState(false);
+    // const [toastMsg, setToastMsg] = useState("");
 
     /////// REGEX FUNCTIONS ///////
     const strongRegexPassword = new RegExp("^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})")
@@ -124,33 +127,35 @@ const RegisterPage = (props) => {
         try {
             if (username == "" || email == "" || password == "" || confPassword == "") {
                 console.log("Fill in all form")
-                setOpenToast(!openToast)
-                setToastMsg("Fill in all form")
+                // setOpenToast(!openToast)
+                toast.warn("Fill in all form")
             } else {
                 if (password.length < 8) {
                     // console.log("Password should contain at least 8 characters")
-                    setOpenToast(!openToast)
-                    setToastMsg("Password should contain at least 8 characters")
+                    // setOpenToast(!openToast)
+                    toast.warn("Password should contain at least 8 characters")
                 } else if (passStrength == "❌ Contain lowercase letter") {
                     // console.log("Password cannot contain lowercase letter")
-                    setOpenToast(!openToast)
-                    setToastMsg("Password cannot contain lowercase letter")
+                    // setOpenToast(!openToast)
+                    toast.warn("Password cannot contain lowercase letter")
                 } else if (password != confPassword) {
                     // console.log("Password not match")
-                    setOpenToast(!openToast)
-                    setToastMsg("Password not match")
+                    // setOpenToast(!openToast)
+                    toast.warn("Password not match")
                 } else if (dbUsers.find(val => val.username == username)) {
                     // console.log("Username already used")
-                    setOpenToast(!openToast)
-                    setToastMsg("Username already used")
+                    // setOpenToast(!openToast)
+                    toast.warn("Username already used")
                     setUsedUsername("❌ Used Username")
                 } else if (dbUsers.find(val => val.email == email)) {
                     // console.log("Email already used")
-                    setOpenToast(!openToast)
-                    setToastMsg("Email already used")
+                    // setOpenToast(!openToast)
+                    toast.warn("Email already used")
                     setEmailValidity("❌ Used Email")
                 } else if (emailValidity == "✅ Valid Email") {
 
+                    setButtonStatus(true)
+                    
                     let res = await Axios.post(`${API_URL}/users/regis`, {
                         email,
                         username,
@@ -162,19 +167,24 @@ const RegisterPage = (props) => {
                         profilePicture: ""
                     })
 
-                    // alert("Registrasi berhasil")
-                    setToastMsg("Registration successful, account verification link has been sent to your email")
+                    
 
-                    console.log("data yg teregister", res.data)
+                    if (res.data.success){
 
-                    localStorage.setItem("tokenIdUser", res.data.token)
-                    dispatch(loginAction(res.data))
-                    navigate("/", { replace: true })
+                        // alert("Registrasi berhasil")
+                        toast.success("Registration successful, account verification link has been sent to your email")
+    
+                        console.log("data yg teregister", res.data)
+    
+                        localStorage.setItem("tokenIdUser", res.data.token)
+                        dispatch(loginAction(res.data))
+                        navigate("/", { replace: true })
+                    }
 
                 } else {
                     // console.log("❌ Invalid Email")
-                    setOpenToast(!openToast)
-                    setToastMsg("❌ Invalid Email")
+                    // setOpenToast(!openToast)
+                    toast.warn("❌ Invalid Email")
                 }
             }
         } catch (error) {
@@ -203,9 +213,9 @@ const RegisterPage = (props) => {
     }
 
     /////// TOAST TIMEOUT ///////
-    if (openToast) {
-        setTimeout(() => setOpenToast(!openToast), 3500)
-    }
+    // if (openToast) {
+    //     setTimeout(() => setOpenToast(!openToast), 3500)
+    // }
 
     return (
         <div
@@ -214,7 +224,7 @@ const RegisterPage = (props) => {
         >
 
             <>
-                <Toast
+                {/* <Toast
                     isOpen={openToast}
                     className="gen_font_content"
                     style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999" }}
@@ -229,7 +239,7 @@ const RegisterPage = (props) => {
                     <ToastBody>
                         <span>{toastMsg}</span>
                     </ToastBody>
-                </Toast>
+                </Toast> */}
 
                 <div
                     className="d-none d-md-flex col-md-6 order-md-1"
@@ -368,6 +378,7 @@ const RegisterPage = (props) => {
                             className="col-12 mb-3 gen_btn_success"
                             color="success"
                             onClick={handleRegister}
+                            disabled = {buttonStatus}
                         >
                             Register
                         </Button>

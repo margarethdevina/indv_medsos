@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Axios from 'axios';
 import { API_URL } from './helper';
-import { Toast, ToastBody } from "reactstrap";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 // import logo from './logo.svg';
 import './App.css';
 import './index.scss';
@@ -79,19 +80,6 @@ function App() {
     }
   })
 
-  const [openToast, setOpenToast] = useState(false);
-  const [toastMsg, setToastMsg] = useState("");
-
-  const handleToastBack = (toastMessages) => {
-    if (toastMessages.length > 0) {
-      setToastMsg(toastMessages)
-    }
-  }
-
-  if (openToast) {
-    setTimeout(() => setOpenToast(!openToast, setToastMsg("")), 3500)
-  } // setToasMsg di reset disini pakai empty string boleh ga ya?
-
   console.log("status user yg login", status)
 
   return (
@@ -99,64 +87,47 @@ function App() {
       className="App"
     // style={{position: "relative", minHeight: "100vh"}}
     >
-      <Toast
-        id='toastGlobal'
-        isOpen={openToast}
-        className="gen_font_content"
-        style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999" }}
-      >
-        <ToastBody>
-          <span>{toastMsg}</span>
-        </ToastBody>
-      </Toast>
+      <ToastContainer
+        position="top-right"
+        autoClose={3500}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+        theme="dark"
+      />
 
       <NavbarComponent />
 
       <Routes>
 
-        <Route path='/' element={<LandingPage />} />
-        <Route path='/userprofile' element={<UserProfilePage />} />
-        <Route path='/register' element={<RegisterPage />} />
-        <Route path='/allposts' element={<AllPostsPage />} />
-        <Route path='/uploadpost' element={<UploadPostPage />} />
-        <Route path='/yourposts' element={<YourPostsPage />} />
-        <Route path='/yourlikes' element={<YourLikesPage />} />
-        <Route path='/postdetail' element={<PostDetailPage />} />
-
-        <Route path='/verification/:token' element={<VerificationUser />} />
-        <Route path='/forgot' element={<ForgotPassword handleToastBack={handleToastBack} />} />
-        <Route path='/newpassword/:token' element={<NewPasswordPage />} />
-
-        {/* {
+        {
           username
             ?
-            status === "unverified"
-              ?
-              <>
-                <Route path='/userprofile' element={<UserProfilePage />} />
-                <Route path='/allposts' element={<AllPostsPage />} />
-                <Route path='/verification/:token' element={<VerificationUser />} />
-                <Route path='/yourposts' element={<YourPostsPage />} />
-                <Route path='/uploadpost' element={<UploadPostPage />} />
-              </>
-              :
-              <>
-                <Route path='/yourposts' element={<YourPostsPage />} />
-                <Route path='/userprofile' element={<UserProfilePage />} />
-                <Route path='/yourlikes' element={<YourLikesPage />} />
-                <Route path='/allposts' element={<AllPostsPage />} />
-                <Route path='/uploadpost' element={<UploadPostPage />} />
-                <Route path='/postdetail' element={<PostDetailPage />} />
-              </>
+            <>
+              <Route path='/' element={<LandingPage />} />
+              <Route path='/userprofile' element={<UserProfilePage />} />
+              <Route path='/allposts' element={<AllPostsPage />} />
+              <Route path='/uploadpost' element={<UploadPostPage />} />
+              <Route path='/yourposts' element={<YourPostsPage />} />
+              <Route path='/yourlikes' element={<YourLikesPage />} />
+              <Route path='/postdetail' element={<PostDetailPage />} />
+
+              <Route path='/verification/:token' element={<VerificationUser />} />
+            </>
             :
             <>
-              <Route path='/yourposts' element={<YourPostsPage />} />
-              <Route path='/uploadpost' element={<UploadPostPage />} />
+              <Route path='/' element={<LandingPage />} />
+              <Route path='/allposts' element={<AllPostsPage />} />
               <Route path='/register' element={<RegisterPage />} />
               <Route path='/forgot' element={<ForgotPassword />} />
               <Route path='/newpassword/:token' element={<NewPasswordPage />} />
+              <Route path='/verification/:token' element={<VerificationUser />} />
             </>
-        } */}
+        }
 
         <Route path='*' element={<NotFoundPage />} />
 

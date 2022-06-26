@@ -235,6 +235,8 @@ const PostDetailPage = (props) => {
 
             let idxInLikes = tempLike.indexOf(IdPost);
             tempLike.splice(idxInLikes, 1);
+            console.log("tempLike setelah coba unlike",tempLike)
+            
             let idxInPost = tempPosts.findIndex(val => val.id == IdPost);
 
             // let tempNoOfLikes = tempPosts[idxInPost].numberOfLikes;

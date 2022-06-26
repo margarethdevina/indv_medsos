@@ -4,6 +4,7 @@ import Axios from "axios";
 import { API_URL } from "../helper";
 import './_PostDetail.scss';
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ForgotPassword = (props) => {
 
@@ -13,17 +14,18 @@ const ForgotPassword = (props) => {
 
     const handleEmail = async () => {
         try {
-            if (insertEmail){
+            if (insertEmail) {
                 let res = await Axios.post(`${API_URL}/users/forgot`, {
                     email: insertEmail
                 })
-    
+
                 if (res.data.success) {
-                    navigate("/", {replace: true})
-                    props.handleToastBack("Reset password link sent. Please check your email inbox")
+                    navigate("/", { replace: true })
+                    // alert("Reset password link sent. Please check your email inbox")
+                    toast.info("Reset password link sent. Please check your email inbox")
                 }
             } else {
-                props.handleToastBack("Please insert your registered email first")
+                toast.warn("Please insert your registered email first")
             }
         } catch (error) {
             console.log(error);
@@ -58,7 +60,7 @@ const ForgotPassword = (props) => {
                 type="button"
                 className="w-100 mt-1 _detail_button_post"
                 onClick={handleEmail}
-                // color="success"
+            // color="success"
             >Request Reset Password</Button>
         </div>
     </div>)

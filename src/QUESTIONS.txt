@@ -356,12 +356,29 @@ Menyiapkan project untuk menggunakan git
 
 6. meskipun unverif bisa lihat semua post tapi ngelike di disabled dulu
 
-7. setelah teken button forget password, masuk ke landing page, muncul notif email sent.
-toast di global? pakai function callback di app.js? atau bisa pakai props ke app.js?
+7. Semua toast di tiap component di replace pakai toastify aja ❗❗❗
+    - cek di registration >> DONE
+    - login
+    - forget pass email >> DONE
+    - new password submitted
+    - resend verif email
+    - verification sukses / ngga?
+    - edit profile
 
-8. liked posts begitu dah keisi ga bisa kosong sama sekali / begitu udah ngelike, minimal di liked post harus ada 1 post yg terlike dulu baru bisa unlike/like post2 lainnya
+8. liked posts begitu dah keisi ga bisa kosong sama sekali / begitu udah ngelike, minimal di liked post harus ada 1 post yg terlike dulu baru bisa unlike/like post2 lainnya >> DONE ini krn ngaco di Backend
 
-8. double check requirement
+9. Page tetep di register tapi disabled, di hasil response button diganti jadi disabled >> able dan disable jadi argumen >> DONE
+
+
+
+
+97. edit profile secara default seharusnya ada edit password juga
+    cek password lama dulu baru isi password baru
+    (belakangan aja)
+
+98. react helmet untuk bantu fitur sharing (belakanga aja gpp)
+
+99. double check requirement
 
 ========= Q26/06/2022 =========
 
@@ -373,8 +390,14 @@ toast di global? pakai function callback di app.js? atau bisa pakai props ke app
 
 4. medsos icon saat diklik berarti sharing link domain netlify FEnya?
 
-5. infinitescroll di BE itu maksudnya set pagination limit di BE? FE bisa pakai library infinite scroll component?
+5. infinitescroll di BE itu maksudnya set pagination limit di BE? FE bisa pakai library infinite scroll component? >> miripin sm komen krn limit di BE
 
-6. handle loadmore button untuk pagination comment ditaruh pas fetchcomments  berikutnya atau di fetchData?
+6. handle loadmore button untuk pagination comment ditaruh pas fetchcomments  berikutnya atau di fetchData? >> ditaruh pas fetchData
 
-7. toast message di app.jsx tidak bisa muncul?
+
+
+URGENT TASK:
+1. page login dan register tidak bisa diakses ulang setelah login >> DONE
+2. disabled register button setelah klik sekali
+3. bug like and unlike
+4. infinite scrolling all post
