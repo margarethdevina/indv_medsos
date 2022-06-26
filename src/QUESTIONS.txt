@@ -348,7 +348,7 @@ Menyiapkan project untuk menggunakan git
 
 2. del post berhasil tp state ga langsung keupdate
 
-3. infinitescroll
+3. infinitescroll all posts >> ongoing
 
 4. beda font di modal delete dan edit
 
@@ -356,21 +356,7 @@ Menyiapkan project untuk menggunakan git
 
 6. meskipun unverif bisa lihat semua post tapi ngelike di disabled dulu
 
-7. Semua toast di tiap component di replace pakai toastify aja ❗❗❗
-    - cek di registration >> DONE
-    - login
-    - forget pass email >> DONE
-    - new password submitted
-    - resend verif email
-    - verification sukses / ngga?
-    - edit profile
-
-8. liked posts begitu dah keisi ga bisa kosong sama sekali / begitu udah ngelike, minimal di liked post harus ada 1 post yg terlike dulu baru bisa unlike/like post2 lainnya >> DONE ini krn ngaco di Backend
-
-9. Page tetep di register tapi disabled, di hasil response button diganti jadi disabled >> able dan disable jadi argumen >> DONE
-
-
-
+7. bug width landing page terlalu lebar kanan sd ada scrollnya
 
 97. edit profile secara default seharusnya ada edit password juga
     cek password lama dulu baru isi password baru
@@ -382,22 +368,20 @@ Menyiapkan project untuk menggunakan git
 
 ========= Q26/06/2022 =========
 
-1. Forgot password di netlify >> page not found padahal di localhost jalan?
+1. Forgot password di netlify >> page not found padahal di localhost jalan? >>> memang ada bug
 
-2. di netlify saat refresh page >> page not found
+2. di netlify saat refresh page >> page not found >>> memang ada bug
 
-3. di netlify saat request email reverif, link di email tetap kesambung ke localhost meskipun di BE env FE_URL sudah diganti ke netlify.
+3. di netlify saat request email reverif, link di email tetap kesambung ke localhost meskipun di BE env FE_URL sudah diganti ke netlify >>> memang ada bug
 
-4. medsos icon saat diklik berarti sharing link domain netlify FEnya?
+4. medsos icon saat diklik berarti sharing link domain netlify FEnya? nanti aja dulu ini setelah metatag library di add
 
-5. infinitescroll di BE itu maksudnya set pagination limit di BE? FE bisa pakai library infinite scroll component? >> miripin sm komen krn limit di BE
+5. infinitescroll di BE itu maksudnya set pagination limit di BE? FE bisa pakai library infinite scroll component? >> miripin sm komen krn limit di BE >> ongoing
 
 6. handle loadmore button untuk pagination comment ditaruh pas fetchcomments  berikutnya atau di fetchData? >> ditaruh pas fetchData
 
 
-
 URGENT TASK:
-1. page login dan register tidak bisa diakses ulang setelah login >> DONE
-2. disabled register button setelah klik sekali
-3. bug like and unlike
-4. infinite scrolling all post
+1. infinite scrolling all post
+2. bug delete comment dan posts
+3. add load more button di comment pagination

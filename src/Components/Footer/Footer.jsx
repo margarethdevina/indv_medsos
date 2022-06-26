@@ -7,7 +7,6 @@ import { ReactComponent as FbIcon } from '../../Assets/IconRef/icons8-facebook.s
 
 const FooterComponent = (props) => {
 
-
     return (
         <div id="footer">
             <div className="container">
@@ -72,8 +71,6 @@ const FooterComponent = (props) => {
                         />
                     </FacebookShareButton>
                 </div>
-
-
 
             </div>
         </div>

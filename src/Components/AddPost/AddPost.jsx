@@ -4,16 +4,14 @@ import Axios from 'axios';
 import { useDispatch, useSelector } from "react-redux";
 import { API_URL } from "../../helper";
 import { getPostsAction } from "../../redux/actions/postsActions";
-import { Form, FormGroup, Label, Input, InputGroup, InputGroupText, Button, Col, Toast, ToastHeader, ToastBody } from "reactstrap";
+import { Form, FormGroup, Label, Input, InputGroup, InputGroupText, Button, Col } from "reactstrap";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AddPostComponent = (props) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const [openToast, setOpenToast] = useState(false);
-    const [toastMsg, setToastMsg] = useState("");
 
     const currentDate = new Date();
     const uploadDate = `${currentDate.getFullYear()}/${(currentDate.getMonth() + 1) < 10 ? `0${(currentDate.getMonth() + 1)}` : `${(currentDate.getMonth() + 1)}`}/${currentDate.getDate()}`
@@ -57,9 +55,7 @@ const AddPostComponent = (props) => {
 
         try {
             if (media == "" || caption == "") {
-                console.log("Fill in all form")
-                setOpenToast(!openToast)
-                setToastMsg("Fill in all form")
+                toast.warn("Fill in all form");
             } else {
                 if (token) {
                     let formData = new FormData();
@@ -85,40 +81,19 @@ const AddPostComponent = (props) => {
                     // yg direturn jadi res.data si id:idPost, username, media, caption, uploadDate, editedDate, numberOfLikes
                     dispatch(getPostsAction(res.data));
                     getPosts();
-                    setNewPost({ ...newPost, media: "", caption: "" })
-                    navigate("/yourposts")
+                    setNewPost({ ...newPost, media: "", caption: "" });
+                    navigate("/yourposts");
                 }
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-    }
-
-    if (openToast) {
-        setTimeout(() => setOpenToast(!openToast), 3500)
     }
 
     return (
         <div
             className="container mx-auto col-10 col-md-6 py-3 pb-md-5"
         >
-
-            <Toast
-                isOpen={openToast}
-                className="gen_font_content"
-                style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999" }}
-            >
-                <ToastHeader
-                    icon="warning"
-                    toggle={() => setOpenToast(!openToast)}
-                    style={{ backgroundColor: "#f3f6f4" }}
-                >
-                    Add a new post warning
-                </ToastHeader>
-                <ToastBody>
-                    <span>{toastMsg}</span>
-                </ToastBody>
-            </Toast>
 
             <fieldset
                 className="border border-0 shadow-sm bg-white rounded py-3 row"

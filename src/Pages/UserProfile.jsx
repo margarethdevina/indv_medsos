@@ -8,6 +8,7 @@ import { Card, CardImg, CardBody, Button, Input } from "reactstrap";
 import { useNavigate } from 'react-router-dom';
 import adminPic from "../Assets/SampleProfilePic/Admin.png";
 import { ReactComponent as VerifIcon } from '../Assets/IconRef/verified.svg';
+import { toast } from "react-toastify";
 
 const UserProfilePage = (props) => {
 
@@ -56,6 +57,7 @@ const UserProfilePage = (props) => {
     const [inputFullName, setInputFullName] = useState(fullname);
     const [inputUserName, setInputUserName] = useState(username);
     const [inputBio, setInputBio] = useState(bio);
+    const [buttonStatus, setButtonStatus] = useState(false);
 
     const printCard = () => {
         if (selectedEdit == 0) {
@@ -309,22 +311,6 @@ const UserProfilePage = (props) => {
                 console.log(err)
             })
 
-            //❗❗❗
-            // Axios.patch(`${API_URL}/users/edit`, {
-            //     fullname: inputFullName,
-            //     username: inputUserName,
-            //     bio: inputBio,
-            //     profilePicture: inputPicture
-            // }, {
-            //     headers: {
-            //         'Authorization': `Bearer ${token}`
-            //     }
-            // }).then((res) => {
-            //     console.log("isi res.data pas klik save", res.data)
-            //     keepLogin()
-            // }).catch((err) => {
-            //     console.log(err)
-            // })
         }
 
     }
@@ -334,7 +320,11 @@ const UserProfilePage = (props) => {
     }
 
     const resendVerif = () => {
+
+        setButtonStatus(true)
+
         let token = localStorage.getItem("tokenIdUser");
+
         if (token) {
             Axios.get(`${API_URL}/users/resendVerif`, {
                 headers: {
@@ -344,12 +334,13 @@ const UserProfilePage = (props) => {
                 if (res.data.success) {
                     localStorage.setItem("tokenIdUser", res.data.token);
                     dispatch(loginAction(res.data));
-                    alert("Your request for Account Verification Link has been sent. Please check your email inbox")
+                    toast.info("Your request for Account Verification Link has been sent. Please check your email inbox");
+                    navigate('/');
+                    setButtonStatus(false);
                 }
             }).catch((error) => {
                 console.log(error);
             })
-            navigate('/');
         }
     }
 
@@ -380,6 +371,7 @@ const UserProfilePage = (props) => {
                                         color="warning"
                                         outline
                                         onClick={resendVerif}
+                                        disabled={buttonStatus}
                                     >
                                         Verify your Account
                                     </Button>

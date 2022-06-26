@@ -5,7 +5,7 @@ import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { API_URL } from "../helper";
 import { loginAction } from "../redux/actions/usersActions";
-import { Form, FormGroup, Label, Input, InputGroup, InputGroupText, Button, Col, Toast, ToastHeader, ToastBody } from "reactstrap";
+import { Form, FormGroup, Label, Input, InputGroup, InputGroupText, Button, Col } from "reactstrap";
 import { toast } from "react-toastify";
 
 const RegisterPage = (props) => {
@@ -31,9 +31,6 @@ const RegisterPage = (props) => {
 
     const [buttonStatus, setButtonStatus] = useState(false);
 
-    // const [openToast, setOpenToast] = useState(false);
-    // const [toastMsg, setToastMsg] = useState("");
-
     /////// REGEX FUNCTIONS ///////
     const strongRegexPassword = new RegExp("^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})")
     const weakRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})")
@@ -54,24 +51,6 @@ const RegisterPage = (props) => {
             }).catch((error) => { console.log(error) })
     };
 
-    // const getUsername = () => {
-    //     console.log("isi dbUsers", dbUsers);
-    //     let temp = [];
-    //     dbUsers.map((value, index) => {
-    //         temp.push(value.username)
-    //     })
-    //     setDbUsername(temp)
-    //     console.log("isi dbUsername", dbUsername);
-    // }
-    // const getEmail = () => {
-    //     console.log("isi dbUsers", dbUsers);
-    //     let temp = [];
-    //     dbUsers.map((value, index) => {
-    //         temp.push(value.email)
-    //     })
-    //     setDbEmail([...temp])
-    // }
-
     /////// REGISTRATION FUNCTIONS AND ITS SUPPORTING FUNCTIONS ///////
     const handlePassword = (value) => {
         // console.log(value)
@@ -90,36 +69,17 @@ const RegisterPage = (props) => {
     const handleUsername = (value) => {
         console.log(value)
         setUsername(value)
-
-        // if (dbUsers.find(val => val.username == username)) {
-        //     console.log("KETEMU USERNAME SAMAAA")
-        // }
-
     }
 
     const handleEmail = (value) => {
         console.log(value)
         setEmail(value)
 
-        // getEmail()
-        // console.log("Isi dbEmail", dbEmail)
-
         if (validRegexEmail.test(email)) {
             setEmailValidity("✅ Valid Email")
         } else {
             setEmailValidity("❌ Invalid Email")
         }
-
-        // if (dbUsers.find(val => val.email == email)) {
-        //     setTimeout(() => setEmailValidity("❌ Email already used"), 1000)
-        // } else {
-        //     if (validRegexEmail.test(email)) {
-        //         setTimeout(() => setEmailValidity("✅ Valid Email"), 4000)
-        //     } else {
-        //         setTimeout(() => setEmailValidity("❌ Invalid Email"), 4000)
-        //     }
-        // }
-
     }
 
     const handleRegister = async () => {
@@ -127,29 +87,23 @@ const RegisterPage = (props) => {
         try {
             if (username == "" || email == "" || password == "" || confPassword == "") {
                 console.log("Fill in all form")
-                // setOpenToast(!openToast)
                 toast.warn("Fill in all form")
             } else {
                 if (password.length < 8) {
                     // console.log("Password should contain at least 8 characters")
-                    // setOpenToast(!openToast)
                     toast.warn("Password should contain at least 8 characters")
                 } else if (passStrength == "❌ Contain lowercase letter") {
                     // console.log("Password cannot contain lowercase letter")
-                    // setOpenToast(!openToast)
                     toast.warn("Password cannot contain lowercase letter")
                 } else if (password != confPassword) {
                     // console.log("Password not match")
-                    // setOpenToast(!openToast)
                     toast.warn("Password not match")
                 } else if (dbUsers.find(val => val.username == username)) {
                     // console.log("Username already used")
-                    // setOpenToast(!openToast)
                     toast.warn("Username already used")
                     setUsedUsername("❌ Used Username")
                 } else if (dbUsers.find(val => val.email == email)) {
                     // console.log("Email already used")
-                    // setOpenToast(!openToast)
                     toast.warn("Email already used")
                     setEmailValidity("❌ Used Email")
                 } else if (emailValidity == "✅ Valid Email") {
@@ -168,7 +122,6 @@ const RegisterPage = (props) => {
                     })
 
                     if (res.data.success){
-                        // alert("Registrasi berhasil")
                         toast.success("Registration successful, account verification link has been sent to your email")
     
                         console.log("data yg teregister", res.data)
@@ -181,7 +134,6 @@ const RegisterPage = (props) => {
 
                 } else {
                     // console.log("❌ Invalid Email")
-                    // setOpenToast(!openToast)
                     toast.warn("❌ Invalid Email")
                 }
             }
@@ -210,11 +162,6 @@ const RegisterPage = (props) => {
         }
     }
 
-    /////// TOAST TIMEOUT ///////
-    // if (openToast) {
-    //     setTimeout(() => setOpenToast(!openToast), 3500)
-    // }
-
     return (
         <div
             className="row container mx-auto py-3"
@@ -222,22 +169,6 @@ const RegisterPage = (props) => {
         >
 
             <>
-                {/* <Toast
-                    isOpen={openToast}
-                    className="gen_font_content"
-                    style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999" }}
-                >
-                    <ToastHeader
-                        icon="warning"
-                        toggle={() => setOpenToast(!openToast)}
-                        style={{ backgroundColor: "#f3f6f4" }}
-                    >
-                        Registration warning
-                    </ToastHeader>
-                    <ToastBody>
-                        <span>{toastMsg}</span>
-                    </ToastBody>
-                </Toast> */}
 
                 <div
                     className="d-none d-md-flex col-md-6 order-md-1"

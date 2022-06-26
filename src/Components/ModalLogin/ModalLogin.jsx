@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import '../../index.scss';
 import {
-    Modal, ModalBody, Button, FormGroup, Label, Input, InputGroup, InputGroupText, Toast, ToastHeader, ToastBody
+    Modal, ModalBody, Button, FormGroup, Label, Input, InputGroup, InputGroupText
 } from 'reactstrap';
 import { toast } from "react-toastify";
 import Axios from 'axios';
@@ -37,14 +37,10 @@ const ModalLogin = (props) => {
         setInForm({ ...inForm, [property]: value })
     }
 
-    const [openToast, setOpenToast] = useState(false);
-    const [toastMsg, setToastMsg] = useState("");
-
     const handleLogin = () => {
         if (inForm.usernameOrEmail == "" || inForm.password == "") {
             console.log("Fill in all form")
-            setOpenToast(!openToast)
-            setToastMsg("Fill in all form")
+            toast.warn("Fill in all form")
         } else if (inForm.usernameOrEmail.includes("@")) {
 
             console.log("isi email", inForm.usernameOrEmail)
@@ -59,11 +55,10 @@ const ModalLogin = (props) => {
                     localStorage.setItem("tokenIdUser", response.data.token)
                     dispatch(loginAction(response.data))
                     props.toggleOpen();
-                    navigate("/")
+                    navigate("/", { replace: true });
                 }).catch((error) => {
                     console.log(error)
-                    setOpenToast(!openToast)
-                    setToastMsg("Incorrect email or password")
+                    toast.warn("Incorrect email or password");
                 })
 
         } else if (!inForm.usernameOrEmail.includes("@")) {
@@ -80,11 +75,10 @@ const ModalLogin = (props) => {
                     localStorage.setItem("tokenIdUser", response.data.token)
                     dispatch(loginAction(response.data))
                     props.toggleOpen();
-                    navigate("/")
+                    navigate("/", { replace: true });
                 }).catch((error) => {
                     console.log(error)
-                    setOpenToast(!openToast)
-                    setToastMsg("Incorrect username or password")
+                    toast.warn("Incorrect username or password");
                 })
 
         }
@@ -110,32 +104,11 @@ const ModalLogin = (props) => {
         }
     }
 
-    if (openToast) {
-        setTimeout(() => setOpenToast(!openToast), 3500)
-    }
-
     return (
         <Modal
             isOpen={props.modalOpen}
             toggle={props.toggleOpen}
         >
-
-            <Toast
-                isOpen={openToast}
-                className="gen_font_content"
-                style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999" }}
-            >
-                <ToastHeader
-                    icon="warning"
-                    toggle={() => setOpenToast(!openToast)}
-                    style={{ backgroundColor: "#f3f6f4" }}
-                >
-                    Login warning
-                </ToastHeader>
-                <ToastBody>
-                    <span>{toastMsg}</span>
-                </ToastBody>
-            </Toast>
 
             <ModalBody>
                 <p

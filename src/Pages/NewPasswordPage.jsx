@@ -5,6 +5,7 @@ import { API_URL } from "../helper";
 import { useDispatch } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import './_PostDetail.scss';
+import { toast } from "react-toastify";
 
 const NewPasswordPage = (props) => {
 
@@ -48,13 +49,14 @@ const NewPasswordPage = (props) => {
                     })
 
                     if (res.data.success) {
+                        toast.success("New password has been saved")
                         navigate('/', { replace: true });
                     }
                 } else {
-                    alert("Your confirmation password is incorrect")
+                    toast.warn("Your confirmation password is incorrect")
                 }
             } else {
-                alert("Please fill in all form")
+                toast.warn("Please fill in all form")
             }
 
         } catch (error) {

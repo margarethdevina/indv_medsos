@@ -25,6 +25,7 @@ const AllPostsPage = (props) => {
 
     useEffect(() => {
         getPosts()
+        // getPostForFirstScroll()
     }, []);
 
     const handleCallBack = (dataFromCards) => {
@@ -41,42 +42,41 @@ const AllPostsPage = (props) => {
             }).catch((error) => { console.log(error) })
     };
 
-    const getPostForFirstScroll = async () => {
-        const res = await Axios.get(`${API_URL}/posts/paginate?_page=1`);
+    // const getPostForFirstScroll = async () => {
+    //     const res = await Axios.get(`${API_URL}/posts/paginate?_page=1`);
 
-        const data = res.data;
-        setPostsArr(data);
+    //     const data = res.data;
+    //     setPostsArr(data);
 
-        if (data.length === 0 || data.length < 4) {
-            setHasMore(false);
-        };
+    //     if (data.length === 0 || data.length < 4) {
+    //         setHasMore(false);
+    //     };
 
-        setPageNumber(2);
-    }
+    //     setPageNumber(2);
+    // }
 
-    const fetchNextPosts = async () => {
-        const res = await Axios.get(`${API_URL}/posts/paginate?_page=${pageNumber}`);
+    // const fetchNextPosts = async () => {
+    //     const res = await Axios.get(`${API_URL}/posts/paginate?_page=${pageNumber}`);
 
-        const data = res.data;
-        return data;
-    }
+    //     const data = res.data;
+    //     return data;
+    // }
 
-    const fetchData = async () => {
-        const postsFromServer = await fetchNextPosts();
+    // const fetchData = async () => {
+    //     const postsFromServer = await fetchNextPosts();
+    //     console.log("isi postsFromServer", postsFromServer);
 
-        console.log("isi postsFromServer", postsFromServer);
+    //     setPostsArr([...postsArr, ...postsFromServer]);
 
-        setPostsArr([...postsArr, ...postsFromServer]);
+    //     if (postsFromServer.length === 0 || postsFromServer.length < 4) {
+    //         setHasMore(false);
+    //     }
 
-        if (postsFromServer.length === 0 || postsFromServer.length < 4) {
-            setHasMore(false);
-        }
-
-        let temp = pageNumber;
-        temp++;
-        console.log("isi increment temp", temp);
-        setPageNumber(temp);
-    }
+    //     let temp = pageNumber;
+    //     temp++;
+    //     console.log("isi increment temp", temp);
+    //     setPageNumber(temp);
+    // }
 
     const unlikedPosts = () => {
         let results = dbPosts.filter(({ id: id1 }) => !likes.some((id2) => id2 === id1));
@@ -103,16 +103,19 @@ const AllPostsPage = (props) => {
     // console.log("isi likedPosts",likedPosts())
 
     return (
-        <div className="container pt-3 pb-3 px-md-5" style={{ minHeight: "100vh" }}>
+        <div 
+        className="container pt-3 pb-3 px-md-5" 
+        style={{ minHeight: "100vh" }}>
 
             {
                 username
                     ?
                     <CardsInAllPosts
                         // data={dbPosts}
-                        postsArr={postsArr}
-                        fetchData={fetchData}
-                        hasMore={hasMore}
+                        // firstScroll={getPostForFirstScroll}
+                        // postsArr={postsArr}
+                        // fetchData={fetchData}
+                        // hasMore={hasMore}
                         data={likedPosts()}
                         unlikedPosts={unlikedPosts()}
                         displayLikes={displayLikes}

@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { loginAction } from "../redux/actions/usersActions";
 import { useParams, useNavigate } from 'react-router-dom';
 import './_PostDetail.scss';
+import { toast } from "react-toastify";
 
 const VerificationUser = (props) => {
 
@@ -24,6 +25,7 @@ const VerificationUser = (props) => {
             if (res.data.success) {
                 localStorage.setItem("tokenIdUser", res.data.token);
                 dispatch(loginAction(res.data));
+                toast.success("Verification successful")
                 navigate('/', { replace: true });
             }
 

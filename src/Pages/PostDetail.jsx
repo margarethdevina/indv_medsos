@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPostsAction } from "../redux/actions/postsActions";
 import { updateLikesAction } from "../redux/actions/usersActions";
 import { getCommentsAction } from "../redux/actions/commentsActions";
+import { toast } from "react-toastify";
 
 const PostDetailPage = (props) => {
 
@@ -38,8 +39,6 @@ const PostDetailPage = (props) => {
     const [pageNumber, setPageNumber] = useState(2);
 
     const [openShare, setOpenShare] = useState(false);
-    const [openToast, setOpenToast] = useState(false);
-    const [toastMsg, setToastMsg] = useState("");
 
     const { userid, username, status, likes, posts, comments, commentsFiltered } = useSelector((state) => {
         return {
@@ -76,9 +75,6 @@ const PostDetailPage = (props) => {
         const res = await Axios.get(`${API_URL}/comments/paginate?postId=${query}&_page=1`);
         // const res = await Axios.get(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=1&_limit=5`);
         //pas konek express API _limit, _sort dan _order dah ga dibutuhin krn fixed sql query harus sort dan order nya begitu ❗❗❗
-
-        // const res = await fetch(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=1&_limit=5`);
-        //bisa pakai axios pagination nya
 
         const data = res.data;
         // const data = await res.json();
@@ -187,7 +183,7 @@ const PostDetailPage = (props) => {
             }).catch((err) => {
                 console.log(err)
             })
-        navigate("/yourposts")
+        navigate("/yourposts", { replace: true })
     }
 
     const handleLike = () => {
@@ -235,8 +231,8 @@ const PostDetailPage = (props) => {
 
             let idxInLikes = tempLike.indexOf(IdPost);
             tempLike.splice(idxInLikes, 1);
-            console.log("tempLike setelah coba unlike",tempLike)
-            
+            console.log("tempLike setelah coba unlike", tempLike)
+
             let idxInPost = tempPosts.findIndex(val => val.id == IdPost);
 
             // let tempNoOfLikes = tempPosts[idxInPost].numberOfLikes;
@@ -341,15 +337,10 @@ const PostDetailPage = (props) => {
     }
 
     const handleCopyLink = () => {
-        navigator.clipboard.writeText(`http://localhost:3001/postdetail${search}`)
+        navigator.clipboard.writeText(`http://localhost:3001/postdetail${search}`);
 
-        setOpenShare(!openShare)
-        setOpenToast(!openToast)
-        setToastMsg("Link copied")
-    }
-
-    if (openToast) {
-        setTimeout(() => setOpenToast(!openToast), 3500)
+        setOpenShare(!openShare);
+        toast.info("Link copied");
     }
 
     return (
@@ -443,15 +434,7 @@ const PostDetailPage = (props) => {
                                     />
                                 </ModalBody>
                             </Modal>
-                            <Toast
-                                isOpen={openToast}
-                                className="gen_font_content"
-                                style={{ position: "fixed", right: "10px", backgroundColor: "#f3f6f4", zIndex: "999" }}
-                            >
-                                <ToastBody>
-                                    <span>{toastMsg}</span>
-                                </ToastBody>
-                            </Toast>
+                            
                             <div
                                 className="col-12 col-md-7 order-md-1"
                             >

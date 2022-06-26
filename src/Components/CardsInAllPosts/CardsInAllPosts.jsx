@@ -8,12 +8,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { API_URL } from "../../helper";
 import { getPostsAction } from "../../redux/actions/postsActions";
 import { loginAction, updateLikesAction } from "../../redux/actions/usersActions";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { DateTime } from "luxon";
 
 const CardsInAllPosts = (props) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // setdataPagination([])
+        getPostForFirstScroll()
+    }, []);
 
     const { userid, likes, posts } = useSelector((state) => {
         return {
@@ -107,6 +113,8 @@ const CardsInAllPosts = (props) => {
             .then((response) => {
                 dispatch(getPostsAction(response.data))
                 props.handleCallBack(response.data)
+                getPostForFirstScroll()
+                // props.firstScroll()
             }).catch((error) => {
                 console.log(error)
             })
@@ -212,17 +220,231 @@ const CardsInAllPosts = (props) => {
         })
     }
 
-    let dataPagination = [...props.postsArr];
-    console.log("isi props.postsArr", dataPagination);
-    console.log("isi posts di reducer saat ini", posts);
-    console.log("isi hasMore", props.hasMore);
+    // const [dataPagination, setdataPagination] = useState([])
+    // if (props.postsArr) {
+    //     setdataPagination([...dataPagination, ...props.postsArr]);
+    //     console.log("isi props.postsArr", props.postsArr);
+    //     console.log("isi dataPagination", dataPagination);
+    // }
+
+    // untuk pagination all post
+    const [postsArr, setPostsArr] = useState([]);
+    const [hasMore, setHasMore] = useState(true);
+    const [pageNumber, setPageNumber] = useState(2);
+    const [favColor, setFavColor] = useState("#351c75"); //warna unliked
+
+    const getPostForFirstScroll = async () => {
+        const res = await Axios.get(`${API_URL}/posts/paginate?_page=1`);
+
+        const data = res.data;
+        setPostsArr(data);
+
+        if (data.length === 0 || data.length < 4) {
+            setHasMore(false);
+        };
+
+        setPageNumber(2);
+    }
+
+    const fetchNextPosts = async () => {
+        const res = await Axios.get(`${API_URL}/posts/paginate?_page=${pageNumber}`);
+
+        const data = res.data;
+        return data;
+    }
+
+    const fetchData = async () => {
+        const postsFromServer = await fetchNextPosts();
+        console.log("isi postsFromServer", postsFromServer);
+
+        setPostsArr([...postsArr, ...postsFromServer]);
+
+        if (postsFromServer.length === 0 || postsFromServer.length < 4) {
+            setHasMore(false);
+        }
+
+        let temp = pageNumber;
+        temp++;
+        console.log("isi increment temp", temp);
+        setPageNumber(temp);
+    }
+
+    const printAllPosts = () => {
+        // console.log("isi props.postsArr", props.postsArr);
+        console.log("isi postsArr", postsArr);
+        console.log("isi posts di reducer saat ini", posts);
+        // console.log("isi hasMore", props.hasMore);
+        console.log("isi hasMore", hasMore);
+
+        console.log("liked posts", props.data);
+        console.log("unliked posts", props.unlikedPosts);
+
+        return postsArr.map((valPaginate, idxPaginate) => {
+            props.data.forEach(valLikes => {
+                if (valPaginate.id == valLikes.id) {
+                    setFavColor("#e13b6e")
+                    console.log("valPaginate.id yg sama dgn valLikes.id", valPaginate.id)
+                }
+                return (
+                    <CardColumns
+                        key={valPaginate.id}
+                        className="col-12 col-md-6"
+                    >
+                        <Card
+                            className="border-0 shadow-sm"
+                        >
+                            <CardImg
+                                onClick={() => navigate(`/postdetail?id=${valPaginate.id}`)}
+                                src={valPaginate.media.includes("http") ? valPaginate.media : `${API_URL}${valPaginate.media}`}
+                                alt={`${valPaginate.id}-${valPaginate.username}-media`}
+                                // top
+                                className="_card_media"
+                            />
+                            <CardTitle
+                                className="_card_title"
+                                tag="h5"
+                            >
+                                {valPaginate.username}
+                            </CardTitle>
+                            <CardSubtitle
+                                className="d-flex justify-content-between align-items-center text-muted"
+                                tag="h6"
+                            >
+                                <p
+                                    className="_card_cardsub_date"
+                                >
+                                    {DateTime.fromISO(valPaginate.uploadDate).toFormat("FF")}
+                                </p>
+                                <p
+                                    className={props.displayLikes}
+                                // className="_card_cardsub_likes"
+                                >
+                                    <FavIcon
+                                        className="_card_icon_allPost"
+                                        fill={favColor}
+                                        onClick={() => handleLike(valPaginate.id)}
+                                    />
+                                    {valPaginate.numberOfLikes}
+                                </p>
+                            </CardSubtitle>
+                        </Card>
+                    </CardColumns>
+                )
+
+            })
+        })
+
+
+
+        // dataPagination.forEach(valPaginate => {
+        //     props.data.forEach(valLikes => {
+        //         if (valPaginate.id == valLikes.id) {
+        //             console.log("valPaginate.id yg sama dgn valLikes.id", valPaginate.id)
+        //             return (
+        //                 <CardColumns
+        //                     key={valPaginate.id}
+        //                     className="col-12 col-md-6"
+        //                 >
+        //                     <Card
+        //                         className="border-0 shadow-sm"
+        //                     >
+        //                         <CardImg
+        //                             onClick={() => navigate(`/postdetail?id=${valPaginate.id}`)}
+        //                             src={valPaginate.media.includes("http") ? valPaginate.media : `${API_URL}${valPaginate.media}`}
+        //                             alt={`${valPaginate.id}-${valPaginate.username}-media`}
+        //                             // top
+        //                             className="_card_media"
+        //                         />
+        //                         <CardTitle
+        //                             className="_card_title"
+        //                             tag="h5"
+        //                         >
+        //                             {valPaginate.username}
+        //                         </CardTitle>
+        //                         <CardSubtitle
+        //                             className="d-flex justify-content-between align-items-center text-muted"
+        //                             tag="h6"
+        //                         >
+        //                             <p
+        //                                 className="_card_cardsub_date"
+        //                             >
+        //                                 {DateTime.fromISO(valPaginate.uploadDate).toFormat("FF")}
+        //                             </p>
+        //                             <p
+        //                                 className={props.displayLikes}
+        //                             // className="_card_cardsub_likes"
+        //                             >
+        //                                 <FavIcon
+        //                                     className="_card_icon_allPost"
+        //                                     fill="#e13b6e"
+        //                                     onClick={() => handleLike(valPaginate.id)}
+        //                                 />
+        //                                 {valPaginate.numberOfLikes}
+        //                             </p>
+        //                         </CardSubtitle>
+        //                     </Card>
+        //                 </CardColumns>
+        //             )
+
+        //         } else {
+        //             return (
+        //                 <CardColumns
+        //                     key={valPaginate.id}
+        //                     className="col-12 col-md-6"
+        //                 >
+        //                     <Card
+        //                         className="border-0 shadow-sm"
+        //                     >
+        //                         <CardImg
+        //                             onClick={() => navigate(`/postdetail?id=${valPaginate.id}`)}
+        //                             src={valPaginate.media.includes("http") ? valPaginate.media : `${API_URL}${valPaginate.media}`}
+        //                             alt={`${valPaginate.id}-${valPaginate.username}-media`}
+        //                             // top
+        //                             className="_card_media"
+        //                         />
+        //                         <CardTitle
+        //                             className="_card_title"
+        //                             tag="h5"
+        //                         >
+        //                             {valPaginate.username}
+        //                         </CardTitle>
+        //                         <CardSubtitle
+        //                             className="d-flex justify-content-between align-items-center text-muted"
+        //                             tag="h6"
+        //                         >
+        //                             <p
+        //                                 className="_card_cardsub_date"
+        //                             >
+        //                                 {DateTime.fromISO(valPaginate.uploadDate).toFormat("FF")}
+        //                             </p>
+        //                             <p
+        //                                 className={props.displayLikes}
+        //                             >
+        //                                 <FavIcon
+        //                                     className="_card_icon_allPost"
+        //                                     fill="#351c75"
+        //                                     onClick={() => handleLike(valPaginate.id)}
+        //                                 />
+        //                                 {valPaginate.numberOfLikes}
+        //                             </p>
+        //                         </CardSubtitle>
+        //                     </Card>
+        //                 </CardColumns>
+        //             )
+        //         }
+        //     })
+        // })
+
+
+    }
 
     return (
         <div
             className="row"
             id="scrollableAllPost"
+            style={{ overflow: "auto" }}
         >
-            {
+            {/* {
                 likes.length >= 0 && props.fromUrLikes == 0
                     ?
                     printUnliked()
@@ -231,32 +453,49 @@ const CardsInAllPosts = (props) => {
             }
             {printLiked()}
 
-            {/* <InfiniteScroll
-                dataLength={dataPagination.length}
-                next={props.fetchData} hasMore={props.hasMore}
-                loader={posts.length === 0
+            {printAllPosts()} */}
+
+            {
+                props.fromUrLikes == 0
                     ?
-                    null
+                    <>
+                        <InfiniteScroll
+                            dataLength={postsArr.length}
+                            next={fetchData}
+                            hasMore={hasMore}
+                            loader={posts.length === 0
+                                ?
+                                null
+                                :
+                                <p
+                                    style={{ textAlign: "center" }}
+                                    className="gen_font_content"
+                                >
+                                    Loading...
+                                </p>
+                            }
+                            endMessage={<p
+                                style={{ textAlign: "center" }}
+                                className="gen_font_content"
+                            >End of comment(s)...</p>}
+                            scrollableTarget="scrollableAllPost"
+                        >
+                            <div
+                                className="row"
+                            >
+                                {printAllPosts()}
+                            </div>
+                        </InfiniteScroll>
+                    </>
                     :
-                    <p
-                        style={{ textAlign: "center" }}
-                        className="gen_font_content"
-                    >
-                    Loading...
-                    </p>
-                }
-                endMessage={<p
-                    style={{ textAlign: "center" }}
-                    className="gen_font_content"
-                >End of comment(s)...</p>}
-                scrollableTarget="scrollableAllPost"
-            >
-                <div
-                    className="row"
-                >
-                    {printCard()}
-                </div>
-            </InfiniteScroll> */}
+                    // null
+                    <>
+                        {/* <div className="row"> */}
+                        {printLiked()}
+                        {/* </div> */}
+                    </>
+            }
+
 
 
         </div>

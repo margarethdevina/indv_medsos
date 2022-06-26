@@ -10,9 +10,12 @@ const ForgotPassword = (props) => {
 
     const navigate = useNavigate();
 
+    const [buttonStatus, setButtonStatus] = useState(false)
     const [insertEmail, setInsertEmail] = useState("");
 
     const handleEmail = async () => {
+        setButtonStatus(true);
+
         try {
             if (insertEmail) {
                 let res = await Axios.post(`${API_URL}/users/forgot`, {
@@ -20,12 +23,13 @@ const ForgotPassword = (props) => {
                 })
 
                 if (res.data.success) {
-                    navigate("/", { replace: true })
-                    // alert("Reset password link sent. Please check your email inbox")
-                    toast.info("Reset password link sent. Please check your email inbox")
+                    navigate("/", { replace: true });
+                    toast.info("Reset password link sent. Please check your email inbox");
+                    setButtonStatus(false);
                 }
             } else {
-                toast.warn("Please insert your registered email first")
+                toast.warn("Please insert your registered email first");
+                setButtonStatus(false);
             }
         } catch (error) {
             console.log(error);
@@ -60,6 +64,7 @@ const ForgotPassword = (props) => {
                 type="button"
                 className="w-100 mt-1 _detail_button_post"
                 onClick={handleEmail}
+                disabled={buttonStatus}
             // color="success"
             >Request Reset Password</Button>
         </div>
