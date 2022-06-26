@@ -130,35 +130,6 @@ const YourLikesPage = (props) => {
                     </>
             }
 
-            {/* <>
-                <Nav
-                    tabs
-                    className="border-0"
-                >
-                    <NavItem>
-                        <NavLink
-                            onClick={() => navigate("/yourposts")}
-                        >
-                            Your Posts
-                        </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className="active"
-                            onClick={() => navigate("/yourlikes")}
-                        >
-                            Your Likes
-                        </NavLink>
-                    </NavItem>
-                </Nav>
-
-                <CardsInAllPosts
-                    data={getYourLikes()}
-                    displayLikes={displayLikes}
-                    fromUrLikes={fromUrLikes}
-                />
-            </> */}
-
         </div>
     )
 

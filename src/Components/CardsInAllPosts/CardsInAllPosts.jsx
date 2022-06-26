@@ -62,7 +62,7 @@ const CardsInAllPosts = (props) => {
         } else {
             let idxInLikes = tempLike.indexOf(IdPost);
             tempLike.splice(idxInLikes, 1);
-            console.log("tempLike setelah coba unlike",tempLike)
+            console.log("tempLike setelah coba unlike", tempLike)
 
             let idxInPost = tempPosts.findIndex(val => val.id == IdPost);
 
@@ -212,9 +212,15 @@ const CardsInAllPosts = (props) => {
         })
     }
 
+    let dataPagination = [...props.postsArr];
+    console.log("isi props.postsArr", dataPagination);
+    console.log("isi posts di reducer saat ini", posts);
+    console.log("isi hasMore", props.hasMore);
+
     return (
         <div
             className="row"
+            id="scrollableAllPost"
         >
             {
                 likes.length >= 0 && props.fromUrLikes == 0
@@ -224,6 +230,34 @@ const CardsInAllPosts = (props) => {
                     null
             }
             {printLiked()}
+
+            {/* <InfiniteScroll
+                dataLength={dataPagination.length}
+                next={props.fetchData} hasMore={props.hasMore}
+                loader={posts.length === 0
+                    ?
+                    null
+                    :
+                    <p
+                        style={{ textAlign: "center" }}
+                        className="gen_font_content"
+                    >
+                    Loading...
+                    </p>
+                }
+                endMessage={<p
+                    style={{ textAlign: "center" }}
+                    className="gen_font_content"
+                >End of comment(s)...</p>}
+                scrollableTarget="scrollableAllPost"
+            >
+                <div
+                    className="row"
+                >
+                    {printCard()}
+                </div>
+            </InfiniteScroll> */}
+
 
         </div>
     )

@@ -89,8 +89,6 @@ const CardsInYourPosts = (props) => {
                     </>
             }
 
-            {/* {printCard()} */}
-
         </div>
     )
 

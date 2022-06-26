@@ -90,30 +90,6 @@ const YourPostsPage = (props) => {
                     </>
             }
 
-            {/* <Nav
-                tabs
-                className="border-0"
-            >
-                <NavItem>
-                    <NavLink
-                        className="active"
-                        onClick={() => navigate("/yourposts")}
-                    >
-                        Your Posts
-                    </NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink
-                        onClick={() => navigate("/yourlikes")}
-                    >
-                        Your Likes
-                    </NavLink>
-                </NavItem>
-            </Nav>
-
-            <CardsInYourPosts
-                data={dbPosts.filter(val => val.username === username)}
-            /> */}
         </div>
     )
 

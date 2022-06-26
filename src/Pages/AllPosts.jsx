@@ -7,8 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 const AllPostsPage = (props) => {
 
     const [dbPosts, setDbPosts] = useState([]);
-    const [displayLikes, setDisplayLikes] = useState("_card_cardsub_likes")
-    const [fromUrLikes, setFromUrLikes] = useState(0)
+    const [displayLikes, setDisplayLikes] = useState("_card_cardsub_likes");
+    const [fromUrLikes, setFromUrLikes] = useState(0);
+    // kalau fromUrLikes = 1, cardsinallpost component hanya print yg di liked aja
+
+    const [postsArr, setPostsArr] = useState([]);
+    const [hasMore, setHasMore] = useState(true);
+    const [pageNumber, setPageNumber] = useState(2);
 
     const { username, status, likes } = useSelector((state) => {
         return {
@@ -35,6 +40,43 @@ const AllPostsPage = (props) => {
                 setDbPosts(response.data)
             }).catch((error) => { console.log(error) })
     };
+
+    const getPostForFirstScroll = async () => {
+        const res = await Axios.get(`${API_URL}/posts/paginate?_page=1`);
+
+        const data = res.data;
+        setPostsArr(data);
+
+        if (data.length === 0 || data.length < 4) {
+            setHasMore(false);
+        };
+
+        setPageNumber(2);
+    }
+
+    const fetchNextPosts = async () => {
+        const res = await Axios.get(`${API_URL}/posts/paginate?_page=${pageNumber}`);
+
+        const data = res.data;
+        return data;
+    }
+
+    const fetchData = async () => {
+        const postsFromServer = await fetchNextPosts();
+
+        console.log("isi postsFromServer", postsFromServer);
+
+        setPostsArr([...postsArr, ...postsFromServer]);
+
+        if (postsFromServer.length === 0 || postsFromServer.length < 4) {
+            setHasMore(false);
+        }
+
+        let temp = pageNumber;
+        temp++;
+        console.log("isi increment temp", temp);
+        setPageNumber(temp);
+    }
 
     const unlikedPosts = () => {
         let results = dbPosts.filter(({ id: id1 }) => !likes.some((id2) => id2 === id1));
@@ -68,6 +110,9 @@ const AllPostsPage = (props) => {
                     ?
                     <CardsInAllPosts
                         // data={dbPosts}
+                        postsArr={postsArr}
+                        fetchData={fetchData}
+                        hasMore={hasMore}
                         data={likedPosts()}
                         unlikedPosts={unlikedPosts()}
                         displayLikes={displayLikes}
@@ -85,14 +130,34 @@ const AllPostsPage = (props) => {
                     </>
             }
 
-            {/* <CardsInAllPosts
-                // data={dbPosts}
-                data={likedPosts()}
-                unlikedPosts={unlikedPosts()}
-                displayLikes={displayLikes}
-                fromUrLikes={fromUrLikes}
-                handleCallBack={handleCallBack}
-            /> */}
+            {/* <InfiniteScroll
+                dataLength={data.length}
+                next={props.fetchData} hasMore={props.hasMore}
+                loader={commentsFiltered.length === 0
+                    ?
+                    
+                    <p
+                        style={{ textAlign: "center" }}
+                        className="gen_font_content"
+                    >No comment(s) yet</p>
+                    :
+                    <p
+                        style={{ textAlign: "center" }}
+                        className="gen_font_content"
+                    >Loading...</p>
+                }
+                endMessage={<p
+                    style={{ textAlign: "center" }}
+                    className="gen_font_content"
+                >End of comment(s)...</p>}
+                scrollableTarget="scrollableDiv"
+            >
+                <div
+                    className="row"
+                >
+                    {printCard()}
+                </div>
+            </InfiniteScroll> */}
 
         </div>
     )

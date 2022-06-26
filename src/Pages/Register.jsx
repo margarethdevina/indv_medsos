@@ -167,10 +167,7 @@ const RegisterPage = (props) => {
                         profilePicture: ""
                     })
 
-                    
-
                     if (res.data.success){
-
                         // alert("Registrasi berhasil")
                         toast.success("Registration successful, account verification link has been sent to your email")
     
@@ -179,6 +176,7 @@ const RegisterPage = (props) => {
                         localStorage.setItem("tokenIdUser", res.data.token)
                         dispatch(loginAction(res.data))
                         navigate("/", { replace: true })
+                        setButtonStatus(false)
                     }
 
                 } else {
