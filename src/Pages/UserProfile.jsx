@@ -82,10 +82,12 @@ const UserProfilePage = (props) => {
                                         alt={`${fullname}'s profile picture`}
                                         top
                                         style={{
-                                            width: "35%",
-                                            height: "35%",
+                                            width: "150px",
+                                            height: "150px",
+                                            objectFit: "cover",
+                                            backgroundColor: "black"
                                         }}
-                                        className="mx-auto"
+                                        className="mx-auto border-0 rounded-circle"
                                     />
                                 </>
                                 :

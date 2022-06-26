@@ -348,11 +348,13 @@ Menyiapkan project untuk menggunakan git
 
 2. del post berhasil tp state ga langsung keupdate
 
-3. beda font di modal delete dan edit
+3. infinitescroll
 
-4. library metatag
+4. beda font di modal delete dan edit
 
-5. user profile pic di std bulat / rectangle yg penting 1 ukuran
+5. library metatag
+
+6. double check requirement
 
 ========= Q26/06/2022 =========
 
@@ -364,4 +366,6 @@ Menyiapkan project untuk menggunakan git
 
 4. medsos icon saat diklik berarti sharing link domain netlify FEnya?
 
-5. 
+5. infinitescroll di BE itu maksudnya set pagination limit di BE? FE bisa pakai library infinite scroll component?
+
+6. handle loadmore button untuk pagination comment ditaruh pas fetchcomments  berikutnya atau di fetchData?

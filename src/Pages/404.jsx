@@ -15,7 +15,11 @@ const NotFoundPage = (props) => {
             className="gen_font"
             style={{ minHeight: "100vh" }}
         >
-            {status === "unverified"
+            <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
+                search_off
+            </span>
+            <h4>404 - The page you were looking for doesn't exist</h4>
+            {/* {status === "unverified"
                 ?
                 <>
                     <h1>404 Not Found</h1>
@@ -25,7 +29,7 @@ const NotFoundPage = (props) => {
                 <>
                     <h1>404 Not Found</h1>
                 </>
-            }
+            } */}
         </div>
     )
 
