@@ -3,6 +3,7 @@ import CardsInAllPosts from "../Components/CardsInAllPosts/CardsInAllPosts";
 import Axios from "axios";
 import { API_URL } from "../helper";
 import { useDispatch, useSelector } from 'react-redux';
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const AllPostsPage = (props) => {
 
@@ -11,9 +12,9 @@ const AllPostsPage = (props) => {
     const [fromUrLikes, setFromUrLikes] = useState(0);
     // kalau fromUrLikes = 1, cardsinallpost component hanya print yg di liked aja
 
-    const [postsArr, setPostsArr] = useState([]);
-    const [hasMore, setHasMore] = useState(true);
-    const [pageNumber, setPageNumber] = useState(2);
+    // const [postsArr, setPostsArr] = useState([]);
+    // const [hasMore, setHasMore] = useState(true);
+    // const [pageNumber, setPageNumber] = useState(2);
 
     const { username, status, likes } = useSelector((state) => {
         return {
@@ -87,25 +88,42 @@ const AllPostsPage = (props) => {
 
     // console.log("isi unlikedPosts", unlikedPosts())
 
+    //❗❗❗di cardsinallposts langsung filtering data yg diliked krn props dr sini skrg undefined terus
     const likedPosts = () => {
-        let temp = []
-        for (let i = 0; i < dbPosts.length; i++) {
-            for (let j = 0; j < likes.length; j++) {
-                if (dbPosts[i].id == likes[j]) {
-                    temp.push(dbPosts[i])
-                }
-            }
-        }
-        // console.log("isi temp", temp)
-        return temp
+        // let temp = []
+        // for (let i = 0; i < dbPosts.length; i++) {
+        //     for (let j = 0; j < likes.length; j++) {
+        //         if (dbPosts[i].id == likes[j]) {
+        //             temp.push(dbPosts[i])
+        //         }
+        //     }
+        // }
+        // // console.log("isi temp", temp)
+        // return temp
+
+        let results = dbPosts.filter(({ id: id1 }) => likes.some((id2) => id2 === id1));
+
+        console.log("isi results likes", results)
+        return results
     }
 
     // console.log("isi likedPosts",likedPosts())
 
     return (
-        <div 
-        className="container pt-3 pb-3 px-md-5" 
-        style={{ minHeight: "100vh" }}>
+        // <div
+        //     // className="container pt-3 pb-3 px-md-5"
+        //     style={{ minHeight: "100vh", overflow: "auto" }}
+        // >
+        <div
+            className="container pt-3 pb-3 px-md-5"
+            id="scrollableAllPost"
+            // style={{ overflow: "auto" }}
+            // style={{ minHeight: "100vh", overflow: "auto" }}
+            // style={{ minHeight: "100vh"}}
+            // style={{ height: "100vh"}}
+            style={{ height: "calc(100vh - 146px)", overflowY: "auto", overflowX: "hidden" }}
+        // style={{ maxHeight: window.innerHeight, overflow: "auto" }}
+        >
 
             {
                 username
@@ -116,7 +134,7 @@ const AllPostsPage = (props) => {
                         // postsArr={postsArr}
                         // fetchData={fetchData}
                         // hasMore={hasMore}
-                        data={likedPosts()}
+                        likedData={likedPosts()}
                         unlikedPosts={unlikedPosts()}
                         displayLikes={displayLikes}
                         fromUrLikes={fromUrLikes}
@@ -163,6 +181,7 @@ const AllPostsPage = (props) => {
             </InfiniteScroll> */}
 
         </div>
+        // </div>
     )
 
 }
