@@ -344,19 +344,13 @@ Menyiapkan project untuk menggunakan git
 
 ======= BUGS / NEEDS UPDATE ======== ❗❗❗❗❗❗
 
-1. del comment berhasil tp state ga langsung keupdate
+1. beda font di modal delete dan edit
 
-2. del post berhasil tp state ga langsung keupdate
+2. meskipun unverif bisa lihat semua post tapi ngelike di disabled dulu
 
-3. infinitescroll all posts >> ongoing
+3. handle load more button for comment
 
-4. beda font di modal delete dan edit
-
-5. library metatag
-
-6. meskipun unverif bisa lihat semua post tapi ngelike di disabled dulu
-
-7. bug width landing page terlalu lebar kanan sd ada scrollnya
+96. library metatag
 
 97. edit profile secara default seharusnya ada edit password juga
     cek password lama dulu baru isi password baru
@@ -376,9 +370,7 @@ Menyiapkan project untuk menggunakan git
 
 4. medsos icon saat diklik berarti sharing link domain netlify FEnya? nanti aja dulu ini setelah metatag library di add
 
-5. infinitescroll di BE itu maksudnya set pagination limit di BE? FE bisa pakai library infinite scroll component? >> miripin sm komen krn limit di BE >> ongoing
-
-6. handle loadmore button untuk pagination comment ditaruh pas fetchcomments  berikutnya atau di fetchData? >> ditaruh pas fetchData
+5. handle loadmore button untuk pagination comment ditaruh pas fetchcomments  berikutnya atau di fetchData? >> ditaruh pas fetchData
 
 
 URGENT TASK:

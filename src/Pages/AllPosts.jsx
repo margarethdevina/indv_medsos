@@ -110,19 +110,10 @@ const AllPostsPage = (props) => {
     // console.log("isi likedPosts",likedPosts())
 
     return (
-        // <div
-        //     // className="container pt-3 pb-3 px-md-5"
-        //     style={{ minHeight: "100vh", overflow: "auto" }}
-        // >
         <div
             className="container pt-3 pb-3 px-md-5"
             id="scrollableAllPost"
-            // style={{ overflow: "auto" }}
-            // style={{ minHeight: "100vh", overflow: "auto" }}
-            // style={{ minHeight: "100vh"}}
-            // style={{ height: "100vh"}}
             style={{ height: "calc(100vh - 146px)", overflowY: "auto", overflowX: "hidden" }}
-        // style={{ maxHeight: window.innerHeight, overflow: "auto" }}
         >
 
             {
@@ -181,7 +172,7 @@ const AllPostsPage = (props) => {
             </InfiniteScroll> */}
 
         </div>
-        // </div>
+
     )
 
 }

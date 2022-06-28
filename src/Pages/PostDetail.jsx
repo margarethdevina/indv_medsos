@@ -180,10 +180,10 @@ const PostDetailPage = (props) => {
         })
             .then((res) => {
                 getPosts()
+                navigate("/yourposts", { replace: true })
             }).catch((err) => {
                 console.log(err)
             })
-        navigate("/yourposts", { replace: true })
     }
 
     const handleLike = () => {
@@ -572,6 +572,7 @@ const PostDetailPage = (props) => {
                                         loginUsername={username}
 
                                         commentsArr={commentsArr}
+                                        firstScroll={getCommentsForThisPost}
                                         query={query}
                                         fetchData={fetchData}
                                         hasMore={hasMore}

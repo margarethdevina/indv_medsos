@@ -93,6 +93,7 @@ const CardsForComments = (props) => {
                 getComments()
                 setSelectedIdx(null)
                 setOpenDelete(!openDelete)
+                props.firstScroll()
             }).catch((err) => {
                 console.log(err)
             })

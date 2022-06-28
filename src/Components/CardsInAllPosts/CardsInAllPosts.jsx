@@ -65,6 +65,7 @@ const CardsInAllPosts = (props) => {
                 }).then((res) => {
                     dispatch(updateLikesAction(res.data));
                     getPosts();
+                    setHasMore(true);
                     getPostForFirstScroll();
                     // setArrLiked(props.likedData);
                     setArrLiked(posts.filter(({ id: id1 }) => likes.some((id2) => id2 === id1)));
@@ -72,9 +73,12 @@ const CardsInAllPosts = (props) => {
                     // setArrUnliked(props.unlikedPosts);
                     setArrUnliked(posts.filter(({ id: id1 }) => !likes.some((id2) => id2 === id1)));
                     console.log("arrUnliked setelah klik", arrUnliked);
-                    // getPostForFirstScroll()
-                    //axios patch posts number of likes
-                    // updateNumberofLikes(IdPost, tempNoOfLikes)
+
+                    console.log("isi post di reducer stlh klik",posts);
+                    console.log("isi postsArr stlh klik",postsArr);
+
+                    printAllPosts();
+
                 }).catch((err) => {
                     console.log(err)
                 })
@@ -104,6 +108,7 @@ const CardsInAllPosts = (props) => {
                 }).then((res) => {
                     dispatch(updateLikesAction(res.data));
                     getPosts();
+                    setHasMore(true);
                     getPostForFirstScroll();
                     // setArrLiked(props.likedData);
                     setArrLiked(posts.filter(({ id: id1 }) => likes.some((id2) => id2 === id1)));
@@ -111,9 +116,11 @@ const CardsInAllPosts = (props) => {
                     // setArrUnliked(props.unlikedPosts);
                     setArrUnliked(posts.filter(({ id: id1 }) => !likes.some((id2) => id2 === id1)));
                     console.log("arrUnliked setelah klik", arrUnliked);
-                    // getPostForFirstScroll()
-                    //axios patch posts number of likes
-                    // updateNumberofLikes(IdPost, tempNoOfLikes)
+
+                    console.log("isi post di reducer stlh klik",posts);
+                    console.log("isi postsArr stlh klik",postsArr);
+
+                    printAllPosts();
                 }).catch((err) => {
                     console.log(err)
                 })
@@ -258,7 +265,7 @@ const CardsInAllPosts = (props) => {
     const [postsArr, setPostsArr] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [pageNumber, setPageNumber] = useState(2);
-    const [favColor, setFavColor] = useState("#351c75"); //warna unliked
+    // const [favColor, setFavColor] = useState("#351c75"); //warna unliked
 
     const getPostForFirstScroll = async () => {
         const res = await Axios.get(`${API_URL}/posts/paginate?_page=1`);
@@ -355,7 +362,6 @@ const CardsInAllPosts = (props) => {
         return postsArr.map((valPaginate, idxPaginate) => {
             // props.likedData.forEach(valLikes => {
             //     if (valPaginate.id == valLikes.id) {
-            //         setFavColor("#e13b6e")
             //         console.log("valPaginate.id yg sama dgn valLikes.id", valPaginate.id)
             //     }
 
@@ -408,117 +414,12 @@ const CardsInAllPosts = (props) => {
 
             // })
         })
-
-
-
-        // dataPagination.forEach(valPaginate => {
-        //     props.likedData.forEach(valLikes => {
-        //         if (valPaginate.id == valLikes.id) {
-        //             console.log("valPaginate.id yg sama dgn valLikes.id", valPaginate.id)
-        //             return (
-        //                 <CardColumns
-        //                     key={valPaginate.id}
-        //                     className="col-12 col-md-6"
-        //                 >
-        //                     <Card
-        //                         className="border-0 shadow-sm"
-        //                     >
-        //                         <CardImg
-        //                             onClick={() => navigate(`/postdetail?id=${valPaginate.id}`)}
-        //                             src={valPaginate.media.includes("http") ? valPaginate.media : `${API_URL}${valPaginate.media}`}
-        //                             alt={`${valPaginate.id}-${valPaginate.username}-media`}
-        //                             // top
-        //                             className="_card_media"
-        //                         />
-        //                         <CardTitle
-        //                             className="_card_title"
-        //                             tag="h5"
-        //                         >
-        //                             {valPaginate.username}
-        //                         </CardTitle>
-        //                         <CardSubtitle
-        //                             className="d-flex justify-content-between align-items-center text-muted"
-        //                             tag="h6"
-        //                         >
-        //                             <p
-        //                                 className="_card_cardsub_date"
-        //                             >
-        //                                 {DateTime.fromISO(valPaginate.uploadDate).toFormat("FF")}
-        //                             </p>
-        //                             <p
-        //                                 className={props.displayLikes}
-        //                             // className="_card_cardsub_likes"
-        //                             >
-        //                                 <FavIcon
-        //                                     className="_card_icon_allPost"
-        //                                     fill="#e13b6e"
-        //                                     onClick={() => handleLike(valPaginate.id)}
-        //                                 />
-        //                                 {valPaginate.numberOfLikes}
-        //                             </p>
-        //                         </CardSubtitle>
-        //                     </Card>
-        //                 </CardColumns>
-        //             )
-
-        //         } else {
-        //             return (
-        //                 <CardColumns
-        //                     key={valPaginate.id}
-        //                     className="col-12 col-md-6"
-        //                 >
-        //                     <Card
-        //                         className="border-0 shadow-sm"
-        //                     >
-        //                         <CardImg
-        //                             onClick={() => navigate(`/postdetail?id=${valPaginate.id}`)}
-        //                             src={valPaginate.media.includes("http") ? valPaginate.media : `${API_URL}${valPaginate.media}`}
-        //                             alt={`${valPaginate.id}-${valPaginate.username}-media`}
-        //                             // top
-        //                             className="_card_media"
-        //                         />
-        //                         <CardTitle
-        //                             className="_card_title"
-        //                             tag="h5"
-        //                         >
-        //                             {valPaginate.username}
-        //                         </CardTitle>
-        //                         <CardSubtitle
-        //                             className="d-flex justify-content-between align-items-center text-muted"
-        //                             tag="h6"
-        //                         >
-        //                             <p
-        //                                 className="_card_cardsub_date"
-        //                             >
-        //                                 {DateTime.fromISO(valPaginate.uploadDate).toFormat("FF")}
-        //                             </p>
-        //                             <p
-        //                                 className={props.displayLikes}
-        //                             >
-        //                                 <FavIcon
-        //                                     className="_card_icon_allPost"
-        //                                     fill="#351c75"
-        //                                     onClick={() => handleLike(valPaginate.id)}
-        //                                 />
-        //                                 {valPaginate.numberOfLikes}
-        //                             </p>
-        //                         </CardSubtitle>
-        //                     </Card>
-        //                 </CardColumns>
-        //             )
-        //         }
-        //     })
-        // })
-
-
     }
 
     return (
         <div
-            // className="container pt-3 pb-3 px-md-5"
         // className="row"
         // id="scrollableAllPost"
-        // style={{ height: "100vh" }}
         >
             {/* {
                 likes.length >= 0 && props.fromUrLikes == 0
@@ -558,14 +459,12 @@ const CardsInAllPosts = (props) => {
                         >
                             <div
                                 className="row"
-                            // style={{ minHeight: "100vh" }}
                             >
                                 {printAllPosts()}
                             </div>
                         </InfiniteScroll>
                     </>
                     :
-                    // null
                     <>
                         <div className="row">
                             {printLiked()}
