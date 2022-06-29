@@ -87,6 +87,8 @@ const PostDetailPage = (props) => {
             setHasMore(false);
         }
 
+        // setHasMore(false) //aditional untuk coba see more ❗❗❗
+
         setPageNumber(2)
     }
 
@@ -103,6 +105,7 @@ const PostDetailPage = (props) => {
     }
 
     const fetchData = async () => {
+        
         const commentsFromServer = await fetchComments();
 
         console.log("isi commentsFromServer", commentsFromServer)
@@ -121,6 +124,10 @@ const PostDetailPage = (props) => {
         console.log("isi increment temp", temp)
         setPageNumber(temp);
     }
+
+    // const handleSeeMore = () => {
+    //     setHasMore(true) //aditional untuk coba see more ❗❗❗
+    // }
 
     const getDetail = () => {
         console.log("isi search", search)
@@ -571,6 +578,8 @@ const PostDetailPage = (props) => {
                                         // detail={detail}
                                         loginUsername={username}
 
+                                        // handleSeeMore = {handleSeeMore}
+                                        
                                         commentsArr={commentsArr}
                                         firstScroll={getCommentsForThisPost}
                                         query={query}

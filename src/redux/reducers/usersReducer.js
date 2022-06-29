@@ -23,6 +23,7 @@ export const usersReducer = (state = INITIAL_STATE, action) => {
                 ...state, likes: action.payload
             }
         case "LOGOUT":
+            console.log("initial state",INITIAL_STATE)
             return INITIAL_STATE
         default:
             return state;

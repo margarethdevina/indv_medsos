@@ -12,6 +12,14 @@ const YourPostsPage = (props) => {
     // const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const { username, status } = useSelector((state) => {
+        return {
+            username: state.usersReducer.username,
+            status: state.usersReducer.status
+        }
+    })
+
+    console.log("username di reducer masih ada?",username)
     const [dbPosts, setDbPosts] = useState([]);
 
     useEffect(() => {
@@ -26,12 +34,6 @@ const YourPostsPage = (props) => {
             }).catch((error) => { console.log(error) })
     };
 
-    const { username, status } = useSelector((state) => {
-        return {
-            username: state.usersReducer.username,
-            status: state.usersReducer.status
-        }
-    })
 
     return (
         <div

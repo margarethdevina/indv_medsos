@@ -122,6 +122,9 @@ function App() {
             <>
               <Route path='/' element={<LandingPage />} />
               <Route path='/allposts' element={<AllPostsPage />} />
+              <Route path='/uploadpost' element={<UploadPostPage />} />
+              <Route path='/yourposts' element={<YourPostsPage />} />
+              <Route path='/yourlikes' element={<YourLikesPage />} />
               <Route path='/register' element={<RegisterPage />} />
               <Route path='/forgot' element={<ForgotPassword />} />
               <Route path='/newpassword/:token' element={<NewPasswordPage />} />

@@ -132,19 +132,19 @@ const CardsForComments = (props) => {
                 } else {
                     intervalShown = `${days} days ago`
                 }
-            } else if (weeks == 0 && days == 0 && hours > 0){
+            } else if (weeks == 0 && days == 0 && hours > 0) {
                 if (hours == 1) {
                     intervalShown = `${hours} hour ago`
                 } else {
                     intervalShown = `${hours} hours ago`
                 }
-            } else if (weeks == 0 && days == 0 && hours == 0 && minutes > 0){
+            } else if (weeks == 0 && days == 0 && hours == 0 && minutes > 0) {
                 if (minutes == 1) {
                     intervalShown = `${minutes} minute ago`
                 } else {
                     intervalShown = `${minutes} minutes ago`
                 }
-            } else if (weeks == 0 && days == 0 && hours == 0 && minutes == 0 && seconds > 0){
+            } else if (weeks == 0 && days == 0 && hours == 0 && minutes == 0 && seconds > 0) {
                 if (seconds < 2) {
                     intervalShown = `${Math.floor(seconds)} second ago`
                 } else {
@@ -198,6 +198,14 @@ const CardsForComments = (props) => {
                             </div>
                         </CardBody>
                     </Card>
+                    {/* {
+                        props.hasMore
+                    }
+                    <Button
+                    onClick={props.handleSeeMore}
+                    >
+                        See More
+                    </Button> */}
                 </CardColumns >
                 )
             } else {
@@ -247,6 +255,11 @@ const CardsForComments = (props) => {
                             }
                         </CardBody>
                     </Card>
+                    {/* <Button
+                    onClick={props.handleSeeMore}
+                    >
+                        See More
+                    </Button> */}
                 </CardColumns >
                 )
             }
@@ -255,6 +268,10 @@ const CardsForComments = (props) => {
     }
 
     console.log("isi hasMore", props.hasMore)
+
+    // const handleSeeMore = () => {
+    //     return 
+    // }
 
     return (
         <div
@@ -299,7 +316,8 @@ const CardsForComments = (props) => {
             <InfiniteScroll
                 dataLength={data.length}
                 // dataLength={commentsFiltered.length}
-                next={props.fetchData} hasMore={props.hasMore}
+                next={props.fetchData}
+                hasMore={props.hasMore}
                 loader={commentsFiltered.length === 0
                     ?
                     <p
@@ -307,6 +325,11 @@ const CardsForComments = (props) => {
                         className="gen_font_content"
                     >No comment(s) yet</p>
                     :
+                    // <Button
+                    //     onClick={props.fetchData}
+                    // >
+                    //     See more
+                    // </Button>
                     <p
                         style={{ textAlign: "center" }}
                         className="gen_font_content"

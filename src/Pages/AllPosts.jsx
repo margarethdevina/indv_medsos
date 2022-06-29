@@ -111,7 +111,7 @@ const AllPostsPage = (props) => {
 
     return (
         <div
-            className="container pt-3 pb-3 px-md-5"
+            className="pt-3 pb-3 px-md-5"
             id="scrollableAllPost"
             style={{ height: "calc(100vh - 146px)", overflowY: "auto", overflowX: "hidden" }}
         >
@@ -119,18 +119,30 @@ const AllPostsPage = (props) => {
             {
                 username
                     ?
-                    <CardsInAllPosts
-                        // data={dbPosts}
-                        // firstScroll={getPostForFirstScroll}
-                        // postsArr={postsArr}
-                        // fetchData={fetchData}
-                        // hasMore={hasMore}
-                        likedData={likedPosts()}
-                        unlikedPosts={unlikedPosts()}
-                        displayLikes={displayLikes}
-                        fromUrLikes={fromUrLikes}
-                        handleCallBack={handleCallBack}
-                    />
+                    status === "verified"
+                        ?
+                        <CardsInAllPosts
+                            // data={dbPosts}
+                            // firstScroll={getPostForFirstScroll}
+                            // postsArr={postsArr}
+                            // fetchData={fetchData}
+                            // hasMore={hasMore}
+                            likedData={likedPosts()}
+                            unlikedPosts={unlikedPosts()}
+                            displayLikes={displayLikes}
+                            fromUrLikes={fromUrLikes}
+                            handleCallBack={handleCallBack}
+                        />
+                        :
+                        <>
+                            <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
+                                <span className="material-symbols-outlined">
+                                    gpp_maybe
+                                </span>
+                            </span>
+                            <h5>401 - Please verify your email first to access this page</h5>
+                            <h5>To resend the verification link, please go to <i>Your Profile</i> page</h5>
+                        </>
                     :
                     <>
                         <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
@@ -141,35 +153,6 @@ const AllPostsPage = (props) => {
                         <h5>401 - Please sign in first to access this page</h5>
                     </>
             }
-
-            {/* <InfiniteScroll
-                dataLength={data.length}
-                next={props.fetchData} hasMore={props.hasMore}
-                loader={commentsFiltered.length === 0
-                    ?
-                    
-                    <p
-                        style={{ textAlign: "center" }}
-                        className="gen_font_content"
-                    >No comment(s) yet</p>
-                    :
-                    <p
-                        style={{ textAlign: "center" }}
-                        className="gen_font_content"
-                    >Loading...</p>
-                }
-                endMessage={<p
-                    style={{ textAlign: "center" }}
-                    className="gen_font_content"
-                >End of comment(s)...</p>}
-                scrollableTarget="scrollableDiv"
-            >
-                <div
-                    className="row"
-                >
-                    {printCard()}
-                </div>
-            </InfiniteScroll> */}
 
         </div>
 

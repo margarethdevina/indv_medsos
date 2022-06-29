@@ -29,6 +29,7 @@ const NavbarComponent = (props) => {
 
     const handleLogout = () => {
         dispatch(logoutAction())
+        console.log("username di reducer masih ada?",username)
         navigate("/")
     }
 

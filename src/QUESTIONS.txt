@@ -344,11 +344,11 @@ Menyiapkan project untuk menggunakan git
 
 ======= BUGS / NEEDS UPDATE ======== ❗❗❗❗❗❗
 
-1. beda font di modal delete dan edit
+1. like unlike di all post belum stabil
 
-2. meskipun unverif bisa lihat semua post tapi ngelike di disabled dulu
+2. handle load more button for comment
 
-3. handle load more button for comment
+95. beda font di modal delete dan edit
 
 96. library metatag
 
@@ -374,6 +374,5 @@ Menyiapkan project untuk menggunakan git
 
 
 URGENT TASK:
-1. infinite scrolling all post
-2. bug delete comment dan posts
-3. add load more button di comment pagination
+1. like unlike di all post belum stabil
+2. add load more button di comment pagination
