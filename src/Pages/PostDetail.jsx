@@ -19,6 +19,7 @@ import { getPostsAction } from "../redux/actions/postsActions";
 import { updateLikesAction } from "../redux/actions/usersActions";
 import { getCommentsAction } from "../redux/actions/commentsActions";
 import { toast } from "react-toastify";
+import { pureFinalPropsSelectorFactory } from "react-redux/es/connect/selectorFactory";
 
 const PostDetailPage = (props) => {
 
@@ -48,7 +49,7 @@ const PostDetailPage = (props) => {
             likes: state.usersReducer.likes,
             posts: state.postsReducer.posts,
             comments: state.commentsReducer.comments,
-            commentsFiltered: state.commentsReducer.comments.filter(val => val.postId == props.query)
+            commentsFiltered: state.commentsReducer.comments.filter(val => val.postId == query)
         }
     })
 
@@ -87,7 +88,7 @@ const PostDetailPage = (props) => {
             setHasMore(false);
         }
 
-        // setHasMore(false) //aditional untuk coba see more ❗❗❗
+        setHasMore(false) //aditional untuk coba see more ❗❗❗
 
         setPageNumber(2)
     }
@@ -105,7 +106,7 @@ const PostDetailPage = (props) => {
     }
 
     const fetchData = async () => {
-        
+
         const commentsFromServer = await fetchComments();
 
         console.log("isi commentsFromServer", commentsFromServer)
@@ -125,9 +126,11 @@ const PostDetailPage = (props) => {
         setPageNumber(temp);
     }
 
-    // const handleSeeMore = () => {
-    //     setHasMore(true) //aditional untuk coba see more ❗❗❗
-    // }
+    const handleSeeMore = () => {
+        //aditional untuk coba see more ❗❗❗
+        fetchData()
+        setHasMore(true)
+    }
 
     const getDetail = () => {
         console.log("isi search", search)
@@ -350,6 +353,10 @@ const PostDetailPage = (props) => {
         toast.info("Link copied");
     }
 
+
+    console.log("commentsArr.length", commentsArr.length);
+    console.log("commentsFiltered.length", commentsFiltered.length);
+
     return (
         <div
             className="row container py-3 mx-auto"
@@ -441,7 +448,7 @@ const PostDetailPage = (props) => {
                                     />
                                 </ModalBody>
                             </Modal>
-                            
+
                             <div
                                 className="col-12 col-md-7 order-md-1"
                             >
@@ -578,14 +585,35 @@ const PostDetailPage = (props) => {
                                         // detail={detail}
                                         loginUsername={username}
 
-                                        // handleSeeMore = {handleSeeMore}
-                                        
+                                        handleSeeMore={handleSeeMore}
+
                                         commentsArr={commentsArr}
                                         firstScroll={getCommentsForThisPost}
                                         query={query}
                                         fetchData={fetchData}
                                         hasMore={hasMore}
                                     />
+                                }
+
+                                {
+                                    hasMore === false
+                                        ?
+                                        commentsArr.length != commentsFiltered.length
+                                            ?
+                                            commentsArr.length <= 5
+                                            &&
+                                            <Button
+                                                className="d-flex justify-content-start border-0"
+                                                size="sm"
+                                                outline
+                                                onClick={handleSeeMore}
+                                            >
+                                                See more...
+                                            </Button>
+                                            :
+                                            null
+                                        :
+                                        null
                                 }
 
                                 <hr className="_detail_hr" />

@@ -200,12 +200,15 @@ const CardsForComments = (props) => {
                     </Card>
                     {/* {
                         props.hasMore
-                    }
-                    <Button
-                    onClick={props.handleSeeMore}
-                    >
-                        See More
-                    </Button> */}
+                        &&
+                        <>
+                            <Button
+                                onClick={props.handleSeeMore}
+                            >
+                                See More
+                            </Button>
+                        </>
+                    } */}
                 </CardColumns >
                 )
             } else {
@@ -255,11 +258,17 @@ const CardsForComments = (props) => {
                             }
                         </CardBody>
                     </Card>
-                    {/* <Button
-                    onClick={props.handleSeeMore}
-                    >
-                        See More
-                    </Button> */}
+                    {/* {
+                        props.hasMore
+                        &&
+                        <>
+                            <Button
+                                onClick={props.handleSeeMore}
+                            >
+                                See More
+                            </Button>
+                        </>
+                    } */}
                 </CardColumns >
                 )
             }
@@ -316,7 +325,8 @@ const CardsForComments = (props) => {
             <InfiniteScroll
                 dataLength={data.length}
                 // dataLength={commentsFiltered.length}
-                next={props.fetchData}
+                // next={props.fetchData}
+                next={props.handleSeeMore}
                 hasMore={props.hasMore}
                 loader={commentsFiltered.length === 0
                     ?
@@ -325,20 +335,20 @@ const CardsForComments = (props) => {
                         className="gen_font_content"
                     >No comment(s) yet</p>
                     :
-                    // <Button
-                    //     onClick={props.fetchData}
-                    // >
-                    //     See more
-                    // </Button>
                     <p
                         style={{ textAlign: "center" }}
                         className="gen_font_content"
                     >Loading...</p>
                 }
-                endMessage={<p
-                    style={{ textAlign: "center" }}
-                    className="gen_font_content"
-                >End of comment(s)...</p>}
+                endMessage={
+                    data.length === commentsFiltered.length
+                    &&
+                    < p
+                        style={{ textAlign: "center" }}
+                        className="gen_font_content"
+                    >
+                        End of comment(s)...
+                    </p>}
                 scrollableTarget="scrollableDiv"
             >
                 <div
@@ -348,7 +358,7 @@ const CardsForComments = (props) => {
                 </div>
             </InfiniteScroll>
 
-        </div>
+        </div >
     )
 
 }
