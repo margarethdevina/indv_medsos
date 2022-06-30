@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { API_URL } from "../helper";
 import { loginAction } from "../redux/actions/usersActions";
 import { Form, FormGroup, Label, Input, InputGroup, InputGroupText, Button, Col } from "reactstrap";
+import registPic from "../Assets/SampleMediaPosts/violet-register.jpg";
 import { toast } from "react-toastify";
 
 const RegisterPage = (props) => {
@@ -67,12 +68,12 @@ const RegisterPage = (props) => {
     }
 
     const handleUsername = (value) => {
-        console.log(value)
+        // console.log(value)
         setUsername(value)
     }
 
     const handleEmail = (value) => {
-        console.log(value)
+        // console.log(value)
         setEmail(value)
 
         if (validRegexEmail.test(email)) {
@@ -174,7 +175,8 @@ const RegisterPage = (props) => {
                     className="d-none d-md-flex col-md-6 order-md-1"
                 >
                     <img
-                        src="https://www.ixpaper.com/wp-content/uploads/2021/06/violet-evergarden-wallpaper-ixpaper-3.jpg"
+                        src={registPic}
+                        // src="https://www.ixpaper.com/wp-content/uploads/2021/06/violet-evergarden-wallpaper-ixpaper-3.jpg"
                         alt=""
                         width="60%"
                         // style={{ width: "50%", height: "50%" }}
