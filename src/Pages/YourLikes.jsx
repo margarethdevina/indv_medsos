@@ -3,7 +3,7 @@ import '../index.scss';
 import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { Nav, NavItem, NavLink } from "reactstrap";
-import CardsInAllPosts from "../Components/CardsInAllPosts/CardsInAllPosts";
+import CardsInYourLikes from "../Components/CardsForYourLikes/CardsInYourLikes";
 import { ReactComponent as FavIcon } from '../Assets/IconRef/love-letter.svg';
 
 const YourLikesPage = (props) => {
@@ -21,22 +21,21 @@ const YourLikesPage = (props) => {
 
     const [displayLikes, setDisplayLikes] = useState("d-none _card_cardsub_likes")
 
-    const [fromUrLikes, setFromUrLikes] = useState(1)
+    // const [fromUrLikes, setFromUrLikes] = useState(1)
 
-    console.log("data state yg masuk page yourLikes", username, likes, posts)
+    // console.log("data state yg masuk page yourLikes", username, likes, posts)
 
-    const getYourLikes = () => {
-        let temp = []
-        for (let i = 0; i < posts.length; i++) {
-            for (let j = 0; j < likes.length; j++) {
-                if (posts[i].id == likes[j]) {
-                    temp.push(posts[i])
-                }
-            }
-        }
-        // console.log("isi temp", temp)
-        return temp
-    }
+    // const getYourLikes = () => {
+    //     let temp = []
+    //     for (let i = 0; i < posts.length; i++) {
+    //         for (let j = 0; j < likes.length; j++) {
+    //             if (posts[i].id == likes[j]) {
+    //                 temp.push(posts[i])
+    //             }
+    //         }
+    //     }
+    //     return temp
+    // }
 
     return (
         <div
@@ -48,7 +47,7 @@ const YourLikesPage = (props) => {
                     ?
                     status === "verified"
                         ?
-                        getYourLikes().length > 0
+                        likes.length > 0
                             ?
                             <>
                                 <Nav
@@ -72,10 +71,10 @@ const YourLikesPage = (props) => {
                                     </NavItem>
                                 </Nav>
 
-                                <CardsInAllPosts
-                                    data={getYourLikes()}
+                                <CardsInYourLikes
+                                    // data={getYourLikes()}
                                     displayLikes={displayLikes}
-                                    fromUrLikes={fromUrLikes}
+                                    // fromUrLikes={fromUrLikes}
                                 />
                             </>
                             :

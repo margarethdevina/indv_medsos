@@ -7,7 +7,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 const AllPostsPage = (props) => {
 
-    const [dbPosts, setDbPosts] = useState([]);
+    const [dbPosts, setDbPosts] = useState([]); //ini mungkin dah ga perlu❗❗❗
+    
     const [displayLikes, setDisplayLikes] = useState("_card_cardsub_likes");
     const [fromUrLikes, setFromUrLikes] = useState(0);
     // kalau fromUrLikes = 1, cardsinallpost component hanya print yg di liked aja
@@ -24,17 +25,20 @@ const AllPostsPage = (props) => {
         }
     })
 
+    //ini mungkin dah ga perlu karena ambil aja dr reducer di cardsinallposts itu❗❗❗
     useEffect(() => {
         getPosts()
         // getPostForFirstScroll()
     }, []);
 
+    //ini mungkin dah ga perlu karena ambil aja dr reducer di cardsinallposts itu❗❗❗
     const handleCallBack = (dataFromCards) => {
         if (dataFromCards.length > 0) {
             setDbPosts(dataFromCards)
         }
     }
 
+    //ini mungkin dah ga perlu karena ambil aja dr reducer di cardsinallposts itu❗❗❗
     const getPosts = () => {
         Axios.get(`${API_URL}/posts/get`)
             .then((response) => {
@@ -117,7 +121,7 @@ const AllPostsPage = (props) => {
         >
 
             {/* title Leiden | All Posts */}
-            
+
 
             {
                 username
