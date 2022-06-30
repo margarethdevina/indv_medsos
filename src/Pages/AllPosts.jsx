@@ -8,7 +8,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 const AllPostsPage = (props) => {
 
     const [dbPosts, setDbPosts] = useState([]); //ini mungkin dah ga perlu❗❗❗
-    
+
     const [displayLikes, setDisplayLikes] = useState("_card_cardsub_likes");
     const [fromUrLikes, setFromUrLikes] = useState(0);
     // kalau fromUrLikes = 1, cardsinallpost component hanya print yg di liked aja
@@ -17,11 +17,12 @@ const AllPostsPage = (props) => {
     // const [hasMore, setHasMore] = useState(true);
     // const [pageNumber, setPageNumber] = useState(2);
 
-    const { username, status, likes } = useSelector((state) => {
+    const { username, status, likes, posts } = useSelector((state) => {
         return {
             username: state.usersReducer.username,
             status: state.usersReducer.status,
-            likes: state.usersReducer.likes
+            likes: state.usersReducer.likes,
+            posts: state.postsReducer.posts
         }
     })
 
@@ -83,6 +84,7 @@ const AllPostsPage = (props) => {
     //     setPageNumber(temp);
     // }
 
+    //ini mungkin dah ga perlu karena ambil aja dr reducer di cardsinallposts itu❗❗❗
     const unlikedPosts = () => {
         let results = dbPosts.filter(({ id: id1 }) => !likes.some((id2) => id2 === id1));
         // console.log(results)
@@ -93,6 +95,7 @@ const AllPostsPage = (props) => {
     // console.log("isi unlikedPosts", unlikedPosts())
 
     //❗❗❗di cardsinallposts langsung filtering data yg diliked krn props dr sini skrg undefined terus
+    //ini mungkin dah ga perlu karena ambil aja dr reducer di cardsinallposts itu❗❗❗
     const likedPosts = () => {
         // let temp = []
         // for (let i = 0; i < dbPosts.length; i++) {
@@ -134,8 +137,10 @@ const AllPostsPage = (props) => {
                             // postsArr={postsArr}
                             // fetchData={fetchData}
                             // hasMore={hasMore}
-                            likedData={likedPosts()}
-                            unlikedPosts={unlikedPosts()}
+                            likedData={posts.filter(({ id: id1 }) => likes.some((id2) => id2 === id1))}
+                            // likedData={likedPosts()}
+                            unlikedData={posts.filter(({ id: id1 }) => !likes.some((id2) => id2 === id1))}
+                            // unlikedData={unlikedPosts()}
                             displayLikes={displayLikes}
                             fromUrLikes={fromUrLikes}
                             handleCallBack={handleCallBack}

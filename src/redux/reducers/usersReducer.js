@@ -19,6 +19,7 @@ export const usersReducer = (state = INITIAL_STATE, action) => {
                 ...state, ...action.payload
             }
         case "UPDATE_LIKES":
+            console.log("DPT DATA USERS DR ACTION respon dari klik like",action.payload)
             return {
                 ...state, likes: action.payload
             }

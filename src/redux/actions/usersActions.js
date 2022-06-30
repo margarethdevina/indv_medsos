@@ -8,6 +8,7 @@ export const loginAction = (data) => {
 }
 
 export const updateLikesAction = (data) => {
+    console.log("DATA USERS DARI COMP UI respon dari klik like",data)
     return {
         type: "UPDATE_LIKES",
         payload: data

@@ -26,37 +26,37 @@ const CardsInAllPosts = (props) => {
 
     console.log("isi posts di reducer", posts);
     console.log("isi likes di reducer", likes);
+    console.log("isi props.likedData", props.likedData);
+    console.log("isi props.unlikedData", props.unlikedData);
 
     // const [likesDb, setLikesDb] = useState([]);
-    const [likesDb, setLikesDb] = useState([...likes]);
-    console.log("likesDb line 33", likesDb);
+    // const [likesDb, setLikesDb] = useState([...likes]);
+    // console.log("likesDb line 33", likesDb);
 
     // const [arrLiked, setArrLiked] = useState([...props.likedData]);
-    const [arrLiked, setArrLiked] = useState(posts.filter(({ id: id1 }) => likes.some((id2) => id2 === id1)));
-    console.log("arrLiked", arrLiked);
+    // const [arrLiked, setArrLiked] = useState(posts.filter(({ id: id1 }) => likes.some((id2) => id2 === id1)));
+    // console.log("arrLiked", arrLiked);
 
-    // const [arrUnliked, setArrUnliked] = useState([...props.unlikedPosts]);
-    const [arrUnliked, setArrUnliked] = useState(posts.filter(({ id: id1 }) => !likes.some((id2) => id2 === id1)));
-    console.log("arrUnliked", arrUnliked);
+    // // const [arrUnliked, setArrUnliked] = useState([...props.unlikedData]);
+    // const [arrUnliked, setArrUnliked] = useState(posts.filter(({ id: id1 }) => !likes.some((id2) => id2 === id1)));
+    // console.log("arrUnliked", arrUnliked);
 
     useEffect(() => {
-        // setLikesDb([...likes]);
-        // getArray();
         getPostForFirstScroll();
     }, []);
 
-    const getArray = () => {
-        setArrLiked(props.likedData);
-        setArrUnliked(props.unlikedPosts);
-    }
+    // const getArray = () => {
+    //     setArrLiked(props.likedData);
+    //     setArrUnliked(props.unlikedData);
+    // }
 
-    console.log("likesDb", likesDb);
-    console.log("arrLiked", arrLiked);
-    console.log("arrUnliked", arrUnliked);
+    // console.log("likesDb", likesDb);
+    // console.log("arrLiked", arrLiked);
+    // console.log("arrUnliked", arrUnliked);
 
     const handleLike = (IdPost) => {
         let tempLike = [...likes];
-        let tempPosts = [...posts];
+        // let tempPosts = [...posts];
         let token = localStorage.getItem("tokenIdUser");
 
         if (!tempLike.includes(IdPost)) {
@@ -74,22 +74,26 @@ const CardsInAllPosts = (props) => {
                     }
                 }).then((res) => {
                     dispatch(updateLikesAction(res.data));
-                    getPosts();
+                    // console.log("respon dari klik like",res.data);
+                    // getPosts();
                     setHasMore(true);
-                    getPostForFirstScroll();
-                    setLikesDb(res.data);
-                    getArray();
+                    getPostForFirstScroll(
+                        posts.filter(({ id: id1 }) => res.data.some((id2) => id2 === id1)),
+                        posts.filter(({ id: id1 }) => !res.data.some((id2) => id2 === id1))
+                    );
+                    // setLikesDb(res.data);
+                    // getArray();
                     // setArrLiked(props.likedData);
                     // setArrLiked(posts.filter(({ id: id1 }) => likes.some((id2) => id2 === id1)));
                     // console.log("arrLiked setelah klik", arrLiked);
-                    // setArrUnliked(props.unlikedPosts);
+                    // setArrUnliked(props.unlikedData);
                     // setArrUnliked(posts.filter(({ id: id1 }) => !likes.some((id2) => id2 === id1)));
                     // console.log("arrUnliked setelah klik", arrUnliked);
 
-                    console.log("isi post di reducer stlh klik", posts);
-                    console.log("isi postsArr stlh klik", postsArr);
+                    // console.log("isi post di reducer stlh klik", posts);
+                    // console.log("isi postsArr stlh klik", postsArr);
 
-                    printAllPosts();
+                    // printAllPosts();
 
                 }).catch((err) => {
                     console.log(err)
@@ -99,7 +103,7 @@ const CardsInAllPosts = (props) => {
         } else {
             let idxInLikes = tempLike.indexOf(IdPost);
             tempLike.splice(idxInLikes, 1);
-            console.log("tempLike setelah coba unlike", tempLike)
+            // console.log("tempLike setelah coba unlike", tempLike)
 
             //axios patch user likes
             if (token) {
@@ -113,22 +117,26 @@ const CardsInAllPosts = (props) => {
                     }
                 }).then((res) => {
                     dispatch(updateLikesAction(res.data));
-                    setLikesDb(res.data);
-                    getPosts();
+                    // console.log("respon dari klik like",res.data);
+                    // setLikesDb(res.data);
+                    // getPosts();
                     setHasMore(true);
-                    getPostForFirstScroll();
-                    getArray();
+                    getPostForFirstScroll(
+                        posts.filter(({ id: id1 }) => res.data.some((id2) => id2 === id1)),
+                        posts.filter(({ id: id1 }) => !res.data.some((id2) => id2 === id1))
+                    );
+                    // getArray();
                     // setArrLiked(props.likedData);
                     // setArrLiked(posts.filter(({ id: id1 }) => likes.some((id2) => id2 === id1)));
                     // console.log("arrLiked setelah klik", arrLiked);
-                    // setArrUnliked(props.unlikedPosts);
+                    // setArrUnliked(props.unlikedData);
                     // setArrUnliked(posts.filter(({ id: id1 }) => !likes.some((id2) => id2 === id1)));
                     // console.log("arrUnliked setelah klik", arrUnliked);
 
-                    console.log("isi post di reducer stlh klik", posts);
-                    console.log("isi postsArr stlh klik", postsArr);
+                    // console.log("isi post di reducer stlh klik", posts);
+                    // console.log("isi postsArr stlh klik", postsArr);
 
-                    printAllPosts();
+                    // printAllPosts();
 
                 }).catch((err) => {
                     console.log(err)
@@ -153,9 +161,9 @@ const CardsInAllPosts = (props) => {
         Axios.get(`${API_URL}/posts/get`)
             .then((response) => {
                 dispatch(getPostsAction(response.data))
-                props.handleCallBack(response.data)
+                // props.handleCallBack(response.data)
                 // setArrLiked(props.likedData)
-                // setArrUnliked(props.unlikedPosts)
+                // setArrUnliked(props.unlikedData)
                 // console.log("arrLiked setelah klik", arrLiked);
                 // console.log("arrUnliked setelah klik", arrUnliked);
                 // getPostForFirstScroll()
@@ -165,125 +173,13 @@ const CardsInAllPosts = (props) => {
             })
     }
 
-    const printLiked = () => {
-        // console.log("likes dr reducer", likes)
-        let results = posts.filter(({ id: id1 }) => likes.some((id2) => id2 === id1));
-        // console.log("results", results)
-        // console.log("props.likedData",props.likedData)
-        return results.map((value, index) => {
-            return (
-                <CardColumns
-                    key={value.id}
-                    className="col-12 col-md-6"
-                >
-                    <Card
-                        className="border-0 shadow-sm"
-                    >
-                        <CardImg
-                            onClick={() => navigate(`/postdetail?id=${value.id}`)}
-                            src={value.media.includes("http") ? value.media : `${API_URL}${value.media}`}
-                            alt={`${value.id}-${value.username}-media`}
-                            // top
-                            className="_card_media"
-                        />
-                        <CardTitle
-                            className="_card_title"
-                            tag="h5"
-                        >
-                            {value.username}
-                        </CardTitle>
-                        <CardSubtitle
-                            className="d-flex justify-content-between align-items-center text-muted"
-                            tag="h6"
-                        >
-                            <p
-                                className="_card_cardsub_date"
-                            >
-                                {DateTime.fromISO(value.uploadDate).toFormat("FF")}
-                            </p>
-                            <p
-                                className={props.displayLikes}
-                            // className="_card_cardsub_likes"
-                            >
-                                <FavIcon
-                                    className="_card_icon_allPost"
-                                    fill="#e13b6e"
-                                    onClick={() => handleLike(value.id)}
-                                />
-                                {value.numberOfLikes}
-                            </p>
-                        </CardSubtitle>
-                    </Card>
-                </CardColumns>
-            )
-        })
-    }
-
-    // const printUnliked = () => {
-    //     return props.unlikedPosts.map((value, index) => {
-    //         return (
-    //             <CardColumns
-    //                 key={value.id}
-    //                 className="col-12 col-md-6"
-    //             >
-    //                 <Card
-    //                     className="border-0 shadow-sm"
-    //                 >
-    //                     <CardImg
-    //                         onClick={() => navigate(`/postdetail?id=${value.id}`)}
-    //                         src={value.media.includes("http") ? value.media : `${API_URL}${value.media}`}
-    //                         alt={`${value.id}-${value.username}-media`}
-    //                         // top
-    //                         className="_card_media"
-    //                     />
-    //                     <CardTitle
-    //                         className="_card_title"
-    //                         tag="h5"
-    //                     >
-    //                         {value.username}
-    //                     </CardTitle>
-    //                     <CardSubtitle
-    //                         className="d-flex justify-content-between align-items-center text-muted"
-    //                         tag="h6"
-    //                     >
-    //                         <p
-    //                             className="_card_cardsub_date"
-    //                         >
-    //                             {DateTime.fromISO(value.uploadDate).toFormat("FF")}
-    //                         </p>
-    //                         <p
-    //                             className={props.displayLikes}
-    //                         // className="_card_cardsub_likes"
-    //                         >
-    //                             <FavIcon
-    //                                 className="_card_icon_allPost"
-    //                                 fill="#351c75"
-    //                                 onClick={() => handleLike(value.id)}
-    //                             />
-    //                             {value.numberOfLikes}
-    //                         </p>
-    //                     </CardSubtitle>
-    //                 </Card>
-    //             </CardColumns>
-    //         )
-    //     })
-    // }
-
-    // const [dataPagination, setdataPagination] = useState([])
-    // if (props.postsArr) {
-    //     setdataPagination([...dataPagination, ...props.postsArr]);
-    //     console.log("isi props.postsArr", props.postsArr);
-    //     console.log("isi dataPagination", dataPagination);
-    // }
-
     // untuk pagination all post
     const [postsArr, setPostsArr] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [pageNumber, setPageNumber] = useState(2);
     // const [favColor, setFavColor] = useState("#351c75"); //warna unliked
 
-    const getPostForFirstScroll = async () => {
-        // setLikesDb([...likes]);
+    const getPostForFirstScroll = async (arrLiked = props.likedData, arrUnliked = props.unlikedData) => {
         // setArrLiked(posts.filter(({ id: id1 }) => likes.some((id2) => id2 === id1)));
         // setArrUnliked(posts.filter(({ id: id1 }) => !likes.some((id2) => id2 === id1)));
 
@@ -295,6 +191,9 @@ const CardsInAllPosts = (props) => {
 
         // let arrayUnliked = posts.filter(({ id: id1 }) => !likes.some((id2) => id2 === id1));
         // console.log("arrayUnliked di getPostForFirstScroll", arrayUnliked);
+
+        console.log("isi props.likedData di getPostForFirstScroll", props.likedData);
+        console.log("isi props.unlikedData di getPostForFirstScroll", props.unlikedData);
 
         if (userid && likes.length > 0) {
             data.forEach(valFirstScroll => {
@@ -334,8 +233,8 @@ const CardsInAllPosts = (props) => {
 
         if (userid && likes.length > 0) {
             data.forEach(valFirstScroll => {
-                arrLiked.forEach(valLikes => {
-                    arrUnliked.forEach(valUnliked => {
+                props.likedData.forEach(valLikes => {
+                    props.unlikedData.forEach(valUnliked => {
                         if (valFirstScroll.id == valLikes.id) {
                             valFirstScroll.favcolor = "#e13b6e"
                         } else if (valFirstScroll.id == valUnliked.id) {
@@ -373,8 +272,8 @@ const CardsInAllPosts = (props) => {
         // console.log("isi hasMore", props.hasMore);
         console.log("isi hasMore", hasMore);
 
-        console.log("liked posts", props.likedData);
-        console.log("unliked posts", props.unlikedPosts);
+        console.log("isi dr props.likedData di printAllPosts", props.likedData);
+        console.log("isi dr props.unlikedData di printAllPosts", props.unlikedData);
 
 
         return postsArr.map((valPaginate, idxPaginate) => {
@@ -416,7 +315,6 @@ const CardsInAllPosts = (props) => {
                             </p>
                             <p
                                 className={props.displayLikes}
-                            // className="_card_cardsub_likes"
                             >
                                 <FavIcon
                                     className="_card_icon_allPost"
@@ -439,58 +337,33 @@ const CardsInAllPosts = (props) => {
         // className="row"
         // id="scrollableAllPost"
         >
-            {/* {
-                likes.length >= 0 && props.fromUrLikes == 0
+            <InfiniteScroll
+                dataLength={postsArr.length}
+                next={fetchData}
+                hasMore={hasMore}
+                loader={posts.length === 0
                     ?
-                    printUnliked()
-                    :
                     null
-            }
-            {printLiked()}
-
-            {printAllPosts()} */}
-
-            {
-                props.fromUrLikes == 0
-                    ?
-                    <>
-                        <InfiniteScroll
-                            dataLength={postsArr.length}
-                            next={fetchData}
-                            hasMore={hasMore}
-                            loader={posts.length === 0
-                                ?
-                                null
-                                :
-                                <p
-                                    style={{ textAlign: "center" }}
-                                    className="gen_font_content"
-                                >
-                                    Loading...
-                                </p>
-                            }
-                            endMessage={<p
-                                style={{ textAlign: "center" }}
-                                className="gen_font_content"
-                            >End of post(s)...</p>}
-                            scrollableTarget="scrollableAllPost"
-                        >
-                            <div
-                                className="row"
-                            >
-                                {printAllPosts()}
-                            </div>
-                        </InfiniteScroll>
-                    </>
                     :
-                    <>
-                        <div className="row">
-                            {printLiked()}
-                        </div>
-                    </>
-            }
-
-
+                    <p
+                        style={{ textAlign: "center" }}
+                        className="gen_font_content"
+                    >
+                        Loading...
+                    </p>
+                }
+                endMessage={<p
+                    style={{ textAlign: "center" }}
+                    className="gen_font_content"
+                >End of post(s)...</p>}
+                scrollableTarget="scrollableAllPost"
+            >
+                <div
+                    className="row"
+                >
+                    {printAllPosts()}
+                </div>
+            </InfiniteScroll>
 
         </div>
     )
