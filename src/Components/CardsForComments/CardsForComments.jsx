@@ -171,6 +171,7 @@ const CardsForComments = (props) => {
                                 type="text"
                                 className="mb-2 _card_font"
                                 placeholder={value.comment}
+                                defaultValue={value.comment}
                                 maxLength={300}
                                 onChange={(e) => setInputComment(e.target.value)}
                             />

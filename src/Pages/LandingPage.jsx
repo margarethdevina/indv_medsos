@@ -8,6 +8,8 @@ const LandingPage = (props) => {
         <div
             style={{ minHeight: "100vh" }}
         >
+            {/* title Leiden | Home */}
+            {/* meta property="og:" */}
 
             <BannerTop />
 

@@ -346,8 +346,6 @@ Menyiapkan project untuk menggunakan git
 
 1. like unlike di all post belum stabil
 
-2. handle load more button for comment
-
 95. beda font di modal delete dan edit
 
 96. library metatag
@@ -370,9 +368,8 @@ Menyiapkan project untuk menggunakan git
 
 4. medsos icon saat diklik berarti sharing link domain netlify FEnya? nanti aja dulu ini setelah metatag library di add
 
-5. handle loadmore button untuk pagination comment ditaruh pas fetchcomments  berikutnya atau di fetchData? >> ditaruh pas fetchData
-
 
 URGENT TASK:
 1. like unlike di all post belum stabil
-2. add load more button di comment pagination
+
+ka mau tanya ka...klo di post detail itu kan bs melakukan sharing postnya...berarti gambar di meta tag nya itu berisi gambar postnya yg lg dibuka ya ka?

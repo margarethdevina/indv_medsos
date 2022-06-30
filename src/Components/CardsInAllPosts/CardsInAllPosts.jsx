@@ -31,11 +31,11 @@ const CardsInAllPosts = (props) => {
     const [likesDb, setLikesDb] = useState([...likes]);
     console.log("likesDb line 33", likesDb);
 
-    // const [arrLiked, setArrLiked] = useState(...propsLikes);
+    // const [arrLiked, setArrLiked] = useState([...props.likedData]);
     const [arrLiked, setArrLiked] = useState(posts.filter(({ id: id1 }) => likes.some((id2) => id2 === id1)));
     console.log("arrLiked", arrLiked);
 
-    // const [arrUnliked, setArrUnliked] = useState(...propsUnlikes);
+    // const [arrUnliked, setArrUnliked] = useState([...props.unlikedPosts]);
     const [arrUnliked, setArrUnliked] = useState(posts.filter(({ id: id1 }) => !likes.some((id2) => id2 === id1)));
     console.log("arrUnliked", arrUnliked);
 

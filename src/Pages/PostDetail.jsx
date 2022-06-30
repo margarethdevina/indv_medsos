@@ -19,7 +19,6 @@ import { getPostsAction } from "../redux/actions/postsActions";
 import { updateLikesAction } from "../redux/actions/usersActions";
 import { getCommentsAction } from "../redux/actions/commentsActions";
 import { toast } from "react-toastify";
-import { pureFinalPropsSelectorFactory } from "react-redux/es/connect/selectorFactory";
 
 const PostDetailPage = (props) => {
 
@@ -354,8 +353,8 @@ const PostDetailPage = (props) => {
     }
 
 
-    console.log("commentsArr.length", commentsArr.length);
-    console.log("commentsFiltered.length", commentsFiltered.length);
+    // console.log("commentsArr.length", commentsArr.length);
+    // console.log("commentsFiltered.length", commentsFiltered.length);
 
     return (
         <div
@@ -492,6 +491,7 @@ const PostDetailPage = (props) => {
                                                 type="textarea"
                                                 className="mb-2"
                                                 placeholder={detail.caption}
+                                                defaultValue={detail.caption}
                                                 onChange={(e) => setInputCaption(e.target.value)}
                                             />
                                             <div

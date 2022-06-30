@@ -193,6 +193,7 @@ const UserProfilePage = (props) => {
                             <Input
                                 type="text"
                                 placeholder={fullname}
+                                defaultValue={fullname}
                                 onChange={(e) => handleFullName(e.target.value)}
                             />
                         </div>
@@ -201,6 +202,7 @@ const UserProfilePage = (props) => {
                             <Input
                                 type="text"
                                 placeholder={username}
+                                defaultValue={username}
                                 onChange={(e) => handleUserName(e.target.value)}
                             />
                         </div>
@@ -212,6 +214,7 @@ const UserProfilePage = (props) => {
                         <Input
                             type="text"
                             placeholder={bio}
+                            defaultValue={bio}
                             onChange={(e) => handleBio(e.target.value)}
                         />
                     </div>
