@@ -56,6 +56,8 @@ const CardsInAllPosts = (props) => {
 
     const handleLike = (IdPost) => {
         let tempLike = [...likes];
+        console.log("tempLike di handleLike", tempLike);
+
         // let tempPosts = [...posts];
         let token = localStorage.getItem("tokenIdUser");
 
@@ -66,7 +68,7 @@ const CardsInAllPosts = (props) => {
             if (token) {
                 let formData = new FormData();
                 let data = { likes: tempLike };
-                console.log("data", data);
+                console.log("data yg akan diappend", data);
                 formData.append('data', JSON.stringify(data));
                 Axios.patch(`${API_URL}/users/edit`, formData, {
                     headers: {
@@ -74,10 +76,11 @@ const CardsInAllPosts = (props) => {
                     }
                 }).then((res) => {
                     dispatch(updateLikesAction(res.data));
-                    // console.log("respon dari klik like",res.data);
+                    // console.log("respon dari klik like", res.data);
                     // getPosts();
                     setHasMore(true);
                     getPostForFirstScroll(
+                        res.data,
                         posts.filter(({ id: id1 }) => res.data.some((id2) => id2 === id1)),
                         posts.filter(({ id: id1 }) => !res.data.some((id2) => id2 === id1))
                     );
@@ -103,13 +106,13 @@ const CardsInAllPosts = (props) => {
         } else {
             let idxInLikes = tempLike.indexOf(IdPost);
             tempLike.splice(idxInLikes, 1);
-            // console.log("tempLike setelah coba unlike", tempLike)
+            console.log("tempLike setelah coba unlike", tempLike)
 
             //axios patch user likes
             if (token) {
                 let formData = new FormData();
                 let data = { likes: tempLike };
-                console.log("data", data);
+                console.log("data yg akan diappend", data);
                 formData.append('data', JSON.stringify(data));
                 Axios.patch(`${API_URL}/users/edit`, formData, {
                     headers: {
@@ -117,11 +120,11 @@ const CardsInAllPosts = (props) => {
                     }
                 }).then((res) => {
                     dispatch(updateLikesAction(res.data));
-                    // console.log("respon dari klik like",res.data);
-                    // setLikesDb(res.data);
+                    // console.log("respon dari klik like", res.data);
                     // getPosts();
                     setHasMore(true);
                     getPostForFirstScroll(
+                        res.data,
                         posts.filter(({ id: id1 }) => res.data.some((id2) => id2 === id1)),
                         posts.filter(({ id: id1 }) => !res.data.some((id2) => id2 === id1))
                     );
@@ -179,7 +182,11 @@ const CardsInAllPosts = (props) => {
     const [pageNumber, setPageNumber] = useState(2);
     // const [favColor, setFavColor] = useState("#351c75"); //warna unliked
 
-    const getPostForFirstScroll = async (arrLiked = props.likedData, arrUnliked = props.unlikedData) => {
+    const getPostForFirstScroll = async (newLikes = likes, arrLiked = props.likedData, arrUnliked = props.unlikedData) => {
+
+        console.log("isi newLikes di getPostForFirstScroll", newLikes);
+        console.log("isi arrLiked di getPostForFirstScroll", arrLiked);
+        console.log("isi arrUnliked di getPostForFirstScroll", arrUnliked);
         // setArrLiked(posts.filter(({ id: id1 }) => likes.some((id2) => id2 === id1)));
         // setArrUnliked(posts.filter(({ id: id1 }) => !likes.some((id2) => id2 === id1)));
 
@@ -192,33 +199,37 @@ const CardsInAllPosts = (props) => {
         // let arrayUnliked = posts.filter(({ id: id1 }) => !likes.some((id2) => id2 === id1));
         // console.log("arrayUnliked di getPostForFirstScroll", arrayUnliked);
 
-        console.log("isi props.likedData di getPostForFirstScroll", props.likedData);
-        console.log("isi props.unlikedData di getPostForFirstScroll", props.unlikedData);
+        if (data) {
 
-        if (userid && likes.length > 0) {
-            data.forEach(valFirstScroll => {
-                arrLiked.forEach(valLikes => {
-                    arrUnliked.forEach(valUnliked => {
-                        if (valFirstScroll.id == valLikes.id) {
-                            valFirstScroll.favcolor = "#e13b6e"
-                        } else if (valFirstScroll.id == valUnliked.id) {
-                            valFirstScroll.favcolor = "#351c75"
-                        }
+            console.group("isi likes dr reducer di getPostForFirstScroll", likes);
+            console.log("isi props.likedData di getPostForFirstScroll", props.likedData);
+            console.log("isi props.unlikedData di getPostForFirstScroll", props.unlikedData);
+
+            if (userid && newLikes.length > 0) {
+                data.forEach(valFirstScroll => {
+                    arrLiked.forEach(valLikes => {
+                        arrUnliked.forEach(valUnliked => {
+                            if (valFirstScroll.id == valLikes.id) {
+                                valFirstScroll.favcolor = "#e13b6e"
+                            } else if (valFirstScroll.id == valUnliked.id) {
+                                valFirstScroll.favcolor = "#351c75"
+                            }
+                        })
                     })
                 })
-            })
-        } else {
-            data.forEach(valFirstScroll => {
-                valFirstScroll.favcolor = "#351c75"
-            })
-        }
-        console.log("data bisa ditambah favcolor", data)
-        setPostsArr([...data]);
+            } else {
+                data.forEach(valFirstScroll => {
+                    valFirstScroll.favcolor = "#351c75"
+                })
+            }
+            console.log("data bisa ditambah favcolor", data)
+            setPostsArr([...data]);
 
-        if (data.length === 0 || data.length < 4) {
-            setHasMore(false);
-        };
-        setPageNumber(2);
+            if (data.length === 0 || data.length < 4) {
+                setHasMore(false);
+            };
+            setPageNumber(2);
+        }
     }
 
     const fetchNextPosts = async () => {
@@ -267,10 +278,12 @@ const CardsInAllPosts = (props) => {
 
     const printAllPosts = () => {
         // console.log("isi props.postsArr", props.postsArr);
-        console.log("isi postsArr", postsArr);
+        console.log("isi postsArr di printAllPosts", postsArr);
         // console.log("isi posts di reducer saat ini", posts);
         // console.log("isi hasMore", props.hasMore);
-        console.log("isi hasMore", hasMore);
+        console.log("isi hasMore di printAllPosts", hasMore);
+
+        console.log("isi likes di di printAllPosts", likes);
 
         console.log("isi dr props.likedData di printAllPosts", props.likedData);
         console.log("isi dr props.unlikedData di printAllPosts", props.unlikedData);
