@@ -1,6 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import AddPostComponent from "../Components/AddPost/AddPost";
+import { API_URL } from "../helper";
+import MetaDecorator from "../Components/MetaDecorator";
 
 const UploadPostPage = (props) => {
 
@@ -18,8 +20,16 @@ const UploadPostPage = (props) => {
     return (
         <div
             className="pb-md-5 mb-md-5"
-            style={{minHeight:"100vh"}}
+            style={{ minHeight: "100vh" }}
         >
+
+            {/* title Leiden | Upload Post */}
+            <MetaDecorator
+                title="Leiden | Upload Post"
+                description="How is your day? Do you want to share it to us?"
+                contentImg={`${API_URL}/imgUtilities/IMGUTILITIES_UPLOADPOST.jpg`}
+                // contentWebUrl="http://localhost:3001/uploadpost"
+            />
 
             {
                 username
@@ -53,12 +63,6 @@ const UploadPostPage = (props) => {
                         <h5>401 - Please sign in first to access this page</h5>
                     </>
             }
-
-            {/* <AddPostComponent
-                userId={userId}
-                username={username}
-                posts={posts}
-            /> */}
 
         </div>
     )

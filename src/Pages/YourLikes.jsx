@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import '../index.scss';
+import { API_URL } from "../helper";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { Nav, NavItem, NavLink } from "reactstrap";
 import CardsInYourLikes from "../Components/CardsForYourLikes/CardsInYourLikes";
 import { ReactComponent as FavIcon } from '../Assets/IconRef/love-letter.svg';
+import MetaDecorator from "../Components/MetaDecorator";
 
 const YourLikesPage = (props) => {
 
@@ -21,27 +23,20 @@ const YourLikesPage = (props) => {
 
     const [displayLikes, setDisplayLikes] = useState("d-none _card_cardsub_likes")
 
-    // const [fromUrLikes, setFromUrLikes] = useState(1)
-
-    // console.log("data state yg masuk page yourLikes", username, likes, posts)
-
-    // const getYourLikes = () => {
-    //     let temp = []
-    //     for (let i = 0; i < posts.length; i++) {
-    //         for (let j = 0; j < likes.length; j++) {
-    //             if (posts[i].id == likes[j]) {
-    //                 temp.push(posts[i])
-    //             }
-    //         }
-    //     }
-    //     return temp
-    // }
-
     return (
         <div
             className="container border-0"
             style={{ minHeight: "100vh" }}
         >
+
+            {/* title Leiden | Your Likes */}
+            <MetaDecorator
+                title="Leiden | Your Likes"
+                description="Do you want to share some love again today? We are waiting for you :D"
+                contentImg={`${API_URL}/imgUtilities/IMGUTILITIES_YOURLIKES.jpg`}
+            // contentWebUrl="http://localhost:3001/yourlikes"
+            />
+
             {
                 username
                     ?
@@ -72,9 +67,7 @@ const YourLikesPage = (props) => {
                                 </Nav>
 
                                 <CardsInYourLikes
-                                    // data={getYourLikes()}
                                     displayLikes={displayLikes}
-                                    // fromUrLikes={fromUrLikes}
                                 />
                             </>
                             :

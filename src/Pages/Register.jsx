@@ -8,6 +8,7 @@ import { loginAction } from "../redux/actions/usersActions";
 import { Form, FormGroup, Label, Input, InputGroup, InputGroupText, Button, Col } from "reactstrap";
 import registPic from "../Assets/SampleMediaPosts/violet-register.jpg";
 import { toast } from "react-toastify";
+import MetaDecorator from "../Components/MetaDecorator";
 
 const RegisterPage = (props) => {
 
@@ -168,6 +169,14 @@ const RegisterPage = (props) => {
             className="row container mx-auto py-3"
             style={{ minHeight: "100vh" }}
         >
+
+            {/* title Leiden | Register */}
+            <MetaDecorator
+                title="Leiden | Register"
+                description="Leiden - Welcome to Leiden Family"
+                contentImg={`${API_URL}/imgUtilities/IMGUTILITIES_HOME.jpg`}
+                // contentWebUrl="http://localhost:3001/register"
+            />
 
             <>
 

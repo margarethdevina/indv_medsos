@@ -19,6 +19,7 @@ import { getPostsAction } from "../redux/actions/postsActions";
 import { updateLikesAction } from "../redux/actions/usersActions";
 import { getCommentsAction } from "../redux/actions/commentsActions";
 import { toast } from "react-toastify";
+import MetaDecorator from "../Components/MetaDecorator";
 
 const PostDetailPage = (props) => {
 
@@ -52,8 +53,8 @@ const PostDetailPage = (props) => {
         }
     })
 
-    const currentDate = new Date();
-    const latestDate = `${currentDate.getFullYear()}/${(currentDate.getMonth() + 1) < 10 ? `0${(currentDate.getMonth() + 1)}` : `${(currentDate.getMonth() + 1)}`}/${currentDate.getDate()}`
+    // const currentDate = new Date();
+    // const latestDate = `${currentDate.getFullYear()}/${(currentDate.getMonth() + 1) < 10 ? `0${(currentDate.getMonth() + 1)}` : `${(currentDate.getMonth() + 1)}`}/${currentDate.getDate()}`
 
     useEffect(() => {
         getDetail()
@@ -73,11 +74,9 @@ const PostDetailPage = (props) => {
 
     const getCommentsForThisPost = async () => {
         const res = await Axios.get(`${API_URL}/comments/paginate?postId=${query}&_page=1`);
-        // const res = await Axios.get(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=1&_limit=5`);
-        //pas konek express API _limit, _sort dan _order dah ga dibutuhin krn fixed sql query harus sort dan order nya begitu ❗❗❗
 
         const data = res.data;
-        // const data = await res.json();
+
         setCommentsArr(data);
 
         // if (commentsFiltered.length === 0 || commentsFiltered.length < 5) {
@@ -87,20 +86,16 @@ const PostDetailPage = (props) => {
             setHasMore(false);
         }
 
-        setHasMore(false) //aditional untuk coba see more ❗❗❗
+        setHasMore(false)
 
         setPageNumber(2)
     }
 
     const fetchComments = async () => {
         const res = await Axios.get(`${API_URL}/comments/paginate?postId=${query}&_page=${pageNumber}`);
-        // const res = await Axios.get(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=${pageNumber}&_limit=5`);
-        //pas konek express API _limit, _sort dan _order dah ga dibutuhin krn fixed sql query harus sort dan order nya begitu ❗❗❗
-
-        // const res = await fetch(`${API_URL}/comments?postId=${query}&_sort=commentDate&_order=desc&_page=${pageNumber}&_limit=5`);
 
         const data = res.data;
-        // const data = await res.json();
+
         return data;
     }
 
@@ -116,7 +111,7 @@ const PostDetailPage = (props) => {
 
         if (commentsFromServer.length === 0 || commentsFromServer.length < 5) {
             setHasMore(false);
-            // setPageNumber(2)
+
         }
 
         let temp = pageNumber;
@@ -126,7 +121,7 @@ const PostDetailPage = (props) => {
     }
 
     const handleSeeMore = () => {
-        //aditional untuk coba see more ❗❗❗
+
         fetchData()
         setHasMore(true)
     }
@@ -208,10 +203,6 @@ const PostDetailPage = (props) => {
             console.log("index di post", idxInPost)
             // console.log("NOL di post itu saat ini", tempPosts[idxInPost].numberOfLikes)
 
-            // let tempNoOfLikes = tempPosts[idxInPost].numberOfLikes;
-            // tempNoOfLikes++;
-            // console.log("number of likes nambah?", tempNoOfLikes)
-
             //axios patch user likes
             if (token) {
                 let formData = new FormData();
@@ -226,7 +217,6 @@ const PostDetailPage = (props) => {
                     dispatch(updateLikesAction(res.data))
                     getPosts()
                     //axios patch posts number of likes
-                    // updateNumberofLikes(IdPost, tempNoOfLikes)
 
                     //set warna fill like iconnya
                     setFavoriteFill("#e13b6e")
@@ -244,10 +234,6 @@ const PostDetailPage = (props) => {
 
             let idxInPost = tempPosts.findIndex(val => val.id == IdPost);
 
-            // let tempNoOfLikes = tempPosts[idxInPost].numberOfLikes;
-            // tempNoOfLikes--;
-            // console.log("number of likes berkurang?", tempNoOfLikes)
-
             //axios patch user likes
             if (token) {
                 let formData = new FormData();
@@ -262,7 +248,6 @@ const PostDetailPage = (props) => {
                     dispatch(updateLikesAction(res.data))
                     getPosts()
                     //axios patch posts number of likes
-                    // updateNumberofLikes(IdPost, tempNoOfLikes)
 
                     //set warna fill like iconnya
                     setFavoriteFill("#351c75")
@@ -273,16 +258,6 @@ const PostDetailPage = (props) => {
 
         }
     }
-
-    // const updateNumberofLikes = (Id, tempNoOfLikes) => {
-    //     Axios.patch(`${API_URL}/posts/${Id}`, {
-    //         numberOfLikes: tempNoOfLikes
-    //     }).then((res) => {
-    //         getPosts()
-    //     }).catch((err) => {
-    //         console.log(err)
-    //     })
-    // }
 
     const getPosts = () => {
         Axios.get(`${API_URL}/posts/get`)
@@ -315,34 +290,11 @@ const PostDetailPage = (props) => {
             getAllComments()
             setInputComment("")
             getCommentsForThisPost()
-            // if(hasMore){
-            //     fetchData()
-            // }
+
         }).catch((err) => {
             console.log(err)
         })
 
-        // } 
-        // else {
-        //     Axios.post(`${API_URL}/comments`, {
-        //         postId: parseInt(query),
-        //         id: 0,
-        //         username,
-        //         commentDate: latestDate,
-        //         editedDate: "",
-        //         comment: inputComment
-        //     }).then((res) => {
-        //         // console.log("isi res.data pas klik handlePost", res.data)
-        //         getAllComments()
-        //         setInputComment("")
-        //         getCommentsForThisPost()
-        //         // if(hasMore){
-        //         //     fetchData()
-        //         // }
-        //     }).catch((err) => {
-        //         console.log(err)
-        //     })
-        // }
     }
 
     const handleCopyLink = () => {
@@ -352,7 +304,6 @@ const PostDetailPage = (props) => {
         toast.info("Link copied");
     }
 
-
     // console.log("commentsArr.length", commentsArr.length);
     // console.log("commentsFiltered.length", commentsFiltered.length);
 
@@ -361,6 +312,23 @@ const PostDetailPage = (props) => {
             className="row container py-3 mx-auto"
             style={{ minHeight: "100vh" }}
         >
+
+            {/* title username | post caption */}
+            <MetaDecorator
+                title={`${detail.username} on Leiden: "${detail.caption}"`}
+                // description={`${detail.caption}`}
+                contentImg={
+                    detail.media
+                        &&
+                        detail.media.includes("http")
+                        ?
+                        detail.media
+                        :
+                        `${API_URL}${detail.media}`
+                }
+                contentWebUrl="http://localhost:3001/postdetail${search}"
+            />
+
             {
                 username
                     ?

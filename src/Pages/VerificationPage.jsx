@@ -7,6 +7,7 @@ import { loginAction } from "../redux/actions/usersActions";
 import { useParams, useNavigate } from 'react-router-dom';
 import './_PostDetail.scss';
 import { toast } from "react-toastify";
+import MetaDecorator from "../Components/MetaDecorator";
 
 const VerificationUser = (props) => {
 
@@ -38,6 +39,14 @@ const VerificationUser = (props) => {
         className="container d-flex justify-content-center p-4"
         style={{ minHeight: "100vh" }}
     >
+
+        {/* title Leiden | Verification Page */}
+        <MetaDecorator
+            title="Leiden | Verification Page"
+            description="Please verify your account and enjoy our features"
+            contentImg={`${API_URL}/imgUtilities/IMGUTILITIES_VERIF.png`}
+        />
+
         <div>
             <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
                 security

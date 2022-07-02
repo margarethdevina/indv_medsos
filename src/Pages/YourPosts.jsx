@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { Nav, NavItem, NavLink } from "reactstrap";
 import CardsInYourPosts from "../Components/CardsInYourPosts/CardsInYourPosts";
+import MetaDecorator from "../Components/MetaDecorator";
 
 const YourPostsPage = (props) => {
 
@@ -19,7 +20,7 @@ const YourPostsPage = (props) => {
         }
     })
 
-    console.log("username di reducer masih ada?",username)
+    console.log("username di reducer masih ada?", username)
     const [dbPosts, setDbPosts] = useState([]);
 
     useEffect(() => {
@@ -38,8 +39,17 @@ const YourPostsPage = (props) => {
     return (
         <div
             className="container border-0"
-            style={{minHeight:"100vh"}}
+            style={{ minHeight: "100vh" }}
         >
+
+            {/* title Leiden | Your Post */}
+            <MetaDecorator
+                title="Leiden | Your Post"
+                description="How is your day? Do you want to share it to us?"
+                contentImg={`${API_URL}/imgUtilities/IMGUTILITIES_YOURPOSTS.jpg`}
+            // contentWebUrl="http://localhost:3001/yourposts"
+            />
+
             {
                 username
                     ?

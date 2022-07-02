@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import adminPic from "../Assets/SampleProfilePic/Admin.png";
 import { ReactComponent as VerifIcon } from '../Assets/IconRef/verified.svg';
 import { toast } from "react-toastify";
+import MetaDecorator from "../Components/MetaDecorator";
 
 const UserProfilePage = (props) => {
 
@@ -352,6 +353,27 @@ const UserProfilePage = (props) => {
             className="row container mx-auto py-3 gen_font"
             style={{ minHeight: "100vh" }}
         >
+
+            {/* title Leiden | User Profile */}
+            <MetaDecorator
+                title="Leiden | User Profile"
+                description="We want to know more about you :D"
+                contentImg={
+                    profilePic != ""
+                        ?
+                        profilePic
+                            &&
+                            profilePic.includes("http")
+                            ?
+                            profilePic
+                            :
+                            `${API_URL}${profilePic}`
+                        :
+                        `${API_URL}/imgUtilities/IMGUTILITIES_ADMINPROFILE.png`
+                }
+                // contentWebUrl="http://localhost:3001/userprofile"
+            />
+
             <div
                 className="col-12 col-md-6 order-md-1"
             >

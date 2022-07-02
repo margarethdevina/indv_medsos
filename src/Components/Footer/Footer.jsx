@@ -4,11 +4,13 @@ import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from "re
 import { ReactComponent as WaIcon } from '../../Assets/IconRef/icons8-whatsapp.svg';
 import { ReactComponent as TwitterIcon } from '../../Assets/IconRef/icons8-twitter.svg';
 import { ReactComponent as FbIcon } from '../../Assets/IconRef/icons8-facebook.svg';
+// import MetaDecorator from "../MetaDecorator";
 
 const FooterComponent = (props) => {
 
     return (
         <div id="footer">
+
             <div className="container">
                 {/* <div>
                     <a
@@ -29,14 +31,14 @@ const FooterComponent = (props) => {
 
                 <div className="footer__lists">
                     <ul>
-                            <a href="/">Privacy</a>
+                        <a href="/">Privacy</a>
                     </ul>
                     <ul>
-                            <a href="/">Terms</a>
+                        <a href="/">Terms</a>
                     </ul>
                     {/* <ul> */}
-                        {/* <li className="topic">Company</li> */}
-                        {/* <li>
+                    {/* <li className="topic">Company</li> */}
+                    {/* <li>
                             <a href="/">Privacy</a>
                         </li>
                         <li>

@@ -5,6 +5,7 @@ import { API_URL } from "../helper";
 import './_PostDetail.scss';
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import MetaDecorator from "../Components/MetaDecorator";
 
 const ForgotPassword = (props) => {
 
@@ -40,6 +41,14 @@ const ForgotPassword = (props) => {
         className="d-flex justify-content-center py-1 my-5"
         style={{ minHeight: "100vh" }}
     >
+
+        {/* title Leiden | Request Reset Password */}
+        <MetaDecorator
+            title="Leiden | Request Reset Password"
+            description="Don't worry if you forgot your password, you can request to reset your password"
+            contentImg={`${API_URL}/imgUtilities/IMGUTILITIES_HOME.jpg`}
+        />
+
         <div
             className="pt-5"
         >

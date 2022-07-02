@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import './_PostDetail.scss';
 import { toast } from "react-toastify";
+import MetaDecorator from "../Components/MetaDecorator";
 
 const NewPasswordPage = (props) => {
 
@@ -68,6 +69,14 @@ const NewPasswordPage = (props) => {
         className="container p-5"
         style={{ minHeight: "100vh" }}
     >
+
+        {/* title Leiden | New Password */}
+        <MetaDecorator
+                title="Leiden | New Password"
+                description="Please fill in the new password, don't worry we will keep it safe"
+                contentImg={`${API_URL}/imgUtilities/IMGUTILITIES_HOME.jpg`}
+            />
+
         <div
             className="col-12 col-md-6 mx-auto"
         >

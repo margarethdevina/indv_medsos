@@ -344,17 +344,13 @@ Menyiapkan project untuk menggunakan git
 
 ======= BUGS / NEEDS UPDATE ======== ❗❗❗❗❗❗
 
-1. like unlike di all post belum stabil
+1. React helmet untuk semua page sudah termasuk post detail, tapi cara ngeshare metatag nya pk medsos gmn? yg keshare cm link mati aja
 
-95. beda font di modal delete dan edit
-
-96. library metatag
-
-97. edit profile secara default seharusnya ada edit password juga
+2. edit profile secara default seharusnya ada edit password juga
     cek password lama dulu baru isi password baru
     (belakangan aja)
 
-98. react helmet untuk bantu fitur sharing (belakanga aja gpp)
+3. beda font di modal delete dan edit
 
 99. double check requirement
 
@@ -370,6 +366,6 @@ Menyiapkan project untuk menggunakan git
 
 
 URGENT TASK:
-1. like unlike di all post belum stabil
-
-ka mau tanya ka...klo di post detail itu kan bs melakukan sharing postnya...berarti gambar di meta tag nya itu berisi gambar postnya yg lg dibuka ya ka?
+1. edit profile secara default seharusnya ada edit password juga
+    cek password lama dulu baru isi password baru
+    (belakangan aja)
