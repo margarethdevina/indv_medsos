@@ -58,6 +58,8 @@ const UserProfilePage = (props) => {
     const [inputFullName, setInputFullName] = useState(fullname);
     const [inputUserName, setInputUserName] = useState(username);
     const [inputBio, setInputBio] = useState(bio);
+    const [inputPrevPass, setInputPrevPass] = useState("");
+    const [inputNewPass, setInputNewPass] = useState("");
     const [buttonStatus, setButtonStatus] = useState(false);
 
     const printCard = () => {
@@ -187,21 +189,23 @@ const UserProfilePage = (props) => {
                         />
                     </div>
                     <div
-                        className="d-md-flex justify-content-between px-md-4 pt-3 text-md-start"
+                        className="d-md-flex justify-content-between px-md-4 pt-3 text-md-start pb-3"
                     >
                         <div>
                             <h5>Full Name</h5>
                             <Input
                                 type="text"
+                                bsSize="sm"
                                 placeholder={fullname}
                                 defaultValue={fullname}
                                 onChange={(e) => handleFullName(e.target.value)}
                             />
                         </div>
                         <div>
-                            <h5>User Name</h5>
+                            <h5>Username</h5>
                             <Input
                                 type="text"
+                                bsSize="sm"
                                 placeholder={username}
                                 defaultValue={username}
                                 onChange={(e) => handleUserName(e.target.value)}
@@ -209,18 +213,41 @@ const UserProfilePage = (props) => {
                         </div>
                     </div>
                     <div
-                        className="col-12 ps-md-4 text-md-start"
+                        className="col-12 ps-md-4 text-md-start pb-3"
                     >
                         <h5>Bio</h5>
                         <Input
                             type="text"
+                            bsSize="sm"
                             placeholder={bio}
                             defaultValue={bio}
                             onChange={(e) => handleBio(e.target.value)}
                         />
                     </div>
                     <div
-                        className="col-12 ps-md-4 text-md-start"
+                        className="d-md-flex justify-content-between px-md-4 text-md-start pb-3"
+                    >
+                        <div>
+                            <h5>Previous Password</h5>
+                            <Input
+                                type="text"
+                                bsSize="sm"
+                                defaultValue={inputPrevPass}
+                                onChange={(e) => handlePrevPass(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <h5>New Password</h5>
+                            <Input
+                                type="text"
+                                bsSize="sm"
+                                defaultValue={inputNewPass}
+                                onChange={(e) => handleNewPass(e.target.value)}
+                            />
+                        </div>
+                    </div>
+                    <div
+                        className="col-12 ps-md-4 text-md-start pb-3"
                     >
                         <h5>Email</h5>
                         <h6>{email}</h6>
@@ -284,6 +311,16 @@ const UserProfilePage = (props) => {
         // console.log(inputBio)
     }
 
+    const handlePrevPass = (value) => {
+        setInputPrevPass(value)
+        console.log(inputPrevPass)
+    }
+
+    const handleNewPass = (value) => {
+        setInputNewPass(value)
+        console.log(inputNewPass)
+    }
+
     const handlePicture = (value) => {
         setInputPicture(value)
         console.log("inputPicture", inputPicture)
@@ -299,7 +336,9 @@ const UserProfilePage = (props) => {
             let data = {
                 fullname: inputFullName,
                 username: inputUserName,
-                bio: inputBio
+                bio: inputBio,
+                previousPassword: inputPrevPass,
+                newPassword: inputNewPass
             };
             console.log("data", data);
             formData.append('data', JSON.stringify(data));
@@ -371,7 +410,7 @@ const UserProfilePage = (props) => {
                         :
                         `${API_URL}/imgUtilities/IMGUTILITIES_ADMINPROFILE.png`
                 }
-                // contentWebUrl="http://localhost:3001/userprofile"
+            // contentWebUrl="http://localhost:3001/userprofile"
             />
 
             <div

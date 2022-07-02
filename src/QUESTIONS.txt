@@ -342,15 +342,14 @@ Menyiapkan project untuk menggunakan git
      - contoh yg kita lakukan untuk fundamental: git push -u origin main
 
 
-======= BUGS / NEEDS UPDATE ======== ❗❗❗❗❗❗
-
-1. React helmet untuk semua page sudah termasuk post detail, tapi cara ngeshare metatag nya pk medsos gmn? yg keshare cm link mati aja
-
-2. edit profile secara default seharusnya ada edit password juga
+======= 🟡🟡🟡 BUGS / NEEDS UPDATE 🟡🟡🟡 ========
+1. edit profile secara default seharusnya ada edit password juga
     cek password lama dulu baru isi password baru
     (belakangan aja)
 
-3. beda font di modal delete dan edit
+2. beda font di modal delete dan edit
+
+98. React helmet untuk semua page sudah termasuk post detail, tapi cara ngeshare metatag nya pk medsos gmn? yg keshare cm link mati aja
 
 99. double check requirement
 
@@ -364,8 +363,19 @@ Menyiapkan project untuk menggunakan git
 
 4. medsos icon saat diklik berarti sharing link domain netlify FEnya? nanti aja dulu ini setelah metatag library di add
 
+========= Q03/07/2022 =========
 
-URGENT TASK:
+1. React helmet untuk semua page sudah termasuk post detail, tapi cara ngeshare metatag nya pk medsos gmn? yg keshare cm link mati aja
+
+2. helmet sepertinya cuma terima url gambar, kalau gambar disimpan di folder BE nya dan ditarik pakai `${API_URL}/imgUtilities/IMGUTILITIES_ADMINPROFILE.png` boleh?
+
+3. 
+
+
+======== 🔴🔴🔴 ❗❗❗ URGENT TASK ❗❗❗ 🔴🔴🔴==========
+
 1. edit profile secara default seharusnya ada edit password juga
     cek password lama dulu baru isi password baru
     (belakangan aja)
+
+2. beda font di modal delete dan edit
