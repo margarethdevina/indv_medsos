@@ -343,9 +343,7 @@ Menyiapkan project untuk menggunakan git
 
 
 ======= 🟡🟡🟡 BUGS / NEEDS UPDATE 🟡🟡🟡 ========
-1. edit profile secara default seharusnya ada edit password juga
-    cek password lama dulu baru isi password baru
-    (belakangan aja)
+1. edit password di userprofile perlu dibuat password visible/not visible?
 
 2. beda font di modal delete dan edit
 
@@ -374,8 +372,6 @@ Menyiapkan project untuk menggunakan git
 
 ======== 🔴🔴🔴 ❗❗❗ URGENT TASK ❗❗❗ 🔴🔴🔴==========
 
-1. edit profile secara default seharusnya ada edit password juga
-    cek password lama dulu baru isi password baru
-    (belakangan aja)
+1. edit password di userprofile perlu dibuat password visible/not visible?
 
 2. beda font di modal delete dan edit

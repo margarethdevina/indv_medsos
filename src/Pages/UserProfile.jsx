@@ -62,6 +62,25 @@ const UserProfilePage = (props) => {
     const [inputNewPass, setInputNewPass] = useState("");
     const [buttonStatus, setButtonStatus] = useState(false);
 
+    const [visibleForm, setVisibleForm] = useState({
+        type: "password",
+        text: "Show"
+    })
+
+    const handleVisible = () => {
+        if (visibleForm.type === "password") {
+            setVisibleForm({
+                type: "text",
+                text: "Hide"
+            })
+        } else {
+            setVisibleForm({
+                type: "password",
+                text: "Show"
+            })
+        }
+    }
+
     const printCard = () => {
         if (selectedEdit == 0) {
             return (
@@ -328,32 +347,37 @@ const UserProfilePage = (props) => {
 
     const handleSave = () => {
         setSelectedEdit(0);
-        console.log("yang ingin disave", inputFullName, inputUserName, inputBio, inputPicture)
+        console.log("yang ingin disave", inputFullName, inputUserName, inputBio, inputPicture, inputPrevPass, inputNewPass)
 
         let token = localStorage.getItem("tokenIdUser");
         if (token) {
-            let formData = new FormData();
-            let data = {
-                fullname: inputFullName,
-                username: inputUserName,
-                bio: inputBio,
-                previousPassword: inputPrevPass,
-                newPassword: inputNewPass
-            };
-            console.log("data", data);
-            formData.append('data', JSON.stringify(data));
-            formData.append('profilePicture', inputPicture);
-            Axios.patch(`${API_URL}/users/edit`, formData, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            }).then((res) => {
-                console.log("isi res.data pas klik save", res.data)
-                keepLogin()
-            }).catch((err) => {
-                console.log(err)
-            })
-
+            if (inputPrevPass === "" && inputNewPass === "" || inputPrevPass != "" && inputNewPass != ""){
+                let formData = new FormData();
+                let data = {
+                    fullname: inputFullName,
+                    username: inputUserName,
+                    bio: inputBio,
+                    previousPassword: inputPrevPass,
+                    newPassword: inputNewPass
+                };
+                console.log("data", data);
+                formData.append('data', JSON.stringify(data));
+                formData.append('profilePicture', inputPicture);
+                Axios.patch(`${API_URL}/users/edit`, formData, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then((res) => {
+                    console.log("isi res.data pas klik save", res.data);
+                    keepLogin();
+                    setInputPrevPass("");
+                    setInputNewPass("");
+                }).catch((err) => {
+                    console.log(err)
+                })
+            } else {
+                toast.warn("Please fill in the New Password to change your password");
+            }
         }
 
     }
