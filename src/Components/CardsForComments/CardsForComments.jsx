@@ -298,7 +298,7 @@ const CardsForComments = (props) => {
                     <span
                         className="me-1 gen_font_content"
                     >Are you sure you want to delete this comment?</span>
-                    <i>Deleted comment can't be returned.</i>
+                    <i className="gen_font_content">Deleted comment can't be returned.</i>
                     <div
                         className="d-flex justify-content-end align-items-center mt-2"
                     >

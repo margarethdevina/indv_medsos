@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Axios from 'axios';
 import { API_URL } from "../helper";
 import { loginAction } from "../redux/actions/usersActions";
-import { Card, CardImg, CardBody, Button, Input } from "reactstrap";
+import { Card, CardImg, CardBody, Button, Input, InputGroup, InputGroupText } from "reactstrap";
 import { useNavigate } from 'react-router-dom';
 import adminPic from "../Assets/SampleProfilePic/Admin.png";
 import { ReactComponent as VerifIcon } from '../Assets/IconRef/verified.svg';
@@ -53,6 +53,7 @@ const UserProfilePage = (props) => {
         }
     }
 
+    // state management
     const [selectedEdit, setSelectedEdit] = useState(0);
     const [inputPicture, setInputPicture] = useState(profilePic);
     const [inputFullName, setInputFullName] = useState(fullname);
@@ -60,8 +61,10 @@ const UserProfilePage = (props) => {
     const [inputBio, setInputBio] = useState(bio);
     const [inputPrevPass, setInputPrevPass] = useState("");
     const [inputNewPass, setInputNewPass] = useState("");
+    const [passStrength, setPassStrength] = useState("");
     const [buttonStatus, setButtonStatus] = useState(false);
 
+    /////// VISIBILITY FUNCTIONS ///////
     const [visibleForm, setVisibleForm] = useState({
         type: "password",
         text: "Show"
@@ -80,6 +83,13 @@ const UserProfilePage = (props) => {
             })
         }
     }
+
+    /////// REGEX FUNCTIONS ///////
+    const strongRegexPassword = new RegExp("^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})")
+    const weakRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})")
+    const wrongRegexPassword = new RegExp("^(?=.*[a-z])(?=.{8,})")
+
+    const validRegexEmail = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
 
     const printCard = () => {
         if (selectedEdit == 0) {
@@ -244,18 +254,31 @@ const UserProfilePage = (props) => {
                         />
                     </div>
                     <div
-                        className="d-md-flex justify-content-between px-md-4 text-md-start pb-3"
+                        className="d-md-flex justify-content-between px-md-4 text-md-start pb-3 row"
                     >
-                        <div>
-                            <h5>Previous Password</h5>
-                            <Input
-                                type="text"
-                                bsSize="sm"
-                                defaultValue={inputPrevPass}
-                                onChange={(e) => handlePrevPass(e.target.value)}
-                            />
+                        <div
+                            className="col-12 col-md-6"
+                        >
+                            <h5>Current Password</h5>
+                            <InputGroup>
+                                <Input
+                                    bsSize="sm"
+                                    placeholder="Current password that you want to change"
+                                    type={visibleForm.type}
+                                    defaultValue={inputPrevPass}
+                                    onChange={(e) => handlePrevPass(e.target.value)}
+                                />
+                                <InputGroupText
+                                    className="btn btn-secondary"
+                                    onClick={handleVisible}
+                                >
+                                    {visibleForm.text}
+                                </InputGroupText>
+                            </InputGroup>
                         </div>
-                        <div>
+                        <div
+                            className="col-12 col-md-6"
+                        >
                             <h5>New Password</h5>
                             <Input
                                 type="text"
@@ -263,6 +286,18 @@ const UserProfilePage = (props) => {
                                 defaultValue={inputNewPass}
                                 onChange={(e) => handleNewPass(e.target.value)}
                             />
+                            <p
+                                className="mb-0"
+                                style={{ fontWeight: "lighter", fontSize: "12px" }}
+                            >
+                                Password should contain at least 8 characters including an uppercase letter, a symbol (!@#$%^*), and a number.
+                            </p>
+                            <p
+                                className="mb-0"
+                                style={{ fontWeight: "bold", fontSize: "12px" }}
+                            >
+                                {passStrength}
+                            </p>
                         </div>
                     </div>
                     <div
@@ -338,6 +373,15 @@ const UserProfilePage = (props) => {
     const handleNewPass = (value) => {
         setInputNewPass(value)
         console.log(inputNewPass)
+
+        if (strongRegexPassword.test(value)) {
+            setPassStrength("✅ Strong Password")
+        } else if (weakRegexPassword.test(value)) {
+            setPassStrength("❗ Weak Password")
+        } else if (wrongRegexPassword.test(value)) {
+            setPassStrength("❌ Contain lowercase letter")
+        }
+        // console.log(passStrength)
     }
 
     const handlePicture = (value) => {
@@ -351,30 +395,40 @@ const UserProfilePage = (props) => {
 
         let token = localStorage.getItem("tokenIdUser");
         if (token) {
-            if (inputPrevPass === "" && inputNewPass === "" || inputPrevPass != "" && inputNewPass != ""){
-                let formData = new FormData();
-                let data = {
-                    fullname: inputFullName,
-                    username: inputUserName,
-                    bio: inputBio,
-                    previousPassword: inputPrevPass,
-                    newPassword: inputNewPass
-                };
-                console.log("data", data);
-                formData.append('data', JSON.stringify(data));
-                formData.append('profilePicture', inputPicture);
-                Axios.patch(`${API_URL}/users/edit`, formData, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                }).then((res) => {
-                    console.log("isi res.data pas klik save", res.data);
-                    keepLogin();
-                    setInputPrevPass("");
-                    setInputNewPass("");
-                }).catch((err) => {
-                    console.log(err)
-                })
+            if (inputPrevPass === "" && inputNewPass === "" || inputPrevPass != "" && inputNewPass != "") {
+
+                if (inputNewPass.length < 8) {
+                    toast.warn("Password should contain at least 8 characters")
+                } else if (passStrength == "❌ Contain lowercase letter") {
+                    // console.log("Password cannot contain lowercase letter")
+                    toast.warn("Password cannot contain lowercase letter")
+                } else {
+                    let formData = new FormData();
+                    let data = {
+                        fullname: inputFullName,
+                        username: inputUserName,
+                        bio: inputBio,
+                        previousPassword: inputPrevPass,
+                        newPassword: inputNewPass
+                    };
+                    console.log("data", data);
+                    formData.append('data', JSON.stringify(data));
+                    formData.append('profilePicture', inputPicture);
+                    Axios.patch(`${API_URL}/users/edit`, formData, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    }).then((res) => {
+                        console.log("isi res.data pas klik save", res.data);
+                        keepLogin();
+                        setInputPrevPass("");
+                        setInputNewPass("");
+                        setPassStrength("");
+                    }).catch((err) => {
+                        console.log(err)
+                    })
+                }
+
             } else {
                 toast.warn("Please fill in the New Password to change your password");
             }
@@ -384,6 +438,9 @@ const UserProfilePage = (props) => {
 
     const handleCancel = () => {
         setSelectedEdit(0);
+        setInputPrevPass("");
+        setInputNewPass("");
+        setPassStrength("");
     }
 
     const resendVerif = () => {

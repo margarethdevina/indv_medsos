@@ -116,6 +116,8 @@ function App() {
               <Route path='/yourlikes' element={<YourLikesPage />} />
               <Route path='/postdetail' element={<PostDetailPage />} />
 
+              <Route path='/register' element={<RegisterPage />} />
+
               <Route path='/verification/:token' element={<VerificationUser />} />
             </>
             :

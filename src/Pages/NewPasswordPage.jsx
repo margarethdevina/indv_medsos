@@ -5,6 +5,7 @@ import { API_URL } from "../helper";
 import { useDispatch } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import './_PostDetail.scss';
+import '../index.scss';
 import { toast } from "react-toastify";
 import MetaDecorator from "../Components/MetaDecorator";
 
@@ -16,6 +17,14 @@ const NewPasswordPage = (props) => {
 
     const [newPassword, setNewPassword] = useState("");
     const [confNewPassword, setConfNewPassword] = useState("");
+    const [passStrength, setPassStrength] = useState("");
+
+    /////// REGEX FUNCTIONS ///////
+    const strongRegexPassword = new RegExp("^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})")
+    const weakRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})")
+    const wrongRegexPassword = new RegExp("^(?=.*[a-z])(?=.{8,})")
+
+    const validRegexEmail = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
 
     const [visibleForm, setVisibleForm] = React.useState({
         type: "password",
@@ -36,22 +45,46 @@ const NewPasswordPage = (props) => {
         }
     }
 
+    const handleNewPass = (value) => {
+        setNewPassword(value)
+        console.log(newPassword)
+
+        if (strongRegexPassword.test(value)) {
+            setPassStrength("✅ Strong Password")
+        } else if (weakRegexPassword.test(value)) {
+            setPassStrength("❗ Weak Password")
+        } else if (wrongRegexPassword.test(value)) {
+            setPassStrength("❌ Contain lowercase letter")
+        }
+        // console.log(passStrength)
+    }
+
     const handleReset = async () => {
         try {
 
             if (newPassword && confNewPassword) {
                 if (newPassword == confNewPassword) {
-                    let res = await Axios.patch(`${API_URL}/users/reset`, {
-                        password: newPassword
-                    }, {
-                        headers: {
-                            'Authorization': `Bearer ${params.token}`
-                        }
-                    })
+                    if (newPassword.length < 8) {
+                        toast.warn("Password should contain at least 8 characters")
+                    } else if (passStrength == "❌ Contain lowercase letter") {
+                        // console.log("Password cannot contain lowercase letter")
+                        toast.warn("Password cannot contain lowercase letter")
+                    } else {
+                        let res = await Axios.patch(`${API_URL}/users/reset`, {
+                            password: newPassword
+                        }, {
+                            headers: {
+                                'Authorization': `Bearer ${params.token}`
+                            }
+                        })
 
-                    if (res.data.success) {
-                        toast.success("New password has been saved")
-                        navigate('/', { replace: true });
+                        if (res.data.success) {
+                            toast.success("New password has been saved");
+                            setConfNewPassword("");
+                            setNewPassword("");
+                            setPassStrength("");
+                            navigate('/', { replace: true });
+                        }
                     }
                 } else {
                     toast.warn("Your confirmation password is incorrect")
@@ -72,10 +105,10 @@ const NewPasswordPage = (props) => {
 
         {/* title Leiden | New Password */}
         <MetaDecorator
-                title="Leiden | New Password"
-                description="Please fill in the new password, don't worry we will keep it safe"
-                contentImg={`${API_URL}/imgUtilities/IMGUTILITIES_HOME.jpg`}
-            />
+            title="Leiden | New Password"
+            description="Please fill in the new password, don't worry we will keep it safe"
+            contentImg={`${API_URL}/imgUtilities/IMGUTILITIES_HOME.jpg`}
+        />
 
         <div
             className="col-12 col-md-6 mx-auto"
@@ -90,7 +123,7 @@ const NewPasswordPage = (props) => {
                         type={visibleForm.type}
                         placeholder="Type new password here"
                         value={newPassword}
-                        onChange={(event) => setNewPassword(event.target.value)} />
+                        onChange={(event) => handleNewPass(event.target.value)} />
                     <InputGroupText className="btn btn-secondary" onClick={handleVisible}>
                         {visibleForm.text}
                     </InputGroupText>
@@ -103,6 +136,18 @@ const NewPasswordPage = (props) => {
                     placeholder="Confirm new password here"
                     value={confNewPassword}
                     onChange={(event) => setConfNewPassword(event.target.value)} />
+                <p
+                    className="mb-0 text-start"
+                    style={{ fontWeight: "lighter", fontSize: "12px" }}
+                >
+                    Password should contain at least 8 characters including an uppercase letter, a symbol (!@#$%^*), and a number.
+                </p>
+                <p
+                    className="mb-0 text-start"
+                    style={{ fontWeight: "bold", fontSize: "12px" }}
+                >
+                    {passStrength}
+                </p>
             </FormGroup>
             <Button
                 className="w-100 _detail_button_post"

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import '../index.scss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { API_URL } from "../helper";
@@ -14,6 +14,12 @@ const RegisterPage = (props) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const { usernameSignedIn } = useSelector((state) => {
+        return {
+            usernameSignedIn: state.usersReducer.username,
+        }
+    })
 
     /////// STATE MANAGEMENT ///////
     const [dbUsers, setDbUsers] = useState([]);
@@ -111,7 +117,7 @@ const RegisterPage = (props) => {
                 } else if (emailValidity == "✅ Valid Email") {
 
                     setButtonStatus(true)
-                    
+
                     let res = await Axios.post(`${API_URL}/users/regis`, {
                         email,
                         username,
@@ -123,11 +129,11 @@ const RegisterPage = (props) => {
                         profilePicture: ""
                     })
 
-                    if (res.data.success){
+                    if (res.data.success) {
                         toast.success("Registration successful, account verification link has been sent to your email")
-    
+
                         console.log("data yg teregister", res.data)
-    
+
                         localStorage.setItem("tokenIdUser", res.data.token)
                         dispatch(loginAction(res.data))
                         navigate("/", { replace: true })
@@ -175,156 +181,168 @@ const RegisterPage = (props) => {
                 title="Leiden | Register"
                 description="Leiden - Welcome to Leiden Family"
                 contentImg={`${API_URL}/imgUtilities/IMGUTILITIES_HOME.jpg`}
-                // contentWebUrl="http://localhost:3001/register"
+            // contentWebUrl="http://localhost:3001/register"
             />
 
-            <>
-
-                <div
-                    className="d-none d-md-flex col-md-6 order-md-1"
-                >
-                    <img
-                        src={registPic}
-                        // src="https://www.ixpaper.com/wp-content/uploads/2021/06/violet-evergarden-wallpaper-ixpaper-3.jpg"
-                        alt=""
-                        width="60%"
-                        // style={{ width: "50%", height: "50%" }}
-                        className="mx-auto"
-                    />
-                </div>
-                <div
-                    className="col-12 col-md-6 order-md-2"
-                >
-                    <Form
-                        className="text-start"
+            {usernameSignedIn
+                ?
+                <>
+                    <div className="col-12">
+                        <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
+                            search_off
+                        </span>
+                        <h4>403 - Your account already registered and signed in</h4>
+                    </div>
+                </>
+                :
+                <>
+                    <div
+                        className="d-none d-md-flex col-md-6 order-md-1"
                     >
-                        <FormGroup
-                            row
-                            className="gen_font_content"
+                        <img
+                            src={registPic}
+                            // src="https://www.ixpaper.com/wp-content/uploads/2021/06/violet-evergarden-wallpaper-ixpaper-3.jpg"
+                            alt=""
+                            width="60%"
+                            // style={{ width: "50%", height: "50%" }}
+                            className="mx-auto"
+                        />
+                    </div>
+                    <div
+                        className="col-12 col-md-6 order-md-2"
+                    >
+                        <Form
+                            className="text-start"
                         >
-                            <Label
-                                sm={2}
-                                for="inputEmail"
+                            <FormGroup
+                                row
+                                className="gen_font_content"
                             >
-                                Email
-                            </Label>
-                            <Col sm={10}>
-                                <Input
-                                    id="inputEmail"
-                                    placeholder="Insert your email"
-                                    type="text"
-                                    onChange={(e) => handleEmail(e.target.value)}
-                                />
-                                <p
-                                    className="mb-0"
-                                    style={{ fontWeight: "bold", fontSize: "12px" }}
+                                <Label
+                                    sm={2}
+                                    for="inputEmail"
                                 >
-                                    {emailValidity}
-                                </p>
-                                <p
-                                    className="mb-0"
-                                    style={{ fontWeight: "lighter", fontSize: "12px" }}
-                                >
-                                    Account verification link will be sent to this email once the registration is completed.
-                                </p>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup
-                            row
-                            className="gen_font_content"
-                        >
-                            <Label
-                                sm={2}
-                                for="inputUsername"
-                            >
-                                Username
-                            </Label>
-                            <Col sm={10}>
-                                <Input
-                                    id="inputUsername"
-                                    placeholder="Insert your username"
-                                    type="text"
-                                    onChange={(e) => handleUsername(e.target.value)}
-                                />
-                                <p
-                                    className="mb-0"
-                                    style={{ fontWeight: "bold", fontSize: "12px" }}
-                                >
-                                    {usedUsername}
-                                </p>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup
-                            row
-                            className="gen_font_content"
-                        >
-                            <Label
-                                sm={2}
-                                for="inputPassword"
-                            >
-                                Password
-                            </Label>
-                            <Col sm={10}>
-                                <InputGroup>
+                                    Email
+                                </Label>
+                                <Col sm={10}>
                                     <Input
-                                        id="inputPassword"
-                                        placeholder="Insert your password"
-                                        type={visibleForm.type}
-                                        onChange={(e) => handlePassword(e.target.value)}
+                                        id="inputEmail"
+                                        placeholder="Insert your email"
+                                        type="text"
+                                        onChange={(e) => handleEmail(e.target.value)}
                                     />
-                                    <InputGroupText
-                                        className="btn btn-secondary"
-                                        onClick={handleVisible}
+                                    <p
+                                        className="mb-0"
+                                        style={{ fontWeight: "bold", fontSize: "12px" }}
                                     >
-                                        {visibleForm.text}
-                                    </InputGroupText>
-                                </InputGroup>
-                                <p
-                                    className="mb-0"
-                                    style={{ fontWeight: "lighter", fontSize: "12px" }}
-                                >
-                                    Password should contain at least 8 characters including an uppercase letter, a symbol (!@#$%^*), and a number.
-                                </p>
-                                <p
-                                    className="mb-0"
-                                    style={{ fontWeight: "bold", fontSize: "12px" }}
-                                >
-                                    {passStrength}
-                                </p>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup
-                            row
-                            className="align-items-center gen_font_content"
-                        >
-                            <Label
-                                sm={2}
-                                for="inputConfirmPassword"
+                                        {emailValidity}
+                                    </p>
+                                    <p
+                                        className="mb-0"
+                                        style={{ fontWeight: "lighter", fontSize: "12px" }}
+                                    >
+                                        Account verification link will be sent to this email once the registration is completed.
+                                    </p>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup
+                                row
+                                className="gen_font_content"
                             >
-                                Confirm password
-                            </Label>
-                            <Col sm={10}>
-                                <InputGroup>
+                                <Label
+                                    sm={2}
+                                    for="inputUsername"
+                                >
+                                    Username
+                                </Label>
+                                <Col sm={10}>
                                     <Input
-                                        id="inputConfirmPassword"
-                                        placeholder="Confirm your password"
-                                        type={visibleForm.type}
-                                        onChange={(e) => setConfPassword(e.target.value)}
+                                        id="inputUsername"
+                                        placeholder="Insert your username"
+                                        type="text"
+                                        onChange={(e) => handleUsername(e.target.value)}
                                     />
-                                </InputGroup>
-                            </Col>
-                        </FormGroup>
-                        <Button
-                            className="col-12 mb-3 gen_btn_success"
-                            color="success"
-                            onClick={handleRegister}
-                            disabled = {buttonStatus}
-                        >
-                            Register
-                        </Button>
-                    </Form>
-                </div>
-            </>
+                                    <p
+                                        className="mb-0"
+                                        style={{ fontWeight: "bold", fontSize: "12px" }}
+                                    >
+                                        {usedUsername}
+                                    </p>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup
+                                row
+                                className="gen_font_content"
+                            >
+                                <Label
+                                    sm={2}
+                                    for="inputPassword"
+                                >
+                                    Password
+                                </Label>
+                                <Col sm={10}>
+                                    <InputGroup>
+                                        <Input
+                                            id="inputPassword"
+                                            placeholder="Insert your password"
+                                            type={visibleForm.type}
+                                            onChange={(e) => handlePassword(e.target.value)}
+                                        />
+                                        <InputGroupText
+                                            className="btn btn-secondary"
+                                            onClick={handleVisible}
+                                        >
+                                            {visibleForm.text}
+                                        </InputGroupText>
+                                    </InputGroup>
+                                    <p
+                                        className="mb-0"
+                                        style={{ fontWeight: "lighter", fontSize: "12px" }}
+                                    >
+                                        Password should contain at least 8 characters including an uppercase letter, a symbol (!@#$%^*), and a number.
+                                    </p>
+                                    <p
+                                        className="mb-0"
+                                        style={{ fontWeight: "bold", fontSize: "12px" }}
+                                    >
+                                        {passStrength}
+                                    </p>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup
+                                row
+                                className="align-items-center gen_font_content"
+                            >
+                                <Label
+                                    sm={2}
+                                    for="inputConfirmPassword"
+                                >
+                                    Confirm password
+                                </Label>
+                                <Col sm={10}>
+                                    <InputGroup>
+                                        <Input
+                                            id="inputConfirmPassword"
+                                            placeholder="Confirm your password"
+                                            type={visibleForm.type}
+                                            onChange={(e) => setConfPassword(e.target.value)}
+                                        />
+                                    </InputGroup>
+                                </Col>
+                            </FormGroup>
+                            <Button
+                                className="col-12 mb-3 gen_btn_success"
+                                color="success"
+                                onClick={handleRegister}
+                                disabled={buttonStatus}
+                            >
+                                Register
+                            </Button>
+                        </Form>
+                    </div>
+                </>
+            }
+
 
         </div >
     )

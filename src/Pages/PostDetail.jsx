@@ -201,7 +201,7 @@ const PostDetailPage = (props) => {
             let idxInPost = tempPosts.findIndex(val => val.id == IdPost);
 
             console.log("index di post", idxInPost)
-            // console.log("NOL di post itu saat ini", tempPosts[idxInPost].numberOfLikes)
+            // console.log("NOL di post itu saat ini", 
 
             //axios patch user likes
             if (token) {
@@ -298,6 +298,8 @@ const PostDetailPage = (props) => {
     }
 
     const handleCopyLink = () => {
+
+        //link diganti kalau sudah deploy? ❗❗❗
         navigator.clipboard.writeText(`http://localhost:3001/postdetail${search}`);
 
         setOpenShare(!openShare);
@@ -348,7 +350,7 @@ const PostDetailPage = (props) => {
                                     <span
                                         className="me-1"
                                     >Are you sure you want to delete this post?</span>
-                                    <i>Deleted post can't be returned.</i>
+                                    <i className="gen_font_content">Deleted post can't be returned.</i>
                                     <div
                                         className="d-flex justify-content-end align-items-center mt-2"
                                     >

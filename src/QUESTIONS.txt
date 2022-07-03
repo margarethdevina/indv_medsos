@@ -343,11 +343,19 @@ Menyiapkan project untuk menggunakan git
 
 
 ======= 🟡🟡🟡 BUGS / NEEDS UPDATE 🟡🟡🟡 ========
-1. edit password di userprofile perlu dibuat password visible/not visible?
 
-2. beda font di modal delete dan edit
+1. readtoken di modif supaya user diharuskan untuk request token baru untuk verifikasi ataupun database token
 
-98. React helmet untuk semua page sudah termasuk post detail, tapi cara ngeshare metatag nya pk medsos gmn? yg keshare cm link mati aja
+1.a. saat token expired dan link di klik ulang, muncul axios error, message 401 dari readToken yg di return
+--ini dicoba tarik untuk referensi toast untuk resend request token lg (via resend verif / forget password)
+
+1.b. 
+
+2. edit username di userprofile didobel cek udah pernah ada belum tapi juga klo username itu sendiri yg pake gpp
+--coba klo userid == userid pemilik username saat ini && username sama itu berarti fine/diperbolehkan
+--klo userid != userid pemilik username && username==username berarti ga boleh
+
+98. React helmet untuk semua page sudah termasuk post detail, tapi cara ngeshare metatag nya pk medsos gmn? yg keshare cm link mati aja >> akan coba deployment minggu depan >> yg penting metatag di tes di og muncul smua dulu
 
 99. double check requirement
 
@@ -363,15 +371,18 @@ Menyiapkan project untuk menggunakan git
 
 ========= Q03/07/2022 =========
 
-1. React helmet untuk semua page sudah termasuk post detail, tapi cara ngeshare metatag nya pk medsos gmn? yg keshare cm link mati aja
+1. helmet sepertinya cuma terima url gambar, kalau gambar disimpan di folder BE nya dan ditarik pakai `${API_URL}/imgUtilities/IMGUTILITIES_ADMINPROFILE.png` boleh? >> GPP
 
-2. helmet sepertinya cuma terima url gambar, kalau gambar disimpan di folder BE nya dan ditarik pakai `${API_URL}/imgUtilities/IMGUTILITIES_ADMINPROFILE.png` boleh?
-
-3. 
-
+2. React helmet untuk semua page sudah termasuk post detail, tapi cara ngeshare metatag nya pk medsos gmn? yg keshare cm link mati aja >> coba ngrok >> di hold dulu
 
 ======== 🔴🔴🔴 ❗❗❗ URGENT TASK ❗❗❗ 🔴🔴🔴==========
 
-1. edit password di userprofile perlu dibuat password visible/not visible?
+1. readtoken di modif supaya user diharuskan untuk request token baru untuk verifikasi ataupun database token
 
-2. beda font di modal delete dan edit
+2. edit username di userprofile didobel cek udah pernah ada belum tapi juga klo username itu sendiri yg pake gpp
+--coba klo userid == userid pemilik username saat ini && username sama itu berarti fine/diperbolehkan
+--klo userid != userid pemilik username && username==username berarti ga boleh
+
+3. instal ngrok -- hold
+
+99. double check requirement
