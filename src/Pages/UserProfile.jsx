@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Axios from 'axios';
 import { API_URL } from "../helper";
 import { loginAction } from "../redux/actions/usersActions";
-import { Card, CardImg, CardBody, Button, Input, InputGroup, InputGroupText } from "reactstrap";
+import { Card, CardImg, CardBody, Button, Input, InputGroup, InputGroupText, Nav, NavItem, NavLink } from "reactstrap";
 import { useNavigate } from 'react-router-dom';
+import CardsInYourPosts from "../Components/CardsInYourPosts/CardsInYourPosts";
 import adminPic from "../Assets/SampleProfilePic/Admin.png";
 import { ReactComponent as VerifIcon } from '../Assets/IconRef/verified.svg';
 import { toast } from "react-toastify";
@@ -33,7 +34,8 @@ const UserProfilePage = (props) => {
     console.log("data state yg masuk page userProfile", id, fullname, bio, username, email, profilePic, status, likes, posts)
 
     useEffect(() => {
-        keepLogin()
+        keepLogin();
+        getUsers();
     }, []);
 
     const keepLogin = () => {
@@ -54,6 +56,7 @@ const UserProfilePage = (props) => {
     }
 
     // state management
+    const [dbUsers, setDbUsers] = useState([]);
     const [selectedEdit, setSelectedEdit] = useState(0);
     const [inputPicture, setInputPicture] = useState(profilePic);
     const [inputFullName, setInputFullName] = useState(fullname);
@@ -63,6 +66,14 @@ const UserProfilePage = (props) => {
     const [inputNewPass, setInputNewPass] = useState("");
     const [passStrength, setPassStrength] = useState("");
     const [buttonStatus, setButtonStatus] = useState(false);
+
+    const getUsers = () => {
+        Axios.get(`${API_URL}/users/get`)
+            .then((response) => {
+                // console.log("isi dbUsers", response.data)
+                setDbUsers(response.data)
+            }).catch((error) => { console.log(error) })
+    };
 
     /////// VISIBILITY FUNCTIONS ///////
     const [visibleForm, setVisibleForm] = useState({
@@ -357,7 +368,7 @@ const UserProfilePage = (props) => {
 
     const handleUserName = (value) => {
         setInputUserName(value)
-        // console.log(inputUserName)
+        // console.log("inputUserName", inputUserName);
     }
 
     const handleBio = (value) => {
@@ -397,11 +408,17 @@ const UserProfilePage = (props) => {
         if (token) {
             if (inputPrevPass === "" && inputNewPass === "" || inputPrevPass != "" && inputNewPass != "") {
 
-                if (inputNewPass.length < 8) {
-                    toast.warn("Password should contain at least 8 characters")
+                if (inputPrevPass != "" && inputNewPass.length < 8) {
+                    toast.warn("Password should contain at least 8 characters");
                 } else if (passStrength == "❌ Contain lowercase letter") {
                     // console.log("Password cannot contain lowercase letter")
-                    toast.warn("Password cannot contain lowercase letter")
+                    toast.warn("Password cannot contain lowercase letter");
+                } else if (
+                    (dbUsers.find(val => val.username == inputUserName))
+                    // &&
+                    // ((dbUsers[dbUsers.findIndex(valfind => valfind.id === id)].id) != id)
+                ) {
+                    toast.warn("Username already used");
                 } else {
                     let formData = new FormData();
                     let data = {
@@ -575,6 +592,39 @@ const UserProfilePage = (props) => {
                     </CardBody>
                 </Card>
             </div>
+
+            {/* {
+                username
+                &&
+                status === "verified"
+                &&
+                <>
+                    <Nav
+                        tabs
+                        className="border-0"
+                    >
+                        <NavItem>
+                            <NavLink
+                                className="active"
+                                onClick={() => navigate("/yourposts")}
+                            >
+                                Your Posts
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                onClick={() => navigate("/yourlikes")}
+                            >
+                                Your Likes
+                            </NavLink>
+                        </NavItem>
+                    </Nav>
+
+                    <CardsInYourPosts
+                        data={posts.filter(val => val.username === username)}
+                    />
+                </>
+            } */}
 
         </div>
     )

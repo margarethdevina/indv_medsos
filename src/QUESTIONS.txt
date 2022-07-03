@@ -351,10 +351,6 @@ Menyiapkan project untuk menggunakan git
 
 1.b. 
 
-2. edit username di userprofile didobel cek udah pernah ada belum tapi juga klo username itu sendiri yg pake gpp
---coba klo userid == userid pemilik username saat ini && username sama itu berarti fine/diperbolehkan
---klo userid != userid pemilik username && username==username berarti ga boleh
-
 98. React helmet untuk semua page sudah termasuk post detail, tapi cara ngeshare metatag nya pk medsos gmn? yg keshare cm link mati aja >> akan coba deployment minggu depan >> yg penting metatag di tes di og muncul smua dulu
 
 99. double check requirement
@@ -377,12 +373,13 @@ Menyiapkan project untuk menggunakan git
 
 ======== 🔴🔴🔴 ❗❗❗ URGENT TASK ❗❗❗ 🔴🔴🔴==========
 
-1. readtoken di modif supaya user diharuskan untuk request token baru untuk verifikasi ataupun database token
+4. readtoken di modif supaya user diharuskan untuk request token baru untuk verifikasi ataupun database token
 
-2. edit username di userprofile didobel cek udah pernah ada belum tapi juga klo username itu sendiri yg pake gpp
---coba klo userid == userid pemilik username saat ini && username sama itu berarti fine/diperbolehkan
---klo userid != userid pemilik username && username==username berarti ga boleh
+4.a. saat token expired dan link di klik ulang, muncul axios error, message 401 dari readToken yg di return
+--ini dicoba tarik untuk referensi toast untuk resend request token lg (via resend verif / forget password)
 
-3. instal ngrok -- hold
+4.b.
+
+98. instal ngrok -- hold
 
 99. double check requirement

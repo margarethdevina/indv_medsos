@@ -37,50 +37,60 @@ const ModalLogin = (props) => {
         setInForm({ ...inForm, [property]: value })
     }
 
+    const [buttonStatus, setButtonStatus] = useState(false);
+
     const handleLogin = () => {
         if (inForm.usernameOrEmail == "" || inForm.password == "") {
-            console.log("Fill in all form")
-            toast.warn("Fill in all form")
+            console.log("Fill in all form");
+            toast.warn("Fill in all form");
+            setButtonStatus(false);
         } else if (inForm.usernameOrEmail.includes("@")) {
 
             console.log("isi email", inForm.usernameOrEmail)
             console.log("inForm.password", inForm.password)
+
+            setButtonStatus(true);
 
             Axios.post(`${API_URL}/users/login`, {
                 email: inForm.usernameOrEmail,
                 password: inForm.password
             })
                 .then((response) => {
-                    console.log("data saat masuk lwt email", response.data)
-                    localStorage.setItem("tokenIdUser", response.data.token)
-                    dispatch(loginAction(response.data))
+                    console.log("data saat masuk lwt email", response.data);
+                    localStorage.setItem("tokenIdUser", response.data.token);
+                    dispatch(loginAction(response.data));
                     props.toggleOpen();
                     navigate("/", { replace: true });
+                    setButtonStatus(false);
                 }).catch((error) => {
-                    console.log(error)
+                    console.log(error);
                     toast.warn("Incorrect email or password");
+                    setButtonStatus(false);
                 })
 
         } else if (!inForm.usernameOrEmail.includes("@")) {
 
-            console.log("isi username", inForm.usernameOrEmail)
-            console.log("inForm.password", inForm.password)
+            setButtonStatus(true);
+
+            console.log("isi username", inForm.usernameOrEmail);
+            console.log("inForm.password", inForm.password);
 
             Axios.post(`${API_URL}/users/login`, {
                 username: inForm.usernameOrEmail,
                 password: inForm.password
             })
                 .then((response) => {
-                    console.log("data saat masuk lwt username", response.data)
-                    localStorage.setItem("tokenIdUser", response.data.token)
-                    dispatch(loginAction(response.data))
+                    console.log("data saat masuk lwt username", response.data);
+                    localStorage.setItem("tokenIdUser", response.data.token);
+                    dispatch(loginAction(response.data));
                     props.toggleOpen();
                     navigate("/", { replace: true });
+                    setButtonStatus(false);
                 }).catch((error) => {
-                    console.log(error)
+                    console.log(error);
                     toast.warn("Incorrect username or password");
+                    setButtonStatus(false);
                 })
-
         }
 
     }
@@ -160,6 +170,7 @@ const ModalLogin = (props) => {
                     className="w-100 mt-2 mb-2 gen_btn_success"
                     color="primary"
                     onClick={handleLogin}
+                    disabled={buttonStatus}
                 >
                     Login
                 </Button>

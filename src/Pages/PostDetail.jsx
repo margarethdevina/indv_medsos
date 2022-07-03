@@ -19,6 +19,7 @@ import { getPostsAction } from "../redux/actions/postsActions";
 import { updateLikesAction } from "../redux/actions/usersActions";
 import { getCommentsAction } from "../redux/actions/commentsActions";
 import { toast } from "react-toastify";
+import { DateTime } from 'luxon';
 import MetaDecorator from "../Components/MetaDecorator";
 
 const PostDetailPage = (props) => {
@@ -214,12 +215,14 @@ const PostDetailPage = (props) => {
                         'Authorization': `Bearer ${token}`
                     }
                 }).then((res) => {
-                    dispatch(updateLikesAction(res.data))
-                    getPosts()
+                    dispatch(updateLikesAction(res.data));
+                    getPosts();
                     //axios patch posts number of likes
 
                     //set warna fill like iconnya
-                    setFavoriteFill("#e13b6e")
+                    setFavoriteFill("#e13b6e");
+
+                    getDetail();
                 }).catch((err) => {
                     console.log(err)
                 });
@@ -245,12 +248,14 @@ const PostDetailPage = (props) => {
                         'Authorization': `Bearer ${token}`
                     }
                 }).then((res) => {
-                    dispatch(updateLikesAction(res.data))
-                    getPosts()
+                    dispatch(updateLikesAction(res.data));
+                    getPosts();
                     //axios patch posts number of likes
 
                     //set warna fill like iconnya
-                    setFavoriteFill("#351c75")
+                    setFavoriteFill("#351c75");
+
+                    getDetail();
                 }).catch((err) => {
                     console.log(err)
                 });
@@ -295,6 +300,56 @@ const PostDetailPage = (props) => {
             console.log(err)
         })
 
+    }
+
+    const printDate = () => {
+
+        let endDate = DateTime.now();
+
+        let startDate = DateTime.fromISO(detail.uploadDate);
+
+        let diffInterval = endDate.diff(startDate, ['weeks', 'days', 'hours', 'minutes', 'seconds']).toObject();
+
+        let { weeks, days, hours, minutes, seconds } = diffInterval;
+
+        console.log("diffInterval di postnya", diffInterval);
+        // console.log("diffInterval.weeks", weeks);
+
+        let intervalShown = ""
+        if (weeks > 0) {
+            if (weeks == 1) {
+                intervalShown = `${weeks} week ago`
+            } else {
+                intervalShown = `${weeks} weeks ago`
+            }
+        } else if (weeks == 0 && days > 0) {
+            if (days == 1) {
+                intervalShown = `${days} day ago`
+            } else {
+                intervalShown = `${days} days ago`
+            }
+        } else if (weeks == 0 && days == 0 && hours > 0) {
+            if (hours == 1) {
+                intervalShown = `${hours} hour ago`
+            } else {
+                intervalShown = `${hours} hours ago`
+            }
+        } else if (weeks == 0 && days == 0 && hours == 0 && minutes > 0) {
+            if (minutes == 1) {
+                intervalShown = `${minutes} minute ago`
+            } else {
+                intervalShown = `${minutes} minutes ago`
+            }
+        } else if (weeks == 0 && days == 0 && hours == 0 && minutes == 0 && seconds > 0) {
+            if (seconds < 2) {
+                intervalShown = `${Math.floor(seconds)} second ago`
+            } else {
+                intervalShown = `${Math.floor(seconds)} seconds ago`
+            }
+        }
+        console.log("intervalShown di postnya", intervalShown);
+
+        return intervalShown;
     }
 
     const handleCopyLink = () => {
@@ -450,11 +505,27 @@ const PostDetailPage = (props) => {
                                 {
                                     selectedEdit == 0
                                         ?
-                                        <p
-                                            className="_detail_font_content"
-                                        >
-                                            {detail.caption}
-                                        </p>
+                                        <>
+                                            <p
+                                                className="_detail_font_content"
+                                            >
+                                                {detail.caption}
+                                            </p>
+                                            <div
+                                                className="d-md-flex justify-content-between mt-0"
+                                            >
+                                                <p
+                                                    className="mb-3 _card_detail_date text-muted"
+                                                >
+                                                    {printDate()}
+                                                </p>
+                                                <p
+                                                    className="mb-3 _card_detail_date text-muted"
+                                                >
+                                                    Liked by {detail.numberOfLikes} people
+                                                </p>
+                                            </div>
+                                        </>
                                         :
                                         <>
                                             <Input

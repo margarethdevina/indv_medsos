@@ -96,24 +96,30 @@ const RegisterPage = (props) => {
             if (username == "" || email == "" || password == "" || confPassword == "") {
                 console.log("Fill in all form")
                 toast.warn("Fill in all form")
+                setButtonStatus(false);
             } else {
                 if (password.length < 8) {
                     // console.log("Password should contain at least 8 characters")
-                    toast.warn("Password should contain at least 8 characters")
+                    toast.warn("Password should contain at least 8 characters");
+                    setButtonStatus(false);
                 } else if (passStrength == "❌ Contain lowercase letter") {
                     // console.log("Password cannot contain lowercase letter")
-                    toast.warn("Password cannot contain lowercase letter")
+                    toast.warn("Password cannot contain lowercase letter");
+                    setButtonStatus(false);
                 } else if (password != confPassword) {
                     // console.log("Password not match")
-                    toast.warn("Password not match")
+                    toast.warn("Password not match");
+                    setButtonStatus(false);
                 } else if (dbUsers.find(val => val.username == username)) {
                     // console.log("Username already used")
-                    toast.warn("Username already used")
-                    setUsedUsername("❌ Used Username")
+                    toast.warn("Username already used");
+                    setUsedUsername("❌ Used Username");
+                    setButtonStatus(false);
                 } else if (dbUsers.find(val => val.email == email)) {
                     // console.log("Email already used")
-                    toast.warn("Email already used")
-                    setEmailValidity("❌ Used Email")
+                    toast.warn("Email already used");
+                    setEmailValidity("❌ Used Email");
+                    setButtonStatus(false);
                 } else if (emailValidity == "✅ Valid Email") {
 
                     setButtonStatus(true)
@@ -130,23 +136,25 @@ const RegisterPage = (props) => {
                     })
 
                     if (res.data.success) {
-                        toast.success("Registration successful, account verification link has been sent to your email")
+                        toast.success("Registration successful, account verification link has been sent to your email");
 
-                        console.log("data yg teregister", res.data)
+                        console.log("data yg teregister", res.data);
 
-                        localStorage.setItem("tokenIdUser", res.data.token)
-                        dispatch(loginAction(res.data))
-                        navigate("/", { replace: true })
-                        setButtonStatus(false)
+                        localStorage.setItem("tokenIdUser", res.data.token);
+                        dispatch(loginAction(res.data));
+                        navigate("/", { replace: true });
+                        setButtonStatus(false);
                     }
 
                 } else {
                     // console.log("❌ Invalid Email")
-                    toast.warn("❌ Invalid Email")
+                    toast.warn("❌ Invalid Email");
+                    setButtonStatus(false);
                 }
             }
         } catch (error) {
             console.log(error);
+            setButtonStatus(false);
         }
     }
 

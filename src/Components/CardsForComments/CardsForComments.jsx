@@ -116,7 +116,7 @@ const CardsForComments = (props) => {
 
             let { weeks, days, hours, minutes, seconds } = diffInterval;
 
-            console.log("diffInterval", diffInterval);
+            console.log("diffInterval di comment", diffInterval);
             // console.log("diffInterval.weeks", weeks);
 
             let intervalShown = ""
@@ -151,7 +151,7 @@ const CardsForComments = (props) => {
                     intervalShown = `${Math.floor(seconds)} seconds ago`
                 }
             }
-            console.log("intervalShown", intervalShown);
+            console.log("intervalShown di commentnya", intervalShown);
 
             if (selectedIdx == index && openDelete == false) {
                 return (<CardColumns
@@ -199,17 +199,6 @@ const CardsForComments = (props) => {
                             </div>
                         </CardBody>
                     </Card>
-                    {/* {
-                        props.hasMore
-                        &&
-                        <>
-                            <Button
-                                onClick={props.handleSeeMore}
-                            >
-                                See More
-                            </Button>
-                        </>
-                    } */}
                 </CardColumns >
                 )
             } else {
@@ -259,17 +248,6 @@ const CardsForComments = (props) => {
                             }
                         </CardBody>
                     </Card>
-                    {/* {
-                        props.hasMore
-                        &&
-                        <>
-                            <Button
-                                onClick={props.handleSeeMore}
-                            >
-                                See More
-                            </Button>
-                        </>
-                    } */}
                 </CardColumns >
                 )
             }
@@ -278,10 +256,6 @@ const CardsForComments = (props) => {
     }
 
     console.log("isi hasMore", props.hasMore)
-
-    // const handleSeeMore = () => {
-    //     return 
-    // }
 
     return (
         <div
