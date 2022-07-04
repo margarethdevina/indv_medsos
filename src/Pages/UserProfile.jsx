@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Axios from 'axios';
 import { API_URL } from "../helper";
 import { loginAction } from "../redux/actions/usersActions";
-import { Card, CardImg, CardBody, Button, Input, InputGroup, InputGroupText, Nav, NavItem, NavLink } from "reactstrap";
+import { Card, CardImg, CardBody, Button, ButtonGroup, Input, InputGroup, InputGroupText } from "reactstrap";
 import { useNavigate } from 'react-router-dom';
-import CardsInYourPosts from "../Components/CardsInYourPosts/CardsInYourPosts";
+import CardsInUserProfile from "../Components/CardsInUserProfile/CardsInUserProfile";
 import adminPic from "../Assets/SampleProfilePic/Admin.png";
 import { ReactComponent as VerifIcon } from '../Assets/IconRef/verified.svg';
 import { toast } from "react-toastify";
@@ -66,6 +66,8 @@ const UserProfilePage = (props) => {
     const [inputNewPass, setInputNewPass] = useState("");
     const [passStrength, setPassStrength] = useState("");
     const [buttonStatus, setButtonStatus] = useState(false);
+    const [selectedPostMenu, setSelectedPostMenu] = useState(0);
+    const [btnPostMenuStat, setBtnPostMenuStat] = useState(false);
 
     const getUsers = () => {
         Axios.get(`${API_URL}/users/get`)
@@ -485,146 +487,190 @@ const UserProfilePage = (props) => {
         }
     }
 
+    const handleYourPosts = () => {
+        //Isi Your Post dishow
+        setSelectedPostMenu(0);
+
+        //Your Post disabled
+        // setBtnPostMenuStat(true);
+    }
+
+    const handleYourLikes = () => {
+        //Isi Your Post dishow
+        setSelectedPostMenu(1);
+
+        //Your Post disabled
+        // setBtnPostMenuStat(false);
+    }
+
     return (
         <div
-            className="row container mx-auto py-3 gen_font"
+            className="container mx-auto py-3 gen_font"
             style={{ minHeight: "100vh" }}
         >
+            <div
+                className="row"
+            // className="row container mx-auto py-3 gen_font"
+            // style={{ minHeight: "100vh" }}
+            >
 
-            {/* title Leiden | User Profile */}
-            <MetaDecorator
-                title="Leiden | User Profile"
-                description="We want to know more about you :D"
-                contentImg={
-                    profilePic != ""
-                        ?
-                        profilePic
-                            &&
-                            profilePic.includes("http")
+                {/* title Leiden | User Profile */}
+                <MetaDecorator
+                    title="Leiden | User Profile"
+                    description="We want to know more about you :D"
+                    contentImg={
+                        profilePic != ""
                             ?
                             profilePic
-                            :
-                            `${API_URL}${profilePic}`
-                        :
-                        `${API_URL}/imgUtilities/IMGUTILITIES_ADMINPROFILE.png`
-                }
-            // contentWebUrl="http://localhost:3001/userprofile"
-            />
-
-            <div
-                className="col-12 col-md-6 order-md-1"
-            >
-                {printCard()}
-
-            </div>
-            <div
-                className="col-12 col-md-6 order-md-2"
-            >
-                <Card
-                    className="border-0"
-                >
-                    <CardBody>
-                        {
-                            status == "unverified"
+                                &&
+                                profilePic.includes("http")
                                 ?
-                                <>
-                                    <Button
-                                        className="col-12 gen_btn_warning_secondary"
-                                        color="warning"
-                                        outline
-                                        onClick={resendVerif}
-                                        disabled={buttonStatus}
-                                    >
-                                        Verify your Account
-                                    </Button>
-                                </>
+                                profilePic
                                 :
-                                selectedEdit == 0
+                                `${API_URL}${profilePic}`
+                            :
+                            `${API_URL}/imgUtilities/IMGUTILITIES_ADMINPROFILE.png`
+                    }
+                // contentWebUrl="http://localhost:3001/userprofile"
+                />
+
+                <div
+                    className="col-12 col-md-6 order-md-1"
+                >
+                    {printCard()}
+
+                </div>
+                <div
+                    className="col-12 col-md-6 order-md-2"
+                >
+                    <Card
+                        className="border-0"
+                    >
+                        <CardBody>
+                            {
+                                status == "unverified"
                                     ?
                                     <>
                                         <Button
-                                            className="col-12 mb-2 gen_btn_warning_secondary"
-                                            onClick={handleEdit}
+                                            className="col-12 gen_btn_warning_secondary"
                                             color="warning"
                                             outline
+                                            onClick={resendVerif}
+                                            disabled={buttonStatus}
                                         >
-                                            Edit Profile
+                                            Verify your Account
                                         </Button>
                                     </>
                                     :
-                                    <>
-                                        <Button
-                                            className="col-12 mb-2 gen_btn_warning_secondary"
-                                            onClick={handleSave}
-                                            color="warning"
-                                            outline
-                                        >
-                                            Save
-                                        </Button>
-                                        <Button
-                                            className="col-12 mb-2 gen_btn_warning_secondary"
-                                            onClick={handleCancel}
-                                            color="secondary"
-                                            outline
-                                        >
-                                            Cancel
-                                        </Button>
-                                    </>
-                        }
-                    </CardBody>
-                </Card>
-                <Card
-                    className="d-none d-md-flex border-0 shadow-sm"
-                >
-                    <CardBody>
-                        <div
-                            className="d-md-flex justify-content-between px-md-4 pt-3 text-md-start"
-                        >
-                            <h5>Likes</h5>
-                            <h6>{likes.length}</h6>
-                        </div>
-                        <div
-                            className="d-md-flex justify-content-between px-md-4 pt-3 text-md-start"
-                        >
-                            <h5>Posts</h5>
-                            <h6>{posts.filter(val => val.username == username).length}</h6>
-                        </div>
-                    </CardBody>
-                </Card>
+                                    selectedEdit == 0
+                                        ?
+                                        <>
+                                            <Button
+                                                className="col-12 mb-2 gen_btn_warning_secondary"
+                                                onClick={handleEdit}
+                                                color="warning"
+                                                outline
+                                            >
+                                                Edit Profile
+                                            </Button>
+                                        </>
+                                        :
+                                        <>
+                                            <Button
+                                                className="col-12 mb-2 gen_btn_warning_secondary"
+                                                onClick={handleSave}
+                                                color="warning"
+                                                outline
+                                            >
+                                                Save
+                                            </Button>
+                                            <Button
+                                                className="col-12 mb-2 gen_btn_warning_secondary"
+                                                onClick={handleCancel}
+                                                color="secondary"
+                                                outline
+                                            >
+                                                Cancel
+                                            </Button>
+                                        </>
+                            }
+                        </CardBody>
+                    </Card>
+                    <Card
+                        className="d-none d-md-flex border-0 shadow-sm"
+                    >
+                        <CardBody>
+                            <div
+                                className="d-md-flex justify-content-between px-md-4 pt-3 text-md-start"
+                            >
+                                <h5>Likes</h5>
+                                <h6>{likes.length}</h6>
+                            </div>
+                            <div
+                                className="d-md-flex justify-content-between px-md-4 pt-3 text-md-start"
+                            >
+                                <h5>Posts</h5>
+                                <h6>{posts.filter(val => val.username == username).length}</h6>
+                            </div>
+                        </CardBody>
+                    </Card>
+                </div>
+
             </div>
 
-            {/* {
+            {
                 username
                 &&
                 status === "verified"
                 &&
                 <>
-                    <Nav
-                        tabs
-                        className="border-0"
+                    <div
+                        className="container col-12 pt-2 pb-2"
                     >
-                        <NavItem>
-                            <NavLink
-                                className="active"
-                                onClick={() => navigate("/yourposts")}
-                            >
-                                Your Posts
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink
-                                onClick={() => navigate("/yourlikes")}
-                            >
-                                Your Likes
-                            </NavLink>
-                        </NavItem>
-                    </Nav>
-
-                    <CardsInYourPosts
-                        data={posts.filter(val => val.username === username)}
-                    />
+                        <Button
+                            // bsSize="lg"
+                            // outline
+                            className="col-12 col-md-6 gen_btn_success"
+                            style={{ fontSize: 15 }}
+                            // disabled={btnPostMenuStat}
+                            onClick={handleYourPosts}
+                        >
+                            Your Posts
+                        </Button>
+                        <Button
+                            // bsSize="lg"
+                            // outline
+                            className="col-12 col-md-6 gen_btn_success"
+                            style={{ fontSize: 15 }}
+                            // disabled={btnPostMenuStat}
+                            onClick={handleYourLikes}
+                        >
+                            Your Likes
+                        </Button>
+                    </div>
                 </>
-            } */}
+            }
+            {
+                selectedPostMenu == 0
+                    ?
+                    <>
+                        <div>
+                            <CardsInUserProfile
+                                data={posts.filter(val => val.username === username)}
+                                selectedPostMenu={selectedPostMenu}
+                            />
+                        </div>
+                    </>
+                    :
+                    <>
+                        <div>
+                            <CardsInUserProfile
+                                data={posts.filter(({ id: id1 }) => likes.some((id2) => id2 === id1))}
+                                selectedPostMenu={selectedPostMenu}
+                            />
+                        </div>
+                    </>
+            }
 
         </div>
     )

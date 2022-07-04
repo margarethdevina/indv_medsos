@@ -353,8 +353,6 @@ Menyiapkan project untuk menggunakan git
 
 98. React helmet untuk semua page sudah termasuk post detail, tapi cara ngeshare metatag nya pk medsos gmn? yg keshare cm link mati aja >> akan coba deployment minggu depan >> yg penting metatag di tes di og muncul smua dulu
 
-99. double check requirement
-
 ========= Q26/06/2022 =========
 
 1. Forgot password di netlify >> page not found padahal di localhost jalan? >>> memang ada bug
@@ -381,5 +379,3 @@ Menyiapkan project untuk menggunakan git
 4.b.
 
 98. instal ngrok -- hold
-
-99. double check requirement
