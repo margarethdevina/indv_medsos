@@ -67,7 +67,8 @@ const UserProfilePage = (props) => {
     const [passStrength, setPassStrength] = useState("");
     const [buttonStatus, setButtonStatus] = useState(false);
     const [selectedPostMenu, setSelectedPostMenu] = useState(0);
-    const [btnPostMenuStat, setBtnPostMenuStat] = useState(false);
+    const [btnPostMenuStat, setBtnPostMenuStat] = useState(true);
+    const [btnLikesMenuStat, setBtnLikesMenuStat] = useState(false);
 
     const getUsers = () => {
         Axios.get(`${API_URL}/users/get`)
@@ -492,15 +493,21 @@ const UserProfilePage = (props) => {
         setSelectedPostMenu(0);
 
         //Your Post disabled
-        // setBtnPostMenuStat(true);
+        setBtnPostMenuStat(true);
+
+        //Your Likes not disabled
+        setBtnLikesMenuStat(false);
     }
 
     const handleYourLikes = () => {
         //Isi Your Post dishow
         setSelectedPostMenu(1);
 
-        //Your Post disabled
-        // setBtnPostMenuStat(false);
+        //Your Likes disabled
+        setBtnLikesMenuStat(true);
+        
+        //Your Post not disabled
+        setBtnPostMenuStat(false);
     }
 
     return (
@@ -625,12 +632,40 @@ const UserProfilePage = (props) => {
                 &&
                 <>
                     <div
-                        className="container col-12 pt-2 pb-2"
+                    // className="container col-12 pt-2 pb-2 border-0 shadow-sm"
                     >
+                        <ButtonGroup
+                            className="container col-12 pt-2 pb-2 border-0 shadow-sm rounded-pill"
+                        >
+                            <Button
+                                bsSize="sm"
+                                // outline
+                                className="col-12 col-md-6 gen_btn_success"
+                                style={{ fontSize: 15}}
+                                disabled={btnPostMenuStat}
+                                onClick={handleYourPosts}
+                            >
+                                Your Posts
+                            </Button>
+                            <Button
+                                bsSize="sm"
+                                // outline
+                                className="col-12 col-md-6 gen_btn_success"
+                                style={{ fontSize: 15}}
+                                disabled={btnLikesMenuStat}
+                                onClick={handleYourLikes}
+                            >
+                                Your Likes
+                            </Button>
+                        </ButtonGroup>
+                    </div>
+                    {/* <div
+                            className="container col-12 pt-2 pb-2 border-0 shadow-sm rounded-pill"
+                        >
                         <Button
                             // bsSize="lg"
                             // outline
-                            className="col-12 col-md-6 gen_btn_success"
+                            className="col-12 col-md-6 gen_btn_success rounded-pill"
                             style={{ fontSize: 15 }}
                             // disabled={btnPostMenuStat}
                             onClick={handleYourPosts}
@@ -640,14 +675,14 @@ const UserProfilePage = (props) => {
                         <Button
                             // bsSize="lg"
                             // outline
-                            className="col-12 col-md-6 gen_btn_success"
+                            className="col-12 col-md-6 gen_btn_success rounded-pill"
                             style={{ fontSize: 15 }}
                             // disabled={btnPostMenuStat}
                             onClick={handleYourLikes}
                         >
                             Your Likes
                         </Button>
-                    </div>
+                    </div> */}
                 </>
             }
             {
