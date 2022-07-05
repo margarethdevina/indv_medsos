@@ -19,12 +19,12 @@ const NewPasswordPage = (props) => {
     const [confNewPassword, setConfNewPassword] = useState("");
     const [passStrength, setPassStrength] = useState("");
 
-    /////// REGEX FUNCTIONS ///////
-    const strongRegexPassword = new RegExp("^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})")
-    const weakRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})")
-    const wrongRegexPassword = new RegExp("^(?=.*[a-z])(?=.{8,})")
+    const [buttonStatus, setButtonStatus] = useState(false);
 
-    const validRegexEmail = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+    /////// REGEX FUNCTIONS ///////
+    const strongRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]))|((?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])))(?=.{8,})")
+    // const weakRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9])))(?=.{8,})")
+    const wrongRegexPassword = new RegExp("^((?=.*[a-z])|(?=.*[0-9])|(?=.*[A-Z])|(?=.*[!@#\$%\^&\*])|((?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])))(?=.{8,})")
 
     const [visibleForm, setVisibleForm] = React.useState({
         type: "password",
@@ -51,10 +51,12 @@ const NewPasswordPage = (props) => {
 
         if (strongRegexPassword.test(value)) {
             setPassStrength("✅ Strong Password")
-        } else if (weakRegexPassword.test(value)) {
-            setPassStrength("❗ Weak Password")
-        } else if (wrongRegexPassword.test(value)) {
-            setPassStrength("❌ Contain lowercase letter")
+        } 
+        // else if (weakRegexPassword.test(value)) {
+        //     setPassStrength("❗ Weak Password")
+        // } 
+        else if (wrongRegexPassword.test(value)) {
+            setPassStrength("❌ Password needs to contain at least 1 UPPERCASE, 1 number, and a symbol")
         }
         // console.log(passStrength)
     }
@@ -65,11 +67,17 @@ const NewPasswordPage = (props) => {
             if (newPassword && confNewPassword) {
                 if (newPassword == confNewPassword) {
                     if (newPassword.length < 8) {
-                        toast.warn("Password should contain at least 8 characters")
-                    } else if (passStrength == "❌ Contain lowercase letter") {
+                        toast.warn("Password should contain at least 8 characters");
+                        setPassStrength("");
+                        setButtonStatus(false);
+                    } else if (passStrength == "❌ Password needs to contain at least 1 UPPERCASE, 1 number, and a symbol") {
                         // console.log("Password cannot contain lowercase letter")
-                        toast.warn("Password cannot contain lowercase letter")
+                        toast.warn("Password needs to contain at least 1 UPPERCASE, 1 number, and a symbol")
+                        setPassStrength("");
+                        setButtonStatus(false);
                     } else {
+                        setButtonStatus(true);
+
                         let res = await Axios.patch(`${API_URL}/users/reset`, {
                             password: newPassword
                         }, {
@@ -84,13 +92,18 @@ const NewPasswordPage = (props) => {
                             setNewPassword("");
                             setPassStrength("");
                             navigate('/', { replace: true });
+
+                            setButtonStatus(false);
                         }
                     }
                 } else {
-                    toast.warn("Your confirmation password is incorrect")
+                    toast.warn("Your confirmation password is incorrect");
+                    setPassStrength("");
+                    setButtonStatus(false);
                 }
             } else {
-                toast.warn("Please fill in all form")
+                toast.warn("Please fill in all form");
+                setButtonStatus(false);
             }
 
         } catch (error) {
@@ -152,7 +165,7 @@ const NewPasswordPage = (props) => {
             <Button
                 className="w-100 _detail_button_post"
                 type="button"
-                // color="success"
+                disabled={buttonStatus}
                 onClick={handleReset}>Reset my password</Button>
         </div>
     </div>)

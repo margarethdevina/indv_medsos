@@ -23,7 +23,7 @@ const RegisterPage = (props) => {
 
     /////// STATE MANAGEMENT ///////
     const [dbUsers, setDbUsers] = useState([]);
-    const [dbUsername, setDbUsername] = useState([]);
+    // const [dbUsername, setDbUsername] = useState([]);
     // const [dbEmail, setDbEmail] = useState([]);
 
     const [username, setUsername] = useState("");
@@ -40,9 +40,9 @@ const RegisterPage = (props) => {
     const [buttonStatus, setButtonStatus] = useState(false);
 
     /////// REGEX FUNCTIONS ///////
-    const strongRegexPassword = new RegExp("^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})")
-    const weakRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})")
-    const wrongRegexPassword = new RegExp("^(?=.*[a-z])(?=.{8,})")
+    const strongRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]))|((?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])))(?=.{8,})")
+    // const weakRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9])))(?=.{8,})")
+    const wrongRegexPassword = new RegExp("^((?=.*[a-z])|(?=.*[0-9])|(?=.*[A-Z])|(?=.*[!@#\$%\^&\*])|((?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])))(?=.{8,})")
 
     const validRegexEmail = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
 
@@ -66,10 +66,12 @@ const RegisterPage = (props) => {
 
         if (strongRegexPassword.test(value)) {
             setPassStrength("✅ Strong Password")
-        } else if (weakRegexPassword.test(value)) {
-            setPassStrength("❗ Weak Password")
-        } else if (wrongRegexPassword.test(value)) {
-            setPassStrength("❌ Contain lowercase letter")
+        }
+        // else if (weakRegexPassword.test(value)) {
+        //     setPassStrength("❗ Weak Password")
+        // } 
+        else if (wrongRegexPassword.test(value)) {
+            setPassStrength("❌ Password needs to contain at least 1 UPPERCASE, 1 number, and a symbol")
         }
         // console.log(passStrength)
     }
@@ -90,6 +92,15 @@ const RegisterPage = (props) => {
         }
     }
 
+    const handleReset = () => {
+        setPassStrength("");
+        setUsedUsername("");
+
+        if (emailValidity != "✅ Valid Email") {
+            setEmailValidity("");
+        }
+    }
+
     const handleRegister = async () => {
 
         try {
@@ -101,24 +112,34 @@ const RegisterPage = (props) => {
                 if (password.length < 8) {
                     // console.log("Password should contain at least 8 characters")
                     toast.warn("Password should contain at least 8 characters");
+                    handleReset();
+
                     setButtonStatus(false);
-                } else if (passStrength == "❌ Contain lowercase letter") {
+                } else if (passStrength == "❌ Password needs to contain at least 1 UPPERCASE, 1 number, and a symbol") {
                     // console.log("Password cannot contain lowercase letter")
-                    toast.warn("Password cannot contain lowercase letter");
+                    toast.warn("Password needs to contain at least 1 UPPERCASE, 1 number, and a symbol");
+                    handleReset();
+
                     setButtonStatus(false);
                 } else if (password != confPassword) {
                     // console.log("Password not match")
                     toast.warn("Password not match");
+                    handleReset();
+
                     setButtonStatus(false);
                 } else if (dbUsers.find(val => val.username == username)) {
                     // console.log("Username already used")
                     toast.warn("Username already used");
                     setUsedUsername("❌ Used Username");
+                    handleReset();
+
                     setButtonStatus(false);
                 } else if (dbUsers.find(val => val.email == email)) {
                     // console.log("Email already used")
                     toast.warn("Email already used");
                     setEmailValidity("❌ Used Email");
+                    handleReset();
+
                     setButtonStatus(false);
                 } else if (emailValidity == "✅ Valid Email") {
 
@@ -143,15 +164,20 @@ const RegisterPage = (props) => {
                         localStorage.setItem("tokenIdUser", res.data.token);
                         dispatch(loginAction(res.data));
                         navigate("/", { replace: true });
+                        handleReset();
+
                         setButtonStatus(false);
                     }
 
                 } else {
                     // console.log("❌ Invalid Email")
                     toast.warn("❌ Invalid Email");
+                    handleReset();
+
                     setButtonStatus(false);
                 }
             }
+
         } catch (error) {
             console.log(error);
             setButtonStatus(false);
@@ -209,10 +235,8 @@ const RegisterPage = (props) => {
                     >
                         <img
                             src={registPic}
-                            // src="https://www.ixpaper.com/wp-content/uploads/2021/06/violet-evergarden-wallpaper-ixpaper-3.jpg"
                             alt=""
                             width="60%"
-                            // style={{ width: "50%", height: "50%" }}
                             className="mx-auto"
                         />
                     </div>
@@ -237,6 +261,7 @@ const RegisterPage = (props) => {
                                         id="inputEmail"
                                         placeholder="Insert your email"
                                         type="text"
+                                        // defaultValue={email}
                                         onChange={(e) => handleEmail(e.target.value)}
                                     />
                                     <p
@@ -268,6 +293,7 @@ const RegisterPage = (props) => {
                                         id="inputUsername"
                                         placeholder="Insert your username"
                                         type="text"
+                                        // defaultValue={username}
                                         onChange={(e) => handleUsername(e.target.value)}
                                     />
                                     <p
@@ -294,6 +320,7 @@ const RegisterPage = (props) => {
                                             id="inputPassword"
                                             placeholder="Insert your password"
                                             type={visibleForm.type}
+                                            // defaultValue={password}
                                             onChange={(e) => handlePassword(e.target.value)}
                                         />
                                         <InputGroupText
@@ -333,6 +360,7 @@ const RegisterPage = (props) => {
                                             id="inputConfirmPassword"
                                             placeholder="Confirm your password"
                                             type={visibleForm.type}
+                                            // defaultValue={confPassword}
                                             onChange={(e) => setConfPassword(e.target.value)}
                                         />
                                     </InputGroup>

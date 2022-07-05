@@ -99,11 +99,9 @@ const UserProfilePage = (props) => {
     }
 
     /////// REGEX FUNCTIONS ///////
-    const strongRegexPassword = new RegExp("^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})")
-    const weakRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})")
-    const wrongRegexPassword = new RegExp("^(?=.*[a-z])(?=.{8,})")
-
-    const validRegexEmail = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+    const strongRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]))|((?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])))(?=.{8,})")
+    // const weakRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9])))(?=.{8,})")
+    const wrongRegexPassword = new RegExp("^((?=.*[a-z])|(?=.*[0-9])|(?=.*[A-Z])|(?=.*[!@#\$%\^&\*])|((?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])))(?=.{8,})")
 
     const printCard = () => {
         if (selectedEdit == 0) {
@@ -390,10 +388,12 @@ const UserProfilePage = (props) => {
 
         if (strongRegexPassword.test(value)) {
             setPassStrength("✅ Strong Password")
-        } else if (weakRegexPassword.test(value)) {
-            setPassStrength("❗ Weak Password")
-        } else if (wrongRegexPassword.test(value)) {
-            setPassStrength("❌ Contain lowercase letter")
+        }
+        // else if (weakRegexPassword.test(value)) {
+        //     setPassStrength("❗ Weak Password")
+        // } 
+        else if (wrongRegexPassword.test(value)) {
+            setPassStrength("❌ Password needs to contain at least 1 UPPERCASE, 1 number, and a symbol")
         }
         // console.log(passStrength)
     }
@@ -402,6 +402,11 @@ const UserProfilePage = (props) => {
         setInputPicture(value)
         console.log("inputPicture", inputPicture)
     }
+
+    // const handleReset = () => {
+    //     setPassStrength("");
+    //     setUsedUsername("");
+    // }
 
     const handleSave = () => {
         setSelectedEdit(0);
@@ -413,13 +418,15 @@ const UserProfilePage = (props) => {
 
                 if (inputPrevPass != "" && inputNewPass.length < 8) {
                     toast.warn("Password should contain at least 8 characters");
-                } else if (passStrength == "❌ Contain lowercase letter") {
+                    setPassStrength("");
+                } else if (passStrength == "❌ Password needs to contain at least 1 UPPERCASE, 1 number, and a symbol") {
                     // console.log("Password cannot contain lowercase letter")
-                    toast.warn("Password cannot contain lowercase letter");
+                    toast.warn("Password needs to contain at least 1 UPPERCASE, 1 number, and a symbol");
+                    setPassStrength("");
                 } else if (
                     (dbUsers.find(val => val.username == inputUserName))
-                    // &&
-                    // ((dbUsers[dbUsers.findIndex(valfind => valfind.id === id)].id) != id)
+                    &&
+                    ((dbUsers[dbUsers.findIndex(valfind => valfind.email === email)].id) != id)
                 ) {
                     toast.warn("Username already used");
                 } else {
@@ -446,6 +453,7 @@ const UserProfilePage = (props) => {
                         setPassStrength("");
                     }).catch((err) => {
                         console.log(err)
+                        toast.warn("Your previous password is incorrect");
                     })
                 }
 
@@ -505,7 +513,7 @@ const UserProfilePage = (props) => {
 
         //Your Likes disabled
         setBtnLikesMenuStat(true);
-        
+
         //Your Post not disabled
         setBtnPostMenuStat(false);
     }
@@ -632,26 +640,22 @@ const UserProfilePage = (props) => {
                 &&
                 <>
                     <div
-                    // className="container col-12 pt-2 pb-2 border-0 shadow-sm"
+                        className="pt-2 pb-4"
                     >
                         <ButtonGroup
                             className="container col-12 pt-2 pb-2 border-0 shadow-sm rounded-pill"
                         >
                             <Button
-                                bsSize="sm"
-                                // outline
                                 className="col-12 col-md-6 gen_btn_success"
-                                style={{ fontSize: 15}}
+                                style={{ fontSize: 15 }}
                                 disabled={btnPostMenuStat}
                                 onClick={handleYourPosts}
                             >
                                 Your Posts
                             </Button>
                             <Button
-                                bsSize="sm"
-                                // outline
                                 className="col-12 col-md-6 gen_btn_success"
-                                style={{ fontSize: 15}}
+                                style={{ fontSize: 15 }}
                                 disabled={btnLikesMenuStat}
                                 onClick={handleYourLikes}
                             >
@@ -659,52 +663,34 @@ const UserProfilePage = (props) => {
                             </Button>
                         </ButtonGroup>
                     </div>
-                    {/* <div
-                            className="container col-12 pt-2 pb-2 border-0 shadow-sm rounded-pill"
-                        >
-                        <Button
-                            // bsSize="lg"
-                            // outline
-                            className="col-12 col-md-6 gen_btn_success rounded-pill"
-                            style={{ fontSize: 15 }}
-                            // disabled={btnPostMenuStat}
-                            onClick={handleYourPosts}
-                        >
-                            Your Posts
-                        </Button>
-                        <Button
-                            // bsSize="lg"
-                            // outline
-                            className="col-12 col-md-6 gen_btn_success rounded-pill"
-                            style={{ fontSize: 15 }}
-                            // disabled={btnPostMenuStat}
-                            onClick={handleYourLikes}
-                        >
-                            Your Likes
-                        </Button>
-                    </div> */}
                 </>
             }
             {
-                selectedPostMenu == 0
+                username
+                    &&
+                    status === "verified"
                     ?
-                    <>
-                        <div>
-                            <CardsInUserProfile
-                                data={posts.filter(val => val.username === username)}
-                                selectedPostMenu={selectedPostMenu}
-                            />
-                        </div>
-                    </>
+                    selectedPostMenu == 0
+                        ?
+                        <>
+                            <div>
+                                <CardsInUserProfile
+                                    data={posts.filter(val => val.username === username)}
+                                    selectedPostMenu={selectedPostMenu}
+                                />
+                            </div>
+                        </>
+                        :
+                        <>
+                            <div>
+                                <CardsInUserProfile
+                                    data={posts.filter(({ id: id1 }) => likes.some((id2) => id2 === id1))}
+                                    selectedPostMenu={selectedPostMenu}
+                                />
+                            </div>
+                        </>
                     :
-                    <>
-                        <div>
-                            <CardsInUserProfile
-                                data={posts.filter(({ id: id1 }) => likes.some((id2) => id2 === id1))}
-                                selectedPostMenu={selectedPostMenu}
-                            />
-                        </div>
-                    </>
+                    null
             }
 
         </div>

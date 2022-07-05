@@ -34,6 +34,8 @@ const ForgotPassword = (props) => {
             }
         } catch (error) {
             console.log(error);
+            toast.warn("Please insert the correct email address");
+            setButtonStatus(false);
         }
     }
 
