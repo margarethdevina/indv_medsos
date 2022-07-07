@@ -73,7 +73,7 @@ const UserProfilePage = (props) => {
     const getUsers = () => {
         Axios.get(`${API_URL}/users/get`)
             .then((response) => {
-                // console.log("isi dbUsers", response.data)
+                console.log("isi dbUsers", response.data)
                 setDbUsers(response.data)
             }).catch((error) => { console.log(error) })
     };
@@ -410,7 +410,10 @@ const UserProfilePage = (props) => {
 
     const handleSave = () => {
         setSelectedEdit(0);
+
         console.log("yang ingin disave", inputFullName, inputUserName, inputBio, inputPicture, inputPrevPass, inputNewPass)
+
+        let idxByEmail = dbUsers.findIndex(valfindEM => valfindEM.email === email);
 
         let token = localStorage.getItem("tokenIdUser");
         if (token) {
@@ -425,10 +428,47 @@ const UserProfilePage = (props) => {
                     setPassStrength("");
                 } else if (
                     (dbUsers.find(val => val.username == inputUserName))
-                    &&
-                    ((dbUsers[dbUsers.findIndex(valfind => valfind.email === email)].id) != id)
+                    // &&
+                    // ((dbUsers[dbUsers.findIndex(valfind => valfind.email === email)].id) != id)
                 ) {
-                    toast.warn("Username already used");
+                    let idxByUsername = dbUsers.findIndex(valfindUN => valfindUN.username === inputUserName);
+
+                    if (idxByUsername != idxByEmail) {
+                        console.log("UN dah dipake user lain: username lama, username baru", username, inputUserName);
+
+                        toast.warn("Username already used");
+
+                        setInputUserName(username);
+                    }
+                    else 
+                    {
+                        let formData = new FormData();
+                        let data = {
+                            fullname: inputFullName,
+                            username: inputUserName,
+                            bio: inputBio,
+                            previousPassword: inputPrevPass,
+                            newPassword: inputNewPass
+                        };
+                        console.log("data", data);
+                        formData.append('data', JSON.stringify(data));
+                        formData.append('profilePicture', inputPicture);
+                        Axios.patch(`${API_URL}/users/edit`, formData, {
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        }).then((res) => {
+                            console.log("isi res.data pas klik save", res.data);
+                            // getUsers();
+                            keepLogin();
+                            setInputPrevPass("");
+                            setInputNewPass("");
+                            setPassStrength("");
+                        }).catch((err) => {
+                            console.log(err)
+                            toast.warn("Your previous password is incorrect");
+                        })
+                    }
                 } else {
                     let formData = new FormData();
                     let data = {
@@ -447,6 +487,7 @@ const UserProfilePage = (props) => {
                         }
                     }).then((res) => {
                         console.log("isi res.data pas klik save", res.data);
+                        // getUsers();
                         keepLogin();
                         setInputPrevPass("");
                         setInputNewPass("");
