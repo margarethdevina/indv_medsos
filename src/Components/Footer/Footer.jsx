@@ -49,7 +49,7 @@ const FooterComponent = (props) => {
 
                 <div className="footer__socials">
                     <WhatsappShareButton
-                        url="http://localhost:3001/"
+                        url="https://leiden.netlify.app/"
                         className="footer__socials__icons"
                     >
                         <WaIcon
@@ -57,7 +57,7 @@ const FooterComponent = (props) => {
                         />
                     </WhatsappShareButton>
                     <TwitterShareButton
-                        url="http://localhost:3001/"
+                        url="https://leiden.netlify.app/"
                         className="footer__socials__icons"
                     >
                         <TwitterIcon
@@ -65,7 +65,7 @@ const FooterComponent = (props) => {
                         />
                     </TwitterShareButton>
                     <FacebookShareButton
-                        url="http://localhost:3001/"
+                        url="https://leiden.netlify.app/"
                         className="footer__socials__icons"
                     >
                         <FbIcon

@@ -442,7 +442,7 @@ const PostDetailPage = (props) => {
                                     className="share__socials"
                                 >
                                     <WhatsappShareButton
-                                        url={`http://localhost:3001/postdetail${search}`}
+                                        url={`https://leiden.netlify.app/postdetail${search}`}
                                     >
                                         <WaIcon
                                             className="share__socials__icons"
@@ -450,7 +450,7 @@ const PostDetailPage = (props) => {
                                         />
                                     </WhatsappShareButton>
                                     <TwitterShareButton
-                                        url={`http://localhost:3001/postdetail${search}`}
+                                        url={`https://leiden.netlify.app/postdetail${search}`}
                                     >
                                         <TwitterIcon
                                             className="share__socials__icons"
@@ -458,7 +458,7 @@ const PostDetailPage = (props) => {
                                         />
                                     </TwitterShareButton>
                                     <FacebookShareButton
-                                        url={`http://localhost:3001/postdetail${search}`}
+                                        url={`https://leiden.netlify.app/postdetail${search}`}
                                     >
                                         <FbIcon
                                             className="share__socials__icons"
