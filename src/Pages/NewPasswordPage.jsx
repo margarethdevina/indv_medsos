@@ -85,6 +85,8 @@ const NewPasswordPage = (props) => {
 
                 let startDate = DateTime.fromISO(prevToken.editedDate);
                 let endDate = DateTime.now();
+                console.log("startDate",startDate);
+                console.log("endDate",endDate);
 
                 let diffInterval = endDate.diff(startDate, ['hours', 'minutes', 'seconds']).toObject();
 
