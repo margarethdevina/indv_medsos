@@ -10,7 +10,6 @@ import MetaDecorator from "../Components/MetaDecorator";
 
 const YourPostsPage = (props) => {
 
-    // const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const { username, status } = useSelector((state) => {
@@ -20,7 +19,7 @@ const YourPostsPage = (props) => {
         }
     })
 
-    console.log("username di reducer masih ada?", username)
+    // console.log("username di reducer masih ada?", username)
     const [dbPosts, setDbPosts] = useState([]);
 
     useEffect(() => {
@@ -30,7 +29,7 @@ const YourPostsPage = (props) => {
     const getPosts = () => {
         Axios.get(`${API_URL}/posts/get`)
             .then((response) => {
-                console.log("isi dbPosts", response.data)
+                // console.log("isi dbPosts", response.data)
                 setDbPosts(response.data)
             }).catch((error) => { console.log(error) })
     };
@@ -47,7 +46,6 @@ const YourPostsPage = (props) => {
                 title="Leiden | Your Post"
                 description="How is your day? Do you want to share it to us?"
                 contentImg={`${API_URL}/imgUtilities/IMGUTILITIES_YOURPOSTS.jpg`}
-            // contentWebUrl="http://localhost:3001/yourposts"
             />
 
             {

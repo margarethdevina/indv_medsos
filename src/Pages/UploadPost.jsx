@@ -28,7 +28,6 @@ const UploadPostPage = (props) => {
                 title="Leiden | Upload Post"
                 description="How is your day? Do you want to share it to us?"
                 contentImg={`${API_URL}/imgUtilities/IMGUTILITIES_UPLOADPOST.jpg`}
-                // contentWebUrl="http://localhost:3001/uploadpost"
             />
 
             {

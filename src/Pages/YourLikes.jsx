@@ -34,7 +34,6 @@ const YourLikesPage = (props) => {
                 title="Leiden | Your Likes"
                 description="Do you want to share some love again today? We are waiting for you :D"
                 contentImg={`${API_URL}/imgUtilities/IMGUTILITIES_YOURLIKES.jpg`}
-            // contentWebUrl="http://localhost:3001/yourlikes"
             />
 
             {

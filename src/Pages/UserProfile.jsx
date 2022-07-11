@@ -31,7 +31,7 @@ const UserProfilePage = (props) => {
         }
     })
 
-    console.log("data state yg masuk page userProfile", id, fullname, bio, username, email, profilePic, status, likes, posts)
+    // console.log("data state yg masuk page userProfile", id, fullname, bio, username, email, profilePic, status, likes, posts)
 
     useEffect(() => {
         keepLogin();
@@ -73,7 +73,7 @@ const UserProfilePage = (props) => {
     const getUsers = () => {
         Axios.get(`${API_URL}/users/get`)
             .then((response) => {
-                console.log("isi dbUsers", response.data)
+                // console.log("isi dbUsers", response.data)
                 setDbUsers(response.data)
             }).catch((error) => { console.log(error) })
     };
@@ -100,7 +100,6 @@ const UserProfilePage = (props) => {
 
     /////// REGEX FUNCTIONS ///////
     const strongRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]))|((?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])))(?=.{8,})")
-    // const weakRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9])))(?=.{8,})")
     const wrongRegexPassword = new RegExp("^((?=.*[a-z])|(?=.*[0-9])|(?=.*[A-Z])|(?=.*[!@#\$%\^&\*])|((?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])))(?=.{8,})")
 
     const printCard = () => {
@@ -115,7 +114,6 @@ const UserProfilePage = (props) => {
                                 ?
                                 <>
                                     <CardImg
-                                        // ❗❗❗
                                         src={
                                             profilePic
                                                 &&
@@ -221,11 +219,7 @@ const UserProfilePage = (props) => {
                 >
                     <div className="container">
                         <Input
-                            // ❗❗❗
-                            // type="text"
                             type="file"
-                            // placeholder={`Insert new image: ${profilePic}`}
-                            // onChange={(e) => handlePicture(e.target.value)}
                             onChange={(e) => handlePicture(e.target.files[0])}
                         />
                     </div>
@@ -364,34 +358,27 @@ const UserProfilePage = (props) => {
 
     const handleFullName = (value) => {
         setInputFullName(value)
-        // console.log(inputFullName)
     }
 
     const handleUserName = (value) => {
         setInputUserName(value)
-        // console.log("inputUserName", inputUserName);
     }
 
     const handleBio = (value) => {
         setInputBio(value)
-        // console.log(inputBio)
     }
 
     const handlePrevPass = (value) => {
         setInputPrevPass(value)
-        console.log(inputPrevPass)
     }
 
     const handleNewPass = (value) => {
         setInputNewPass(value)
-        console.log(inputNewPass)
+        // console.log(inputNewPass)
 
         if (strongRegexPassword.test(value)) {
             setPassStrength("✅ Strong Password")
         }
-        // else if (weakRegexPassword.test(value)) {
-        //     setPassStrength("❗ Weak Password")
-        // } 
         else if (wrongRegexPassword.test(value)) {
             setPassStrength("❌ Password needs to contain at least 1 UPPERCASE, 1 number, and a symbol")
         }
@@ -400,18 +387,13 @@ const UserProfilePage = (props) => {
 
     const handlePicture = (value) => {
         setInputPicture(value)
-        console.log("inputPicture", inputPicture)
+        // console.log("inputPicture", inputPicture)
     }
-
-    // const handleReset = () => {
-    //     setPassStrength("");
-    //     setUsedUsername("");
-    // }
 
     const handleSave = () => {
         setSelectedEdit(0);
 
-        console.log("yang ingin disave", inputFullName, inputUserName, inputBio, inputPicture, inputPrevPass, inputNewPass)
+        // console.log("yang ingin disave", inputFullName, inputUserName, inputBio, inputPicture, inputPrevPass, inputNewPass)
 
         let idxByEmail = dbUsers.findIndex(valfindEM => valfindEM.email === email);
 
@@ -423,7 +405,6 @@ const UserProfilePage = (props) => {
                     toast.warn("Password should contain at least 8 characters");
                     setPassStrength("");
                 } else if (passStrength == "❌ Password needs to contain at least 1 UPPERCASE, 1 number, and a symbol") {
-                    // console.log("Password cannot contain lowercase letter")
                     toast.warn("Password needs to contain at least 1 UPPERCASE, 1 number, and a symbol");
                     setPassStrength("");
                 } else if (
@@ -434,7 +415,7 @@ const UserProfilePage = (props) => {
                     let idxByUsername = dbUsers.findIndex(valfindUN => valfindUN.username === inputUserName);
 
                     if (idxByUsername != idxByEmail) {
-                        console.log("UN dah dipake user lain: username lama, username baru", username, inputUserName);
+                        // console.log("UN dah dipake user lain: username lama, username baru", username, inputUserName);
 
                         toast.warn("Username already used");
 
@@ -450,7 +431,7 @@ const UserProfilePage = (props) => {
                             previousPassword: inputPrevPass,
                             newPassword: inputNewPass
                         };
-                        console.log("data", data);
+                        // console.log("data", data);
                         formData.append('data', JSON.stringify(data));
                         formData.append('profilePicture', inputPicture);
                         Axios.patch(`${API_URL}/users/edit`, formData, {
@@ -458,8 +439,7 @@ const UserProfilePage = (props) => {
                                 'Authorization': `Bearer ${token}`
                             }
                         }).then((res) => {
-                            console.log("isi res.data pas klik save", res.data);
-                            // getUsers();
+                            // console.log("isi res.data pas klik save", res.data);
                             keepLogin();
                             setInputPrevPass("");
                             setInputNewPass("");
@@ -478,7 +458,7 @@ const UserProfilePage = (props) => {
                         previousPassword: inputPrevPass,
                         newPassword: inputNewPass
                     };
-                    console.log("data", data);
+                    // console.log("data", data);
                     formData.append('data', JSON.stringify(data));
                     formData.append('profilePicture', inputPicture);
                     Axios.patch(`${API_URL}/users/edit`, formData, {
@@ -486,8 +466,7 @@ const UserProfilePage = (props) => {
                             'Authorization': `Bearer ${token}`
                         }
                     }).then((res) => {
-                        console.log("isi res.data pas klik save", res.data);
-                        // getUsers();
+                        // console.log("isi res.data pas klik save", res.data);
                         keepLogin();
                         setInputPrevPass("");
                         setInputNewPass("");
@@ -566,8 +545,6 @@ const UserProfilePage = (props) => {
         >
             <div
                 className="row"
-            // className="row container mx-auto py-3 gen_font"
-            // style={{ minHeight: "100vh" }}
             >
 
                 {/* title Leiden | User Profile */}
@@ -587,7 +564,6 @@ const UserProfilePage = (props) => {
                             :
                             `${API_URL}/imgUtilities/IMGUTILITIES_ADMINPROFILE.png`
                     }
-                // contentWebUrl="http://localhost:3001/userprofile"
                 />
 
                 <div

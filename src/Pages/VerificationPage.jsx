@@ -32,7 +32,7 @@ const VerificationUser = (props) => {
     const getToken = () => {
         Axios.get(`${API_URL}/users/getToken`)
             .then((response) => {
-                console.log("isi dbToken", response.data);
+                // console.log("isi dbToken", response.data);
                 setDbToken(response.data);
             }).catch((error) => { console.log(error) })
     }
@@ -43,7 +43,7 @@ const VerificationUser = (props) => {
             if (dbToken.find(valToken => valToken.token == params.token)) {
 
                 let prevToken = dbToken.filter(val => val.token == params.token)[0];
-                console.log("prevToken", prevToken);
+                // console.log("prevToken", prevToken);
 
                 let startDate = DateTime.fromISO(prevToken.editedDate);
                 let endDate = DateTime.now();
@@ -51,7 +51,7 @@ const VerificationUser = (props) => {
                 let diffInterval = endDate.diff(startDate, ['hours', 'minutes', 'seconds']).toObject();
 
                 let { hours, minutes, seconds } = diffInterval;
-                console.log("diffInterval Token", diffInterval);
+                // console.log("diffInterval Token", diffInterval);
 
                 if (hours > 1) {
                     toast.warn("Token has expired, please create a new resend verification link request");
