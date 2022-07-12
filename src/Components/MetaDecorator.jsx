@@ -13,6 +13,17 @@ const MetaDecorator = ({
             title={title}
             meta={[
                 {
+                    charSet: `utf-8`
+                },
+                {
+                    httpEquiv: `X-UA-Compatible`,
+                    content: `IE=edge`
+                },
+                {
+                    property: `type`,
+                    content: `website`
+                },
+                {
                     name: `description`,
                     content: description
                 },

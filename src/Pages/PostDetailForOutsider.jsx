@@ -53,17 +53,6 @@ const PostDetailPublicPage = (props) => {
             commentsFiltered: state.commentsReducer.comments.filter(val => val.postId == query)
         }
     })
-    // const { userid, username, status, likes, posts, comments, commentsFiltered } = useSelector((state) => {
-    //     return {
-    //         userid: state.usersReducer.id,
-    //         username: state.usersReducer.username,
-    //         status: state.usersReducer.status,
-    //         likes: state.usersReducer.likes,
-    //         posts: state.postsReducer.posts,
-    //         comments: state.commentsReducer.comments,
-    //         commentsFiltered: state.commentsReducer.comments.filter(val => val.postId == query)
-    //     }
-    // })
 
     useEffect(() => {
         getDetail()
