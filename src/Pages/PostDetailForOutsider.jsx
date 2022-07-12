@@ -42,10 +42,10 @@ const PostDetailPublicPage = (props) => {
 
     const [openShare, setOpenShare] = useState(false);
 
-    const { userid, username, status, likes, posts, comments, commentsFiltered } = useSelector((state) => {
+    const { userid, status, likes, posts, comments, commentsFiltered } = useSelector((state) => {
         return {
             userid: state.usersReducer.id,
-            username: state.usersReducer.username,
+            // username: state.usersReducer.username,
             status: state.usersReducer.status,
             likes: state.usersReducer.likes,
             posts: state.postsReducer.posts,
@@ -53,10 +53,20 @@ const PostDetailPublicPage = (props) => {
             commentsFiltered: state.commentsReducer.comments.filter(val => val.postId == query)
         }
     })
+    // const { userid, username, status, likes, posts, comments, commentsFiltered } = useSelector((state) => {
+    //     return {
+    //         userid: state.usersReducer.id,
+    //         username: state.usersReducer.username,
+    //         status: state.usersReducer.status,
+    //         likes: state.usersReducer.likes,
+    //         posts: state.postsReducer.posts,
+    //         comments: state.commentsReducer.comments,
+    //         commentsFiltered: state.commentsReducer.comments.filter(val => val.postId == query)
+    //     }
+    // })
 
     useEffect(() => {
         getDetail()
-        favoriteFillTrigger()
         getCommentsForThisPost()
         getAllComments()
     }, []);
@@ -119,7 +129,6 @@ const PostDetailPublicPage = (props) => {
     }
 
     const handleSeeMore = () => {
-
         fetchData()
         setHasMore(true)
     }
@@ -135,110 +144,6 @@ const PostDetailPublicPage = (props) => {
             .catch((error) => { console.log(error) })
     };
 
-    const favoriteFillTrigger = () => {
-        let tempLike = [...likes];
-        let IdPost = parseInt(search.split("=")[1]);
-        if (!tempLike.includes(IdPost)) {
-            console.log("isi likes, isi search stlh split", tempLike, IdPost)
-            setFavoriteFill("#351c75")
-        }
-    }
-
-    const handleSave = () => {
-        setSelectedEdit(0);
-        console.log("yang ingin disave", inputCaption)
-
-        let token = localStorage.getItem("tokenIdUser");
-        if (token) {
-            Axios.patch(`${API_URL}/posts/${detail.id}`, {
-                caption: inputCaption
-                // editedDate: latestDate // pas sambung ke express api bisa diganti penanggalan dari sql query
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            }).then((res) => {
-                console.log("isi res.data pas klik save", res.data)
-                getDetail()
-            }).catch((err) => {
-                console.log(err)
-            })
-        }
-    }
-
-    const handleLike = () => {
-        let IdPost = parseInt(search.split("=")[1]);
-        let tempLike = [...likes];
-        let tempPosts = [...posts];
-        let token = localStorage.getItem("tokenIdUser");
-
-        if (!tempLike.includes(IdPost)) {
-            tempLike.push(IdPost);
-            let idxInPost = tempPosts.findIndex(val => val.id == IdPost);
-
-            console.log("index di post", idxInPost)
-            // console.log("NOL di post itu saat ini", 
-
-            //axios patch user likes
-            if (token) {
-                let formData = new FormData();
-                let data = { likes: tempLike };
-                console.log("data", data);
-                formData.append('data', JSON.stringify(data));
-                Axios.patch(`${API_URL}/users/edit`, formData, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                }).then((res) => {
-                    dispatch(updateLikesAction(res.data));
-                    getPosts();
-                    //axios patch posts number of likes
-
-                    //set warna fill like iconnya
-                    setFavoriteFill("#e13b6e");
-
-                    getDetail();
-                }).catch((err) => {
-                    console.log(err)
-                });
-            }
-
-
-        } else {
-
-            let idxInLikes = tempLike.indexOf(IdPost);
-            tempLike.splice(idxInLikes, 1);
-            console.log("tempLike setelah coba unlike", tempLike)
-
-            let idxInPost = tempPosts.findIndex(val => val.id == IdPost);
-
-            //axios patch user likes
-            if (token) {
-                let formData = new FormData();
-                let data = { likes: tempLike };
-                console.log("data", data);
-                formData.append('data', JSON.stringify(data));
-                Axios.patch(`${API_URL}/users/edit`, formData, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                }).then((res) => {
-                    dispatch(updateLikesAction(res.data));
-                    getPosts();
-                    //axios patch posts number of likes
-
-                    //set warna fill like iconnya
-                    setFavoriteFill("#351c75");
-
-                    getDetail();
-                }).catch((err) => {
-                    console.log(err)
-                });
-            }
-
-        }
-    }
-
     const getPosts = () => {
         Axios.get(`${API_URL}/posts/get`)
             .then((response) => {
@@ -247,34 +152,6 @@ const PostDetailPublicPage = (props) => {
             }).catch((error) => {
                 console.log(error)
             })
-    }
-
-    const handlePost = () => {
-        // console.log("isi komen2 awal tanpa filter postId", allComments)
-
-        let token = localStorage.getItem("tokenIdUser");
-        // if (comments.length > 0) {
-        Axios.post(`${API_URL}/comments/add`, {
-            postId: parseInt(query),
-            // id: comments[comments.length - 1].id + 1,
-            // username,//pas konek express bisa dihapus
-            // commentDate: latestDate, //pas konek express bisa dihapus
-            // editedDate: "", //pas konek express bisa dihapus
-            comment: inputComment
-        }, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }).then((res) => {
-            console.log("isi res.data pas klik handlePost", res.data)
-            getAllComments()
-            setInputComment("")
-            getCommentsForThisPost()
-
-        }).catch((err) => {
-            console.log(err)
-        })
-
     }
 
     const printDate = () => {
@@ -436,65 +313,25 @@ const PostDetailPublicPage = (props) => {
 
                     {/* <hr className="_detail_hr" /> */}
 
-                    {
-                        selectedEdit == 0
-                            ?
-                            <>
-                                <p
-                                    className="_detail_font_content"
-                                >
-                                    {detail.caption}
-                                </p>
-                                <div
-                                    className="d-md-flex justify-content-between mt-0"
-                                >
-                                    <p
-                                        className="mb-3 _card_detail_date text-muted"
-                                    >
-                                        {printDate()}
-                                    </p>
-                                    <p
-                                        className="mb-3 _card_detail_date text-muted"
-                                    >
-                                        Liked by {detail.numberOfLikes} people
-                                    </p>
-                                </div>
-                            </>
-                            :
-                            <>
-                                <Input
-                                    type="textarea"
-                                    className="mb-2"
-                                    placeholder={detail.caption}
-                                    defaultValue={detail.caption}
-                                    onChange={(e) => setInputCaption(e.target.value)}
-                                />
-                                <div
-                                    className="d-md-flex justify-content-end"
-                                >
-                                    <Button
-                                        className="col-12 col-md-2 mb-2 me-md-2 gen_btn_warning_secondary"
-                                        size="sm"
-                                        color="warning"
-                                        outline
-                                        onClick={handleSave}
-                                    >
-                                        Save
-                                    </Button>
-                                    <Button
-                                        className="col-12 col-md-2 mb-2 gen_btn_warning_secondary"
-                                        size="sm"
-                                        color="secondary"
-                                        outline
-                                        onClick={() => setSelectedEdit(0)}
-                                    >
-                                        Cancel
-                                    </Button>
-                                </div>
-                            </>
-                    }
-
-                    {/* <hr className="_detail_hr" /> */}
+                    <p
+                        className="_detail_font_content"
+                    >
+                        {detail.caption}
+                    </p>
+                    <div
+                        className="d-md-flex justify-content-between mt-0"
+                    >
+                        <p
+                            className="mb-3 _card_detail_date text-muted"
+                        >
+                            {printDate()}
+                        </p>
+                        <p
+                            className="mb-3 _card_detail_date text-muted"
+                        >
+                            Liked by {detail.numberOfLikes} people
+                        </p>
+                    </div>
 
                     <div
                         className="_detail_font_content d-flex align-items-center mt-2 mb-4"
@@ -510,13 +347,10 @@ const PostDetailPublicPage = (props) => {
 
                     </div>
 
-                    {/* <hr className="_detail_hr" /> */}
-
                     {
                         detail.id &&
                         <CardsForComments
-                            // detail={detail}
-                            loginUsername={username}
+                            loginUsername="NONE"
 
                             handleSeeMore={handleSeeMore}
 
