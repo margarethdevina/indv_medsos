@@ -305,8 +305,10 @@ const PostDetailPage = (props) => {
     const printDate = () => {
 
         let endDate = DateTime.now();
-
+        console.log("endDate",endDate)
+        
         let startDate = DateTime.fromISO(detail.uploadDate);
+        console.log("startDate",startDate)
 
         let diffInterval = endDate.diff(startDate, ['weeks', 'days', 'hours', 'minutes', 'seconds']).toObject();
 
@@ -355,7 +357,7 @@ const PostDetailPage = (props) => {
     const handleCopyLink = () => {
 
         //link diganti kalau sudah deploy? ❗❗❗
-        navigator.clipboard.writeText(`http://localhost:3001/postdetail${search}`);
+        navigator.clipboard.writeText(`https://leiden.netlify.app/postdetailpublic${search}`);
 
         setOpenShare(!openShare);
         toast.info("Link copied");
@@ -383,7 +385,7 @@ const PostDetailPage = (props) => {
                         :
                         `${API_URL}${detail.media}`
                 }
-                contentWebUrl="http://localhost:3001/postdetail${search}"
+                contentWebUrl={`https://leiden.netlify.app/postdetailpublic${search}`}
             />
 
             {
@@ -442,7 +444,7 @@ const PostDetailPage = (props) => {
                                     className="share__socials"
                                 >
                                     <WhatsappShareButton
-                                        url={`https://leiden.netlify.app/postdetail${search}`}
+                                        url={`https://leiden.netlify.app/postdetailpublic${search}`}
                                     >
                                         <WaIcon
                                             className="share__socials__icons"
@@ -450,7 +452,7 @@ const PostDetailPage = (props) => {
                                         />
                                     </WhatsappShareButton>
                                     <TwitterShareButton
-                                        url={`https://leiden.netlify.app/postdetail${search}`}
+                                        url={`https://leiden.netlify.app/postdetailpublic${search}`}
                                     >
                                         <TwitterIcon
                                             className="share__socials__icons"
@@ -458,7 +460,7 @@ const PostDetailPage = (props) => {
                                         />
                                     </TwitterShareButton>
                                     <FacebookShareButton
-                                        url={`https://leiden.netlify.app/postdetail${search}`}
+                                        url={`https://leiden.netlify.app/postdetailpublic${search}`}
                                     >
                                         <FbIcon
                                             className="share__socials__icons"

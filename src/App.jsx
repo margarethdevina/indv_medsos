@@ -16,6 +16,7 @@ import YourLikesPage from './Pages/YourLikes';
 import AllPostsPage from './Pages/AllPosts';
 import UploadPostPage from './Pages/UploadPost';
 import PostDetailPage from './Pages/PostDetail';
+import PostDetailPublicPage from './Pages/PostDetailForOutsider';
 import RegisterPage from './Pages/Register';
 import UserProfilePage from './Pages/UserProfile';
 import NotFoundPage from './Pages/404';
@@ -133,7 +134,7 @@ function App() {
               <Route path='/verification/:token' element={<VerificationUser />} />
             </>
         }
-
+        <Route path='/postdetailpublic' element={<PostDetailPublicPage />} />
         <Route path='*' element={<NotFoundPage />} />
 
       </Routes>

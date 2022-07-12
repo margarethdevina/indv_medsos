@@ -23,30 +23,12 @@ const NotFoundPage = (props) => {
                 title="Leiden | Not Found"
                 description="You have been redirected to this page because the page you were looking for doesn't exist"
                 contentImg={`${API_URL}/imgUtilities/IMGUTILITIES_HOME.jpg`}
-                // contentWebUrl="http://localhost:3001/notfound"
             />
 
             <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
                 search_off
             </span>
             <h4>404 - The page you were looking for doesn't exist</h4>
-
-            {/* {username
-                ?
-                <>
-                    <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
-                        search_off
-                    </span>
-                    <h4>403 - Your account already registered and signed in</h4>
-                </>
-                :
-                <>
-                    <span className="material-icons d-flex justify-content-center" style={{ color: "#351c75", fontSize: "150px" }}>
-                        search_off
-                    </span>
-                    <h4>404 - The page you were looking for doesn't exist</h4>
-                </>
-            } */}
 
         </div>
     )
