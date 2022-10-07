@@ -25,15 +25,9 @@ const CardsForComments = (props) => {
     })
 
     let data = [...props.commentsArr];
-    console.log("isi props.commentsArr terbaru", data);
+    // console.log("isi props.commentsArr terbaru", data);
 
-    console.log("isi commentsFiltered", commentsFiltered)
-
-    // const [data, setData] = useState([])
-
-    // useEffect(()=>{
-    //     setData([...props.commentsArr])
-    // },[])
+    // console.log("isi commentsFiltered", commentsFiltered)
 
     const [inputComment, setInputComment] = useState("");
 
@@ -45,7 +39,6 @@ const CardsForComments = (props) => {
         Axios.get(`${API_URL}/comments/get`)
             .then((res) => {
                 dispatch(getCommentsAction(res.data))
-                // setData([...props.commentsArr])
             }).catch((err) => {
                 console.log(err)
             })
@@ -59,13 +52,12 @@ const CardsForComments = (props) => {
         let token = localStorage.getItem("tokenIdUser");
         Axios.patch(`${API_URL}/comments/${props.commentsArr[selectedIdx].id}`, {
             comment: inputComment
-            // editedDate: latestDate //pas konek ke express API ini bisa didelete
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         }).then((res) => {
-            console.log("isi res.data pas klik save", res.data)
+            // console.log("isi res.data pas klik save", res.data)
             getComments()
             setInputComment("")
         }).catch((err) => {
@@ -116,7 +108,7 @@ const CardsForComments = (props) => {
 
             let { weeks, days, hours, minutes, seconds } = diffInterval;
 
-            console.log("diffInterval di comment", diffInterval);
+            // console.log("diffInterval di comment", diffInterval);
             // console.log("diffInterval.weeks", weeks);
 
             let intervalShown = ""
@@ -151,7 +143,7 @@ const CardsForComments = (props) => {
                     intervalShown = `${Math.floor(seconds)} seconds ago`
                 }
             }
-            console.log("intervalShown di commentnya", intervalShown);
+            // console.log("intervalShown di commentnya", intervalShown);
 
             if (selectedIdx == index && openDelete == false) {
                 return (<CardColumns
@@ -255,7 +247,7 @@ const CardsForComments = (props) => {
         )
     }
 
-    console.log("isi hasMore", props.hasMore)
+    // console.log("isi hasMore", props.hasMore)
 
     return (
         <div
@@ -299,8 +291,6 @@ const CardsForComments = (props) => {
             </Modal>
             <InfiniteScroll
                 dataLength={data.length}
-                // dataLength={commentsFiltered.length}
-                // next={props.fetchData}
                 next={props.handleSeeMore}
                 hasMore={props.hasMore}
                 loader={commentsFiltered.length === 0

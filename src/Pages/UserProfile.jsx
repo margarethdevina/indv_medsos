@@ -98,7 +98,6 @@ const UserProfilePage = (props) => {
         }
     }
 
-    /////// REGEX FUNCTIONS ///////
     const strongRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]))|((?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])))(?=.{8,})")
     const wrongRegexPassword = new RegExp("^((?=.*[a-z])|(?=.*[0-9])|(?=.*[A-Z])|(?=.*[!@#\$%\^&\*])|((?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])))(?=.{8,})")
 
@@ -410,7 +409,6 @@ const UserProfilePage = (props) => {
                 } else if (
                     (dbUsers.find(val => val.username == inputUserName))
                     // &&
-                    // ((dbUsers[dbUsers.findIndex(valfind => valfind.email === email)].id) != id)
                 ) {
                     let idxByUsername = dbUsers.findIndex(valfindUN => valfindUN.username === inputUserName);
 

@@ -8,25 +8,11 @@ import { DateTime } from "luxon";
 const CardsInYourPosts = (props) => {
 
     const navigate = useNavigate();
-    // const endTime = DateTime.now().toFormat("FF");
 
     const printCard = () => {
         return props.data.map((value, index) => {
-            // let startTime = "";
-            // let endTime = "";
 
-            // console.log("value.media", value.media);
-
-            // console.log("DateTime Luxon", DateTime.fromISO(value.uploadDate).toFormat("FF"))
-            // console.log("typeof DateTime Luxon", typeof(DateTime.fromISO(value.uploadDate)))
-
-            // endTime = DateTime.now().toFormat("FF");
-            // console.log("DateTime.now() Luxon", endTime);
-            // console.log("typeof DateTime.now() Luxon", typeof(endTime));
-
-            // startTime = DateTime.fromISO(value.uploadDate).toFormat("FF");
-
-            console.log("diffTime", DateTime.now().diff(DateTime.fromISO(value.uploadDate), ['weeks', 'days', 'hours', 'minutes', 'seconds']).toObject());
+            // console.log("diffTime", DateTime.now().diff(DateTime.fromISO(value.uploadDate), ['weeks', 'days', 'hours', 'minutes', 'seconds']).toObject());
 
             return (
                 <CardColumns
@@ -40,7 +26,6 @@ const CardsInYourPosts = (props) => {
                         <CardImg
                             src={value.media.includes("http") ? value.media : `${API_URL}${value.media}`}
                             alt={`${value.id}-${value.username}-media`}
-                            // top
                             className="_card_media"
                         />
 
@@ -54,9 +39,6 @@ const CardsInYourPosts = (props) => {
                             <p
                                 className="_card_cardsub_likes"
                             >
-                                {/* <FavIcon
-                                    className="_card_icon"
-                                /> */}
                                 Liked by {value.numberOfLikes} people
                             </p>
                         </CardSubtitle>

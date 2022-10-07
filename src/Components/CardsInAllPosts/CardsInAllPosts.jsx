@@ -24,10 +24,10 @@ const CardsInAllPosts = (props) => {
         }
     })
 
-    console.log("isi posts di reducer", posts);
-    console.log("isi likes di reducer", likes);
-    console.log("isi props.likedData", props.likedData);
-    console.log("isi props.unlikedData", props.unlikedData);   
+    // console.log("isi posts di reducer", posts);
+    // console.log("isi likes di reducer", likes);
+    // console.log("isi props.likedData", props.likedData);
+    // console.log("isi props.unlikedData", props.unlikedData);   
 
     useEffect(() => {
         getPostForFirstScroll();
@@ -35,9 +35,8 @@ const CardsInAllPosts = (props) => {
 
     const handleLike = (IdPost) => {
         let tempLike = [...likes];
-        console.log("tempLike di handleLike", tempLike);
+        // console.log("tempLike di handleLike", tempLike);
 
-        // let tempPosts = [...posts];
         let token = localStorage.getItem("tokenIdUser");
 
         if (!tempLike.includes(IdPost)) {
@@ -47,7 +46,7 @@ const CardsInAllPosts = (props) => {
             if (token) {
                 let formData = new FormData();
                 let data = { likes: tempLike };
-                console.log("data yg akan diappend", data);
+                // console.log("data yg akan diappend", data);
                 formData.append('data', JSON.stringify(data));
                 Axios.patch(`${API_URL}/users/edit`, formData, {
                     headers: {
@@ -71,13 +70,13 @@ const CardsInAllPosts = (props) => {
         } else {
             let idxInLikes = tempLike.indexOf(IdPost);
             tempLike.splice(idxInLikes, 1);
-            console.log("tempLike setelah coba unlike", tempLike)
+            // console.log("tempLike setelah coba unlike", tempLike)
 
             //axios patch user likes
             if (token) {
                 let formData = new FormData();
                 let data = { likes: tempLike };
-                console.log("data yg akan diappend", data);
+                // console.log("data yg akan diappend", data);
                 formData.append('data', JSON.stringify(data));
                 Axios.patch(`${API_URL}/users/edit`, formData, {
                     headers: {
@@ -92,18 +91,6 @@ const CardsInAllPosts = (props) => {
                         posts.filter(({ id: id1 }) => res.data.some((id2) => id2 === id1)),
                         posts.filter(({ id: id1 }) => !res.data.some((id2) => id2 === id1))
                     );
-                    // getArray();
-                    // setArrLiked(props.likedData);
-                    // setArrLiked(posts.filter(({ id: id1 }) => likes.some((id2) => id2 === id1)));
-                    // console.log("arrLiked setelah klik", arrLiked);
-                    // setArrUnliked(props.unlikedData);
-                    // setArrUnliked(posts.filter(({ id: id1 }) => !likes.some((id2) => id2 === id1)));
-                    // console.log("arrUnliked setelah klik", arrUnliked);
-
-                    // console.log("isi post di reducer stlh klik", posts);
-                    // console.log("isi postsArr stlh klik", postsArr);
-
-                    // printAllPosts();
 
                 }).catch((err) => {
                     console.log(err)
@@ -122,18 +109,18 @@ const CardsInAllPosts = (props) => {
 
     const getPostForFirstScroll = async (newLikes = likes, arrLiked = props.likedData, arrUnliked = props.unlikedData) => {
 
-        console.log("isi newLikes di getPostForFirstScroll", newLikes);
-        console.log("isi arrLiked di getPostForFirstScroll", arrLiked);
-        console.log("isi arrUnliked di getPostForFirstScroll", arrUnliked);
+        // console.log("isi newLikes di getPostForFirstScroll", newLikes);
+        // console.log("isi arrLiked di getPostForFirstScroll", arrLiked);
+        // console.log("isi arrUnliked di getPostForFirstScroll", arrUnliked);
         
         const res = await Axios.get(`${API_URL}/posts/paginate?_page=1`);
         const data = res.data;
 
         if (data) {
 
-            console.group("isi likes dr reducer di getPostForFirstScroll", likes);
-            console.log("isi props.likedData di getPostForFirstScroll", props.likedData);
-            console.log("isi props.unlikedData di getPostForFirstScroll", props.unlikedData);
+            // console.group("isi likes dr reducer di getPostForFirstScroll", likes);
+            // console.log("isi props.likedData di getPostForFirstScroll", props.likedData);
+            // console.log("isi props.unlikedData di getPostForFirstScroll", props.unlikedData);
 
             if (userid && newLikes.length > 0) {
                 data.forEach(valFirstScroll => {
@@ -152,7 +139,7 @@ const CardsInAllPosts = (props) => {
                     valFirstScroll.favcolor = "#351c75"
                 })
             }
-            console.log("data bisa ditambah favcolor", data)
+            // console.log("data bisa ditambah favcolor", data)
             setPostsArr([...data]);
 
             if (data.length === 0 || data.length < 4) {
@@ -189,33 +176,30 @@ const CardsInAllPosts = (props) => {
 
     const fetchData = async () => {
         const postsFromServer = await fetchNextPosts();
-        console.log("isi postsFromServer", postsFromServer);
+        // console.log("isi postsFromServer", postsFromServer);
         setPostsArr([...postsArr, ...postsFromServer]);
         if (postsFromServer.length === 0 || postsFromServer.length < 4) {
             setHasMore(false);
         }
         let temp = pageNumber;
         temp++;
-        console.log("isi increment temp", temp);
+        // console.log("isi increment temp", temp);
         setPageNumber(temp);
     }
 
     const printAllPosts = () => {
-        // console.log("isi props.postsArr", props.postsArr);
-        console.log("isi postsArr di printAllPosts", postsArr);
-        // console.log("isi posts di reducer saat ini", posts);
-        // console.log("isi hasMore", props.hasMore);
-        console.log("isi hasMore di printAllPosts", hasMore);
+        // console.log("isi postsArr di printAllPosts", postsArr);
+        // console.log("isi hasMore di printAllPosts", hasMore);
 
-        console.log("isi likes di di printAllPosts", likes);
+        // console.log("isi likes di di printAllPosts", likes);
 
-        console.log("isi dr props.likedData di printAllPosts", props.likedData);
-        console.log("isi dr props.unlikedData di printAllPosts", props.unlikedData);
+        // console.log("isi dr props.likedData di printAllPosts", props.likedData);
+        // console.log("isi dr props.unlikedData di printAllPosts", props.unlikedData);
 
 
         return postsArr.map((valPaginate, idxPaginate) => {
             
-            console.log("valPaginate.favcolor", valPaginate.favcolor)
+            // console.log("valPaginate.favcolor", valPaginate.favcolor)
             return (
                 <CardColumns
                     key={valPaginate.id}
@@ -228,7 +212,6 @@ const CardsInAllPosts = (props) => {
                             onClick={() => navigate(`/postdetail?id=${valPaginate.id}`)}
                             src={valPaginate.media.includes("http") ? valPaginate.media : `${API_URL}${valPaginate.media}`}
                             alt={`${valPaginate.id}-${valPaginate.username}-media`}
-                            // top
                             className="_card_media"
                         />
                         <CardTitle

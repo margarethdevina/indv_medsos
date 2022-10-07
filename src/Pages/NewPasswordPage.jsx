@@ -23,9 +23,7 @@ const NewPasswordPage = (props) => {
 
     const [buttonStatus, setButtonStatus] = useState(false);
 
-    /////// REGEX FUNCTIONS ///////
     const strongRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]))|((?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])))(?=.{8,})")
-    // const weakRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9])))(?=.{8,})")
     const wrongRegexPassword = new RegExp("^((?=.*[a-z])|(?=.*[0-9])|(?=.*[A-Z])|(?=.*[!@#\$%\^&\*])|((?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])))(?=.{8,})")
 
     const [visibleForm, setVisibleForm] = React.useState({
@@ -49,14 +47,12 @@ const NewPasswordPage = (props) => {
 
     const handleNewPass = (value) => {
         setNewPassword(value)
-        console.log(newPassword)
+        // console.log(newPassword)
 
         if (strongRegexPassword.test(value)) {
             setPassStrength("✅ Strong Password")
         }
-        // else if (weakRegexPassword.test(value)) {
-        //     setPassStrength("❗ Weak Password")
-        // } 
+        
         else if (wrongRegexPassword.test(value)) {
             setPassStrength("❌ Password needs to contain at least 1 UPPERCASE, 1 number, and a symbol")
         }
@@ -70,7 +66,7 @@ const NewPasswordPage = (props) => {
     const getToken = () => {
         Axios.get(`${API_URL}/users/getToken`)
             .then((response) => {
-                console.log("isi dbToken", response.data);
+                // console.log("isi dbToken", response.data);
                 setDbToken(response.data);
             }).catch((error) => { console.log(error) })
     }
@@ -81,17 +77,17 @@ const NewPasswordPage = (props) => {
             if (dbToken.find(valToken => valToken.token == params.token)) {
 
                 let prevToken = dbToken.filter(val => val.token == params.token)[0];
-                console.log("prevToken", prevToken);
+                // console.log("prevToken", prevToken);
 
                 let startDate = DateTime.fromISO(prevToken.editedDate);
                 let endDate = DateTime.now();
-                console.log("startDate",startDate);
-                console.log("endDate",endDate);
+                // console.log("startDate",startDate);
+                // console.log("endDate",endDate);
 
                 let diffInterval = endDate.diff(startDate, ['hours', 'minutes', 'seconds']).toObject();
 
                 let { hours, minutes, seconds } = diffInterval;
-                console.log("diffInterval Token", diffInterval);
+                // console.log("diffInterval Token", diffInterval);
 
                 if (hours > 1) {
                     toast.warn("Token has expired, please create a new forgot password request");

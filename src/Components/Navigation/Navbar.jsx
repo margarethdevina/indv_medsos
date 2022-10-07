@@ -29,17 +29,13 @@ const NavbarComponent = (props) => {
 
     const handleLogout = () => {
         dispatch(logoutAction())
-        console.log("username di reducer masih ada?",username)
+        // console.log("username di reducer masih ada?",username)
         navigate("/")
     }
 
     return (
         <div
             style={{
-                // backgroundImage: `url(${backgroundNavbar})`,
-                // backgroundRepeat: "no-repeat",
-                // backgroundSize: "cover",
-                // backgroundColor: "white",
                 position: "sticky",
                 top: 0,
                 zIndex: 99
@@ -57,7 +53,6 @@ const NavbarComponent = (props) => {
                 color="white"
                 light
                 sticky="top"
-            // fixed="top"
             >
                 <NavbarBrand
                     onClick={() => navigate("/")}
@@ -168,7 +163,6 @@ const NavbarComponent = (props) => {
                                                 </DropdownItem>
                                                 <DropdownItem divider />
                                                 <DropdownItem
-                                                    // className="app_navbar_btn_user"
                                                     onClick={() => navigate("/userprofile")}>
                                                     Your Profile
                                                 </DropdownItem>

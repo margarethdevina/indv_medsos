@@ -45,7 +45,6 @@ const PostDetailPublicPage = (props) => {
     const { userid, status, likes, posts, comments, commentsFiltered } = useSelector((state) => {
         return {
             userid: state.usersReducer.id,
-            // username: state.usersReducer.username,
             status: state.usersReducer.status,
             likes: state.usersReducer.likes,
             posts: state.postsReducer.posts,
@@ -76,9 +75,6 @@ const PostDetailPublicPage = (props) => {
 
         setCommentsArr(data);
 
-        // if (commentsFiltered.length === 0 || commentsFiltered.length < 5) {
-        //     setHasMore(false);
-        // }
         if (data.length === 0 || data.length < 5) {
             setHasMore(false);
         }
@@ -100,7 +96,7 @@ const PostDetailPublicPage = (props) => {
 
         const commentsFromServer = await fetchComments();
 
-        console.log("isi commentsFromServer", commentsFromServer)
+        // console.log("isi commentsFromServer", commentsFromServer)
         //console.log commentsFromServer komen kurang dr 5
         //console.log commentsFromServer komen > 5
 
@@ -113,7 +109,7 @@ const PostDetailPublicPage = (props) => {
 
         let temp = pageNumber;
         temp++;
-        console.log("isi increment temp", temp)
+        // console.log("isi increment temp", temp)
         setPageNumber(temp);
     }
 
@@ -123,11 +119,11 @@ const PostDetailPublicPage = (props) => {
     }
 
     const getDetail = () => {
-        console.log("isi search", search)
+        // console.log("isi search", search)
         Axios.get(`${API_URL}/posts/detail${search}`)
             .then((response) => {
-                console.log("isi detail", response.data);
-                console.log("isi detail.media", response.data.media);
+                // console.log("isi detail", response.data);
+                // console.log("isi detail.media", response.data.media);
                 setDetail(response.data);
             })
             .catch((error) => { console.log(error) })
@@ -136,7 +132,7 @@ const PostDetailPublicPage = (props) => {
     const getPosts = () => {
         Axios.get(`${API_URL}/posts/get`)
             .then((response) => {
-                console.log("data posts terambil smua?", response.data)
+                // console.log("data posts terambil smua?", response.data)
                 dispatch(getPostsAction(response.data))
             }).catch((error) => {
                 console.log(error)
@@ -146,16 +142,16 @@ const PostDetailPublicPage = (props) => {
     const printDate = () => {
 
         let endDate = DateTime.now();
-        console.log("endDate", endDate)
+        // console.log("endDate", endDate)
 
         let startDate = DateTime.fromISO(detail.uploadDate);
-        console.log("startDate", startDate)
+        // console.log("startDate", startDate)
 
         let diffInterval = endDate.diff(startDate, ['weeks', 'days', 'hours', 'minutes', 'seconds']).toObject();
 
         let { weeks, days, hours, minutes, seconds } = diffInterval;
 
-        console.log("diffInterval di postnya", diffInterval);
+        // console.log("diffInterval di postnya", diffInterval);
         // console.log("diffInterval.weeks", weeks);
 
         let intervalShown = ""
@@ -190,7 +186,7 @@ const PostDetailPublicPage = (props) => {
                 intervalShown = `${Math.floor(seconds)} seconds ago`
             }
         }
-        console.log("intervalShown di postnya", intervalShown);
+        // console.log("intervalShown di postnya", intervalShown);
 
         return intervalShown;
     }
@@ -216,7 +212,6 @@ const PostDetailPublicPage = (props) => {
             {/* title username | post caption */}
             <MetaDecorator
                 title={`${detail.username} on Leiden: "${detail.caption}"`}
-                // description={`${detail.caption}`}
                 contentImg={
                     detail.media
                         &&
@@ -299,8 +294,6 @@ const PostDetailPublicPage = (props) => {
                     >
                         {detail.username}
                     </p>
-
-                    {/* <hr className="_detail_hr" /> */}
 
                     <p
                         className="_detail_font_content"

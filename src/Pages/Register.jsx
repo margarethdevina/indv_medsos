@@ -21,17 +21,13 @@ const RegisterPage = (props) => {
         }
     })
 
-    /////// STATE MANAGEMENT ///////
     const [dbUsers, setDbUsers] = useState([]);
-    // const [dbUsername, setDbUsername] = useState([]);
-    // const [dbEmail, setDbEmail] = useState([]);
 
     const [username, setUsername] = useState("");
     const [usedUsername, setUsedUsername] = useState("");
 
     const [email, setEmail] = useState("");
     const [emailValidity, setEmailValidity] = useState("");
-    // const [usedEmail, setUsedEmail] = useState("");
 
     const [password, setPassword] = useState("");
     const [confPassword, setConfPassword] = useState("");
@@ -39,14 +35,11 @@ const RegisterPage = (props) => {
 
     const [buttonStatus, setButtonStatus] = useState(false);
 
-    /////// REGEX FUNCTIONS ///////
     const strongRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]))|((?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])))(?=.{8,})")
-    // const weakRegexPassword = new RegExp("^(((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9])))(?=.{8,})")
     const wrongRegexPassword = new RegExp("^((?=.*[a-z])|(?=.*[0-9])|(?=.*[A-Z])|(?=.*[!@#\$%\^&\*])|((?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])))(?=.{8,})")
 
     const validRegexEmail = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
 
-    /////// GET EXISTING USERS DATA ///////
     useEffect(() => {
         getUsers()
     }, []);
@@ -67,9 +60,6 @@ const RegisterPage = (props) => {
         if (strongRegexPassword.test(value)) {
             setPassStrength("✅ Strong Password")
         }
-        // else if (weakRegexPassword.test(value)) {
-        //     setPassStrength("❗ Weak Password")
-        // } 
         else if (wrongRegexPassword.test(value)) {
             setPassStrength("❌ Password needs to contain at least 1 UPPERCASE, 1 number, and a symbol")
         }
@@ -105,7 +95,7 @@ const RegisterPage = (props) => {
 
         try {
             if (username == "" || email == "" || password == "" || confPassword == "") {
-                console.log("Fill in all form")
+                // console.log("Fill in all form")
                 toast.warn("Fill in all form")
                 setButtonStatus(false);
             } else {
@@ -159,7 +149,7 @@ const RegisterPage = (props) => {
                     if (res.data.success) {
                         toast.success("Registration successful, account verification link has been sent to your email");
 
-                        console.log("data yg teregister", res.data);
+                        // console.log("data yg teregister", res.data);
 
                         localStorage.setItem("tokenIdUser", res.data.token);
                         dispatch(loginAction(res.data));
@@ -184,7 +174,6 @@ const RegisterPage = (props) => {
         }
     }
 
-    /////// VISIBILITY FUNCTIONS ///////
     const [visibleForm, setVisibleForm] = useState({
         type: "password",
         text: "Show"
@@ -215,7 +204,6 @@ const RegisterPage = (props) => {
                 title="Leiden | Register"
                 description="Leiden - Welcome to Leiden Family"
                 contentImg={`${API_URL}/imgUtilities/IMGUTILITIES_HOME.jpg`}
-            // contentWebUrl="http://localhost:3001/register"
             />
 
             {usernameSignedIn
@@ -261,7 +249,6 @@ const RegisterPage = (props) => {
                                         id="inputEmail"
                                         placeholder="Insert your email"
                                         type="text"
-                                        // defaultValue={email}
                                         onChange={(e) => handleEmail(e.target.value)}
                                     />
                                     <p
@@ -293,7 +280,6 @@ const RegisterPage = (props) => {
                                         id="inputUsername"
                                         placeholder="Insert your username"
                                         type="text"
-                                        // defaultValue={username}
                                         onChange={(e) => handleUsername(e.target.value)}
                                     />
                                     <p
@@ -320,7 +306,6 @@ const RegisterPage = (props) => {
                                             id="inputPassword"
                                             placeholder="Insert your password"
                                             type={visibleForm.type}
-                                            // defaultValue={password}
                                             onChange={(e) => handlePassword(e.target.value)}
                                         />
                                         <InputGroupText
@@ -360,7 +345,6 @@ const RegisterPage = (props) => {
                                             id="inputConfirmPassword"
                                             placeholder="Confirm your password"
                                             type={visibleForm.type}
-                                            // defaultValue={confPassword}
                                             onChange={(e) => setConfPassword(e.target.value)}
                                         />
                                     </InputGroup>

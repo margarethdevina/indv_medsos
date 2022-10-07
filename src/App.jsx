@@ -4,7 +4,6 @@ import Axios from 'axios';
 import { API_URL } from './helper';
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-// import logo from './logo.svg';
 import './App.css';
 import './index.scss';
 import { Routes, Route } from 'react-router-dom';
@@ -35,7 +34,7 @@ function App() {
   const getPosts = () => {
     Axios.get(`${API_URL}/posts/get`)
       .then((response) => {
-        console.log("data posts terambil smua?", response.data)
+        // console.log("data posts terambil smua?", response.data)
         dispatch(getPostsAction(response.data))
       }).catch((error) => {
         console.log(error)
@@ -81,12 +80,11 @@ function App() {
     }
   })
 
-  console.log("status user yg login", status)
+  // console.log("status user yg login", status)
 
   return (
     <div
       className="App"
-    // style={{position: "relative", minHeight: "100vh"}}
     >
       <ToastContainer
         position="top-right"
@@ -140,7 +138,6 @@ function App() {
       </Routes>
 
       <FooterComponent
-        // style={{position: "absolute", left: 0, right: 0, bottom: 0}}
         style={{ position: "fixed", left: 0, right: 0, bottom: 0 }}
       />
 

@@ -7,11 +7,10 @@ import MetaDecorator from "../Components/MetaDecorator";
 
 const AllPostsPage = (props) => {
 
-    const [dbPosts, setDbPosts] = useState([]); //ini mungkin dah ga perlu❗❗❗
+    const [dbPosts, setDbPosts] = useState([]);
 
     const [displayLikes, setDisplayLikes] = useState("_card_cardsub_likes");
     const [fromUrLikes, setFromUrLikes] = useState(0);
-    // kalau fromUrLikes = 1, cardsinallpost component hanya print yg di liked aja
 
     const { username, status, likes, posts } = useSelector((state) => {
         return {
@@ -21,19 +20,6 @@ const AllPostsPage = (props) => {
             posts: state.postsReducer.posts
         }
     })
-
-    // useEffect(() => {
-    //     getPosts()
-    // }, []);
-
-
-    // const getPosts = () => {
-    //     Axios.get(`${API_URL}/posts/get`)
-    //         .then((response) => {
-    //             console.log("isi dbPosts", response.data);
-    //             // setDbPosts(response.data)
-    //         }).catch((error) => { console.log(error) })
-    // };
 
     return (
         <div
@@ -47,7 +33,6 @@ const AllPostsPage = (props) => {
                 title="Leiden | All Posts"
                 description="Come and see yours and your friends' posts"
                 contentImg={`${API_URL}/imgUtilities/IMGUTILITIES_ALLPOSTS.jpg`}
-                // contentWebUrl="http://localhost:3001/allposts"
             />
 
             {

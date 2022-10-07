@@ -54,9 +54,6 @@ const PostDetailPage = (props) => {
         }
     })
 
-    // const currentDate = new Date();
-    // const latestDate = `${currentDate.getFullYear()}/${(currentDate.getMonth() + 1) < 10 ? `0${(currentDate.getMonth() + 1)}` : `${(currentDate.getMonth() + 1)}`}/${currentDate.getDate()}`
-
     useEffect(() => {
         getDetail()
         favoriteFillTrigger()
@@ -104,7 +101,7 @@ const PostDetailPage = (props) => {
 
         const commentsFromServer = await fetchComments();
 
-        console.log("isi commentsFromServer", commentsFromServer)
+        // console.log("isi commentsFromServer", commentsFromServer)
         //console.log commentsFromServer komen kurang dr 5
         //console.log commentsFromServer komen > 5
 
@@ -117,7 +114,7 @@ const PostDetailPage = (props) => {
 
         let temp = pageNumber;
         temp++;
-        console.log("isi increment temp", temp)
+        // console.log("isi increment temp", temp)
         setPageNumber(temp);
     }
 
@@ -128,11 +125,11 @@ const PostDetailPage = (props) => {
     }
 
     const getDetail = () => {
-        console.log("isi search", search)
+        // console.log("isi search", search)
         Axios.get(`${API_URL}/posts/detail${search}`)
             .then((response) => {
-                console.log("isi detail", response.data);
-                console.log("isi detail.media", response.data.media);
+                // console.log("isi detail", response.data);
+                // console.log("isi detail.media", response.data.media);
                 setDetail(response.data);
             })
             .catch((error) => { console.log(error) })
@@ -142,26 +139,25 @@ const PostDetailPage = (props) => {
         let tempLike = [...likes];
         let IdPost = parseInt(search.split("=")[1]);
         if (!tempLike.includes(IdPost)) {
-            console.log("isi likes, isi search stlh split", tempLike, IdPost)
+            // console.log("isi likes, isi search stlh split", tempLike, IdPost)
             setFavoriteFill("#351c75")
         }
     }
 
     const handleSave = () => {
         setSelectedEdit(0);
-        console.log("yang ingin disave", inputCaption)
+        // console.log("yang ingin disave", inputCaption)
 
         let token = localStorage.getItem("tokenIdUser");
         if (token) {
             Axios.patch(`${API_URL}/posts/${detail.id}`, {
                 caption: inputCaption
-                // editedDate: latestDate // pas sambung ke express api bisa diganti penanggalan dari sql query
             }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             }).then((res) => {
-                console.log("isi res.data pas klik save", res.data)
+                // console.log("isi res.data pas klik save", res.data)
                 getDetail()
             }).catch((err) => {
                 console.log(err)
@@ -201,14 +197,14 @@ const PostDetailPage = (props) => {
             tempLike.push(IdPost);
             let idxInPost = tempPosts.findIndex(val => val.id == IdPost);
 
-            console.log("index di post", idxInPost)
+            // console.log("index di post", idxInPost)
             // console.log("NOL di post itu saat ini", 
 
             //axios patch user likes
             if (token) {
                 let formData = new FormData();
                 let data = { likes: tempLike };
-                console.log("data", data);
+                // console.log("data", data);
                 formData.append('data', JSON.stringify(data));
                 Axios.patch(`${API_URL}/users/edit`, formData, {
                     headers: {
@@ -233,7 +229,7 @@ const PostDetailPage = (props) => {
 
             let idxInLikes = tempLike.indexOf(IdPost);
             tempLike.splice(idxInLikes, 1);
-            console.log("tempLike setelah coba unlike", tempLike)
+            // console.log("tempLike setelah coba unlike", tempLike)
 
             let idxInPost = tempPosts.findIndex(val => val.id == IdPost);
 
@@ -241,7 +237,7 @@ const PostDetailPage = (props) => {
             if (token) {
                 let formData = new FormData();
                 let data = { likes: tempLike };
-                console.log("data", data);
+                // console.log("data", data);
                 formData.append('data', JSON.stringify(data));
                 Axios.patch(`${API_URL}/users/edit`, formData, {
                     headers: {
@@ -267,7 +263,7 @@ const PostDetailPage = (props) => {
     const getPosts = () => {
         Axios.get(`${API_URL}/posts/get`)
             .then((response) => {
-                console.log("data posts terambil smua?", response.data)
+                // console.log("data posts terambil smua?", response.data)
                 dispatch(getPostsAction(response.data))
             }).catch((error) => {
                 console.log(error)
@@ -278,20 +274,15 @@ const PostDetailPage = (props) => {
         // console.log("isi komen2 awal tanpa filter postId", allComments)
 
         let token = localStorage.getItem("tokenIdUser");
-        // if (comments.length > 0) {
         Axios.post(`${API_URL}/comments/add`, {
             postId: parseInt(query),
-            // id: comments[comments.length - 1].id + 1,
-            // username,//pas konek express bisa dihapus
-            // commentDate: latestDate, //pas konek express bisa dihapus
-            // editedDate: "", //pas konek express bisa dihapus
             comment: inputComment
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         }).then((res) => {
-            console.log("isi res.data pas klik handlePost", res.data)
+            // console.log("isi res.data pas klik handlePost", res.data)
             getAllComments()
             setInputComment("")
             getCommentsForThisPost()
@@ -305,16 +296,16 @@ const PostDetailPage = (props) => {
     const printDate = () => {
 
         let endDate = DateTime.now();
-        console.log("endDate",endDate)
+        // console.log("endDate",endDate)
         
         let startDate = DateTime.fromISO(detail.uploadDate);
-        console.log("startDate",startDate)
+        // console.log("startDate",startDate)
 
         let diffInterval = endDate.diff(startDate, ['weeks', 'days', 'hours', 'minutes', 'seconds']).toObject();
 
         let { weeks, days, hours, minutes, seconds } = diffInterval;
 
-        console.log("diffInterval di postnya", diffInterval);
+        // console.log("diffInterval di postnya", diffInterval);
         // console.log("diffInterval.weeks", weeks);
 
         let intervalShown = ""
@@ -349,7 +340,7 @@ const PostDetailPage = (props) => {
                 intervalShown = `${Math.floor(seconds)} seconds ago`
             }
         }
-        console.log("intervalShown di postnya", intervalShown);
+        // console.log("intervalShown di postnya", intervalShown);
 
         return intervalShown;
     }
@@ -375,7 +366,6 @@ const PostDetailPage = (props) => {
             {/* title username | post caption */}
             <MetaDecorator
                 title={`${detail.username} on Leiden: "${detail.caption}"`}
-                // description={`${detail.caption}`}
                 contentImg={
                     detail.media
                         &&
@@ -435,7 +425,6 @@ const PostDetailPage = (props) => {
                             <Modal
                                 isOpen={openShare}
                                 toggle={() => setOpenShare(!openShare)}
-                                // size="sm"
                                 style={{ width: "220px" }}
                                 centered
                                 className="gen_font_content"
@@ -502,8 +491,6 @@ const PostDetailPage = (props) => {
                                     {detail.username}
                                 </p>
 
-                                {/* <hr className="_detail_hr" /> */}
-
                                 {
                                     selectedEdit == 0
                                         ?
@@ -562,8 +549,6 @@ const PostDetailPage = (props) => {
                                         </>
                                 }
 
-                                {/* <hr className="_detail_hr" /> */}
-
                                 <div
                                     className="_detail_font_content d-flex align-items-center mt-2 mb-4"
                                 >
@@ -620,12 +605,9 @@ const PostDetailPage = (props) => {
 
                                 </div>
 
-                                {/* <hr className="_detail_hr" /> */}
-
                                 {
                                     detail.id &&
                                     <CardsForComments
-                                        // detail={detail}
                                         loginUsername={username}
 
                                         handleSeeMore={handleSeeMore}

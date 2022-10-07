@@ -41,13 +41,13 @@ const ModalLogin = (props) => {
 
     const handleLogin = () => {
         if (inForm.usernameOrEmail == "" || inForm.password == "") {
-            console.log("Fill in all form");
+            // console.log("Fill in all form");
             toast.warn("Fill in all form");
             setButtonStatus(false);
         } else if (inForm.usernameOrEmail.includes("@")) {
 
-            console.log("isi email", inForm.usernameOrEmail)
-            console.log("inForm.password", inForm.password)
+            // console.log("isi email", inForm.usernameOrEmail)
+            // console.log("inForm.password", inForm.password)
 
             setButtonStatus(true);
 
@@ -56,7 +56,7 @@ const ModalLogin = (props) => {
                 password: inForm.password
             })
                 .then((response) => {
-                    console.log("data saat masuk lwt email", response.data);
+                    // console.log("data saat masuk lwt email", response.data);
                     localStorage.setItem("tokenIdUser", response.data.token);
                     dispatch(loginAction(response.data));
                     props.toggleOpen();
@@ -72,15 +72,15 @@ const ModalLogin = (props) => {
 
             setButtonStatus(true);
 
-            console.log("isi username", inForm.usernameOrEmail);
-            console.log("inForm.password", inForm.password);
+            // console.log("isi username", inForm.usernameOrEmail);
+            // console.log("inForm.password", inForm.password);
 
             Axios.post(`${API_URL}/users/login`, {
                 username: inForm.usernameOrEmail,
                 password: inForm.password
             })
                 .then((response) => {
-                    console.log("data saat masuk lwt username", response.data);
+                    // console.log("data saat masuk lwt username", response.data);
                     localStorage.setItem("tokenIdUser", response.data.token);
                     dispatch(loginAction(response.data));
                     props.toggleOpen();
@@ -150,7 +150,6 @@ const ModalLogin = (props) => {
                             className="btn btn-secondary"
                             onClick={handleVisible}
                         >
-                            {/* Show */}
                             {visibleForm.text}
                         </InputGroupText>
                     </InputGroup>
